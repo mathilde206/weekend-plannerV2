@@ -13,14 +13,15 @@
         "prop-types": "^15.6.1",
         "react": "^16",
         "react-autosuggest": "^9.3.4",
-        "react-dom": "15.6.2",
+        "react-dom": "^16.4.1",
         "react-redux": "^5.0.7",
         "react-router-redux": "^5.0.0-alpha.9",
         "reactstrap": "^6.1.0",
         "redux": "^3.7.2",
         "redux-api-middleware": "^2.3.0",
         "redux-persist": "^5.10.0",
-        "redux-persist-transform-filter": "0.0.17"
+        "redux-persist-transform-filter": "0.0.17",
+        "redux-thunk": "^2.3.0"
     },
     "devDependencies": {
         "@babel/cli": "^7.0.0-beta.49",
@@ -38,6 +39,7 @@
         "babel-loader": "^8.0.0-beta.3",
         "cache-loader": "^1.2.2",
         "clean-webpack-plugin": "^0.1.19",
+        "copyfiles": "^2.0.0",
         "copy-webpack-plugin": "^4.5.1",
         "css-loader": "^0.28.11",
         "cssnano": "^3.10.0",
@@ -58,6 +60,7 @@
         "sass-loader": "^7.0.3",
         "script-loader": "^0.7.2",
         "style-loader": "^0.21.0",
+        "uglify-es": "^3.3.9",
         "webpack": "^4.12.0",
         "webpack-bundle-analyzer": "^2.13.1",
         "webpack-cli": "^2.1.4"
@@ -66,7 +69,11 @@
         "start": "webpack-cli  --env.development --progress",
         "watch": "webpack-cli --watch --progress",
         "build": "webpack-cli --mode production --progress",
-        "test": "echo \"Error: no test specified\" && exit 1"
+        "collect": "npm run copy-buildfiles && npm run collectstatic",
+        "collectstatic": "python3 ../src/manage.py collectstatic --no-input",
+        "copy-buildfiles": "npm run copy-build-js && npm run copy-build-css",
+        "copy-build-js": "copyfiles -f 'build/js/*.js' '../src/staticfiles/js/'",
+        "copy-build-css": "copyfiles -f 'build/css/*.css' '../src/staticfiles/css/'"
     },
     "author": "Mathilde Barbier",
     "license": "ISC"
