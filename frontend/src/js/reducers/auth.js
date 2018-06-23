@@ -5,7 +5,7 @@ import {
     TOKEN_RECEIVED,
     TOKEN_FAILURE,
 
-} from '../actions/auth'
+} from '../actions/auth';
 
 const initialState = {
     access: null,
@@ -14,71 +14,71 @@ const initialState = {
 };
 
 export default (state=initialState, action) => {
-  switch(action.type) {
+    switch(action.type) {
     case LOGIN_SUCCESS:
-      return {
-        access: {
-          token: action.payload.access,
-          ...jwtDecode(action.payload.access)
-        },
-        refresh: {
-          token: action.payload.refresh,
-          ...jwtDecode(action.payload.refresh)
-        },
-        errors: {}
-    };
+        return {
+            access: {
+                token: action.payload.access,
+                ...jwtDecode(action.payload.access)
+            },
+            refresh: {
+                token: action.payload.refresh,
+                ...jwtDecode(action.payload.refresh)
+            },
+            errors: {}
+        };
     case TOKEN_RECEIVED:
-      return {
-        ...state,
-        access: {
-          token: action.payload.access,
-          ...jwtDecode(action.payload.access)
-        }
-      };
+        return {
+            ...state,
+            access: {
+                token: action.payload.access,
+                ...jwtDecode(action.payload.access)
+            }
+        };
     case LOGIN_FAILURE:
     case TOKEN_FAILURE:
-      return {
-         access: null,
-         refresh: null,
-         errors:
+        return {
+            access: null,
+            refresh: null,
+            errors:
              action.payload.response ||
                 {'non_field_errors': action.payload.statusText},
-      };
+        };
     default:
-      return state
+        return state;
     }
-}
+};
 
 export function accessToken(state) {
     if (state.access) {
-        return state.access.token
+        return state.access.token;
     }
 }
 
 export function refreshToken(state) {
     if (state.refresh) {
-        return  state.refresh.token
+        return  state.refresh.token;
     }
 }
 
 export function isAccessTokenExpired(state) {
-  if (state.access && state.access.exp) {
-    return 1000 * state.access.exp - (new Date()).getTime() < 5000
-  }
-  return true
+    if (state.access && state.access.exp) {
+        return 1000 * state.access.exp - (new Date()).getTime() < 5000;
+    }
+    return true;
 }
 
 export function isRefreshTokenExpired(state) {
-  if (state.refresh && state.refresh.exp) {
-    return 1000 * state.refresh.exp - (new Date()).getTime() < 5000
-  }
-  return true
+    if (state.refresh && state.refresh.exp) {
+        return 1000 * state.refresh.exp - (new Date()).getTime() < 5000;
+    }
+    return true;
 }
 
 export function isAuthenticated(state) {
-  return !isRefreshTokenExpired(state)
+    return !isRefreshTokenExpired(state);
 }
 
 export function errors(state) {
-   return  state.errors
+    return  state.errors;
 }
