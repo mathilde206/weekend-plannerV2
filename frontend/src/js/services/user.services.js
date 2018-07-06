@@ -6,6 +6,7 @@ export const userService = {
     login,
     logout,
     getById,
+    register,
 };
 
 function login(username, password) {
@@ -30,7 +31,7 @@ function login(username, password) {
             return {
                 access: null,
                 refresh: null,
-                errors: {'non_field_errors': response.statusText},
+                errors: { 'non_field_errors': response.statusText },
             };
         });
 }
@@ -47,17 +48,18 @@ function getById(id) {
         });
 }
 
-//
-// function register(user) {
-//     const requestOptions = {
-//         method: 'POST',
-//         headers: { 'Content-Type': 'application/json' },
-//         body: JSON.stringify(user)
-//     };
-//
-//     return fetch(`${config.apiUrl}/users/register`, requestOptions).then(handleResponse);
-// }
-//
+function register({ username, email, email2, password }) {
+    return axios.post('/api/users/register/', {
+        username,
+        email,
+        email2,
+        password,
+    })
+        .then(response => {
+            console.log(response);
+        });
+}
+
 // function update(user) {
 //     const requestOptions = {
 //         method: 'PUT',

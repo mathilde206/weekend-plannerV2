@@ -8,6 +8,7 @@ import { history } from '../../helpers';
 import PrivateRoute from '../PrivateRoute/PrivateRoute';
 import Home from '../Home/Home';
 import LoginPage from '../LoginPage/LoginPage';
+import RegisterPage from '../RegisterPage/RegisterPage';
 import NavigationBar from '../../components/NavigationBar/NavigationBar';
 
 class App extends React.Component {
@@ -36,6 +37,7 @@ class App extends React.Component {
                     </div>
                     <Switch>
                         <Route exact path="/login/" component={LoginPage} />
+                        <Route exact path="/register/" component={RegisterPage} />
                         <PrivateRoute path="/" component={Home} />
                     </Switch>
 
