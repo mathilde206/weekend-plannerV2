@@ -1,2 +1,6 @@
 frontend/node_modules
 venv
+.bashrc
+static-cdn-local/
+frontend/build/
+src/db.sqlite3

@@ -1,22 +1,26 @@
 from django.contrib import admin
-from django.conf.urls import url, include, re_path
-from django.views import generic
+from django.conf.urls import url, include
+from django.urls import path
+from django.views.generic import TemplateView
 from rest_framework.schemas import get_schema_view
 from rest_framework_simplejwt.views import (
     TokenObtainPairView,
     TokenRefreshView,
 )
 
-# from .pages.views import FrontendRenderView;
-
+from accounts import urls as users_urls
 
 urlpatterns = [
-    url(r'^api/$', get_schema_view()),
-    url(r'^api/auth/', include(
+    path('api/', get_schema_view()),
+    path('api/auth/', include(
         'rest_framework.urls', namespace='rest_framework'
     )),
-    url(r'^api/auth/token/obtain/$', TokenObtainPairView.as_view()),
-    url(r'^api/auth/token/refresh/$', TokenRefreshView.as_view()),
-    url(r'^admin/$', admin.site.urls),
-    # re_path(r'(?P<path>.*)', FrontendRenderView.as_view(), name='home')
+    path('api/auth/', include(
+        'rest_framework.urls', namespace='rest_framework'
+    )),
+    path('api/auth/token/obtain/', TokenObtainPairView.as_view()),
+    path('api/auth/token/refresh/', TokenRefreshView.as_view()),
+    path('api/users/', include((users_urls, 'users'), namespace='users-api')),
+    path('admin/', admin.site.urls),
+    url(r'', TemplateView.as_view(template_name='react.html')),
 ]

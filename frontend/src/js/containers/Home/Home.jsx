@@ -1,13 +1,6 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import {echo} from '../../actions/echo';
-import { serverMessage } from '../../reducers/echo';
+import React from 'react';
 
-class App extends Component {
-    componentDidMount() {
-        this.props.fetchMessage('Hi!');
-    }
-
+class Home extends React.Component {
     render() {
         return (
             <div>
@@ -18,7 +11,4 @@ class App extends Component {
     }
 }
 
-export default connect(
-    state => ({ message: serverMessage(state) }),
-    { fetchMessage: echo }
-)(App);
+export default Home;

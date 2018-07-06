@@ -3,11 +3,7 @@ import dj_database_url
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-if os.path.exists('env.py'):
-    DEVELOPMENT = True
-    import env
-else:
-    DEVELOPMENT = False
+DEVELOPMENT = os.environ.get('DEVELOPMENT', False)
 
 SECRET_KEY = os.environ.get("SECRET_KEY")
 
@@ -108,7 +104,6 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'staticfiles/')
 ]
-print()
 STATIC_ROOT = os.path.join(os.path.dirname(BASE_DIR), 'static-cdn-local')
 
 

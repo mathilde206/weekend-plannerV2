@@ -4,7 +4,6 @@ import {
     LOGIN_FAILURE,
     TOKEN_RECEIVED,
     TOKEN_FAILURE,
-
 } from '../actions/auth';
 
 const initialState = {
