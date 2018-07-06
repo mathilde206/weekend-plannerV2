@@ -4,3 +4,6 @@ venv
 static-cdn-local/
 frontend/build/
 src/db.sqlite3
+src/__init__
+src/staticfiles/js/
+src/__pycache__/env.cpython-36.pyc
