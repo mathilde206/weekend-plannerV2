@@ -1,6 +1,15 @@
 import { userConstants } from '../constants';
+import { userService } from '../services';
 
-let user = JSON.parse(localStorage.getItem('user'));
+let user;
+
+if(localStorage.getItem('auth')){
+    const id = JSON.parse(localStorage.getItem('auth')).access.user_id;
+    userService.getById(id).then((username) => {
+        user = username;
+    });
+    console.log(user);
+}
 const initialState = user ? { loggedIn: true, user } : {};
 
 export function authentication(state = initialState, action) {

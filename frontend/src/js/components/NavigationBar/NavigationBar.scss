@@ -1,0 +1,20 @@
+@import '../../../scss/variables';
+
+nav.navbar.navbar-expand-md.navbar-light {
+    background: $highlight-color; /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, $highlight-color-shade-2, $highlight-color); /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, $highlight-color-shade-2, $highlight-color); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+    a {
+        color: $highlight-secondary-bright;
+
+        &:hover{
+            color: $highlight-secondary-light;
+        }
+
+        &.navbar-brand {
+            font-family: $font-cursive;
+            font-size: $font-large;
+        }
+    }
+}

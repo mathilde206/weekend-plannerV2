@@ -7,7 +7,7 @@ export const userActions = {
     login,
     logout,
     register,
-    getAll,
+    getById,
     delete: _delete
 };
 
@@ -35,7 +35,7 @@ function login(username, password) {
         return { type: userConstants.LOGIN_REQUEST, user };
     }
 
-    function success(user, token) {
+    function success(user, token) {;
         return { type: userConstants.LOGIN_SUCCESS, user, token };
     }
 
@@ -80,27 +80,27 @@ function register(user) {
     }
 }
 
-function getAll() {
+function getById() {
     return dispatch => {
         dispatch(request());
 
-        userService.getAll()
+        userService.getById()
             .then(
-                users => dispatch(success(users)),
+                user => dispatch(success(user)),
                 error => dispatch(failure(error.toString()))
             );
     };
 
     function request() {
-        return { type: userConstants.GETALL_REQUEST };
+        return { type: userConstants.GET_USER_REQUEST };
     }
 
     function success(users) {
-        return { type: userConstants.GETALL_SUCCESS, users };
+        return { type: userConstants.GET_USER_SUCCESS, users };
     }
 
     function failure(error) {
-        return { type: userConstants.GETALL_FAILURE, error };
+        return { type: userConstants.GET_USER_FAILURE, error };
     }
 }
 

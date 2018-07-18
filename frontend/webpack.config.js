@@ -1,94 +1,89 @@
-const path = require("path");
+const path = require('path');
 
-const cssnano = require("cssnano");
-const autoprefixer = require("autoprefixer");
-const postcssURL = require("postcss-url");
+const cssnano = require('cssnano');
+const autoprefixer = require('autoprefixer');
+const postcssURL = require('postcss-url');
 
-const CopyWebpackPlugin = require("copy-webpack-plugin");
-const CleanWebpackPlugin = require("clean-webpack-plugin");
-const ImageMinPlugin = require("imagemin-webpack-plugin").default;
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const CopyWebpackPlugin = require('copy-webpack-plugin');
+const CleanWebpackPlugin = require('clean-webpack-plugin');
+const ImageMinPlugin = require('imagemin-webpack-plugin').default;
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 const here = dir => !dir ? __dirname : path.resolve(__dirname, dir);
 
 
 const dirs = {
-    js: "./src/js",
-    components: "./src/js/components",
-    SCSS: "./src/scss",
-    dist: "./build",
+    js: './src/js',
+    components: './src/js/components',
+    SCSS: './src/scss',
+    dist: './build',
 };
 
 const frontend_weekend_planner = `${dirs.js}/index.js`;
 
-const SCSSToCSS = {
-    styles: `${dirs.SCSS}/styles.scss`,
-};
-
 module.exports = (env, argv) => {
-    const { mode = "development" } = argv;
-    const isProduction = mode === "production";
+    const { mode = 'development' } = argv;
+    const isProduction = mode === 'production';
 
     return {
         mode,
         context: here(),
         entry: {
             frontend_weekend_planner,
-            ...SCSSToCSS,
         },
         output: {
             path: here(dirs.dist),
-            filename: "js/[name].bundle.js",
-            sourceMapFilename: "js/[file].map",
-            publicPath: "/static/",
+            filename: 'js/[name].bundle.js',
+            sourceMapFilename: 'js/[file].map',
+            publicPath: '/static/',
         },
         resolve: {
-            extensions: [ ".js", ".jsx", ".scss", "css", "json" ],
+            extensions: [ '.js', '.jsx', '.scss', 'css', 'json' ],
             modules: [
-                here("./node_modules"),
+                here('./node_modules'),
             ],
         },
-        devtool: isProduction ? false : "inline-cheap-module-source-map",
+        devtool: isProduction ? false : 'inline-cheap-module-source-map',
         module: {
             rules: [
                 {
                     test: /\.jsx?$/,
                     exclude: /node_modules/,
-                    include: here("./src"),
+                    include: here('./src'),
                     use: [
                         {
-                            loader: "cache-loader",
+                            loader: 'cache-loader',
                             options: {
                                 cacheDirectory: here(`./node_modules/.cache/${mode}/js`),
                             }
                         },
                         {
-                            loader: "babel-loader",
+                            loader: 'babel-loader',
                             options: {
                                 comments: true,
                                 env: {
                                     development: {
-                                        "plugins": [
-                                            "@babel/plugin-syntax-object-rest-spread",
-                                            [ "@babel/plugin-proposal-decorators", { legacy: true } ],
-                                            "@babel/plugin-proposal-object-rest-spread",
-                                            "@babel/plugin-proposal-class-properties",
+                                        'plugins': [
+                                            '@babel/plugin-syntax-object-rest-spread',
+                                            [ '@babel/plugin-proposal-decorators', { legacy: true } ],
+                                            '@babel/plugin-proposal-object-rest-spread',
+                                            '@babel/plugin-proposal-class-properties',
 
                                         ],
-                                        "presets": [
-                                            [ "@babel/preset-react" ],
+                                        'presets': [
+                                            [ '@babel/preset-react' ],
                                         ],
                                     },
                                     production: {
-                                        "plugins": [
-                                            "@babel/plugin-syntax-object-rest-spread",
-                                            [ "@babel/plugin-proposal-decorators", { legacy: true } ],
-                                            "@babel/plugin-proposal-object-rest-spread",
-                                            "@babel/plugin-proposal-class-properties",
+                                        'plugins': [
+                                            '@babel/plugin-syntax-object-rest-spread',
+                                            [ '@babel/plugin-proposal-decorators', { legacy: true } ],
+                                            '@babel/plugin-proposal-object-rest-spread',
+                                            '@babel/plugin-proposal-class-properties',
                                         ],
-                                        "presets": [
-                                            [ "@babel/preset-react" ],
-                                            [ "@babel/preset-env" ],
+                                        'presets': [
+                                            [ '@babel/preset-react' ],
+                                            [ '@babel/preset-env' ],
                                         ],
                                     }
                                 }
@@ -101,13 +96,13 @@ module.exports = (env, argv) => {
                     use: [
                         MiniCssExtractPlugin.loader,
                         {
-                            loader: "cache-loader",
+                            loader: 'cache-loader',
                             options: {
                                 cacheDirectory: here(`./node_modules/.cache/${mode}/scss`),
                             }
                         },
                         {
-                            loader: "css-loader",
+                            loader: 'css-loader',
                             options: {
                                 importLoaders: true,
                                 minimize: isProduction,
@@ -116,9 +111,9 @@ module.exports = (env, argv) => {
                             }
                         },
                         {
-                            loader: "postcss-loader",
+                            loader: 'postcss-loader',
                             options: {
-                                ident: "postcss",
+                                ident: 'postcss',
                                 sourceMap: !isProduction,
                                 plugins: [
                                     postcssURL(),
@@ -129,7 +124,7 @@ module.exports = (env, argv) => {
                             }
                         },
                         {
-                            loader: "sass-loader",
+                            loader: 'sass-loader',
                             options: {
                                 sourceMap: !isProduction,
                             }
@@ -140,16 +135,16 @@ module.exports = (env, argv) => {
                     test: /\.css$/,
                     use: [
                         {
-                            loader: "cache-loader",
+                            loader: 'cache-loader',
                             options: {
                                 cacheDirectory: here(`./node_modules/.cache/${mode}/css`),
                             }
                         },
                         {
-                            loader: "style-loader",
+                            loader: 'style-loader',
                         },
                         {
-                            loader: "css-loader",
+                            loader: 'css-loader',
                             options: {
                                 importLoaders: true,
                                 minimize: isProduction,
@@ -157,9 +152,9 @@ module.exports = (env, argv) => {
                             }
                         },
                         {
-                            loader: "postcss-loader",
+                            loader: 'postcss-loader',
                             options: {
-                                ident: "postcss",
+                                ident: 'postcss',
                                 sourceMap: !isProduction,
                                 plugins: [
                                     postcssURL(),
@@ -182,17 +177,17 @@ module.exports = (env, argv) => {
             new CopyWebpackPlugin([
                 {
                     from: `${dirs}/img`,
-                    to: "./img",
+                    to: './img',
                 },
             ], {
                 ignore: [
-                    ".keep",
-                    ".DS_Store",
+                    '.keep',
+                    '.DS_Store',
                 ],
             }),
             new MiniCssExtractPlugin({
-                filename: "css/[name].min.css",
-                sourceMapFilename: "css/[file].map",
+                filename: 'css/[name].min.css',
+                sourceMapFilename: 'css/[file].map',
             }),
             new ImageMinPlugin({
                 test: /\.(jpe?g|png|gif|svg)$/i,

@@ -7,3 +7,5 @@ src/db.sqlite3
 src/__init__
 src/staticfiles/js/
 src/__pycache__/env.cpython-36.pyc
+src/__init__.py
+src/staticfiles/css/frontend_weekend_planner.min.css

@@ -11,6 +11,8 @@ import LoginPage from '../LoginPage/LoginPage';
 import RegisterPage from '../RegisterPage/RegisterPage';
 import NavigationBar from '../../components/NavigationBar/NavigationBar';
 
+import './App.scss';
+
 class App extends React.Component {
     constructor(props) {
         super(props);
@@ -21,6 +23,12 @@ class App extends React.Component {
         //     // dispatch(alertActions.clear());
         // });
     }
+    //
+    // componentWillMount() {
+    //     if ( localStorage.getItem('auth')) {
+    //         this.props.dispatch(userActions.getAll());
+    //     }
+    // }
 
     render() {
         // const { alert } = this.props;
