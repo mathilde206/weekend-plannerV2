@@ -9,6 +9,7 @@ from rest_framework_simplejwt.views import (
 )
 
 from accounts import urls as users_urls
+from itineraries import urls as itineraries_urls
 
 urlpatterns = [
     path('api/', get_schema_view()),
@@ -21,6 +22,7 @@ urlpatterns = [
     path('api/auth/token/obtain/', TokenObtainPairView.as_view()),
     path('api/auth/token/refresh/', TokenRefreshView.as_view()),
     path('api/users/', include((users_urls, 'users'), namespace='users-api')),
+    path('api/itineraries/', include((itineraries_urls, 'itineraries'), namespace='itineraries-api' )),
     path('admin/', admin.site.urls),
     url(r'', TemplateView.as_view(template_name='react.html')),
 ]
