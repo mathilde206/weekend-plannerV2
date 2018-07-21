@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 
 import LoginForm from '../../components/LoginForm/LoginForm';
 
-import { userActions } from '../../actions';
+import { userActions } from '../../actions/userActions';
 
 // import { authErrors, isAuthenticated } from '../../reducers/index';
 

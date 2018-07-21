@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
-import { userActions } from '../../actions';
+import { userActions } from '../../actions/userActions';
 import RegisterForm from '../../components/RegisterForm/RegisterForm';
 
 class Register extends React.Component {

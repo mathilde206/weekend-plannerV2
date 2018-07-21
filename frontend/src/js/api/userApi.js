@@ -2,10 +2,10 @@ import axios from 'axios';
 import jwtDecode from 'jwt-decode';
 import { authHeader } from '../helpers';
 
-export const userService = {
+export const userApi = {
     login,
     logout,
-    getById,
+    getUsername,
     register,
 };
 
@@ -41,7 +41,7 @@ function logout() {
     localStorage.removeItem('auth');
 }
 
-function getById(id) {
+function getUsername(id) {
     return axios.get(`/api/users/${id}/`)
         .then((response) => {
             return response.data.username;
@@ -56,6 +56,7 @@ function register({ username, email, email2, password }) {
         password,
     })
         .then(response => {
+            //TODO: do something with the register response
             console.log(response);
         });
 }

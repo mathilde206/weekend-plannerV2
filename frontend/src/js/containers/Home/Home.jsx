@@ -10,6 +10,7 @@ class HomeComponent extends React.Component {
         const {
             user
         } = this.props;
+
         return (
             <div className="container">
                 <Jumbotron className="home-jumbotron">

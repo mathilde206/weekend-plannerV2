@@ -2,9 +2,12 @@ import jwtDecode from 'jwt-decode';
 import {
     LOGIN_SUCCESS,
     LOGIN_FAILURE,
+    REGISTER_REQUEST,
+    REGISTER_SUCCESS,
+    REGISTER_FAILURE,
     TOKEN_RECEIVED,
     TOKEN_FAILURE,
-} from '../actions/auth';
+} from '../actions/userActions';
 
 const initialState = {
     access: null,
@@ -12,7 +15,7 @@ const initialState = {
     errors: {}
 };
 
-export default (state=initialState, action) => {
+export function authenticationReducer(state=initialState, action) {
     switch(action.type) {
     case LOGIN_SUCCESS:
         return {
@@ -80,4 +83,17 @@ export function isAuthenticated(state) {
 
 export function errors(state) {
     return  state.errors;
+}
+
+export function registrationReducer(state = {}, action) {
+    switch (action.type) {
+    case REGISTER_REQUEST:
+        return { registering: true };
+    case REGISTER_SUCCESS:
+        return {};
+    case REGISTER_FAILURE:
+        return {};
+    default:
+        return state;
+    }
 }
