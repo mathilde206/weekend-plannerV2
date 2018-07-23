@@ -48,7 +48,7 @@ class Navigation extends React.Component {
                                 </DropdownToggle>
                                 <DropdownMenu right>
                                     <DropdownItem>
-                                        <Link to="/login">
+                                        <Link to="/login/">
                                             {
                                                 this.props.user
                                                     ? 'Logout'
@@ -71,7 +71,7 @@ class Navigation extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-    const { user } = state.authentication;
+    const { user } = state.user;
     return {
         user,
     };

@@ -1,19 +1,21 @@
 /*
 * 1. Colors
 */
-$highlight-color: #021B79;
-$highlight-color-shade-1: #0575E6;
-$highlight-color-shade-2: #000428;
-$highlight-secondary-light: #E8CBC0;
-$highlight-secondary: #734b6d;
-$highlight-secondary-bright: #ef629f;
+$primary: #b3e5fc;
+$primary-light: #e6ffff;
+$primary-dark: #82b3c9;
+$secondary: #ffd180;
+$secondary-light: #ffffb1;
+$secondary-dark: #f57c00;
 
 $background: #FFFBF9;
 /*
 * 2. Fonts
 */
-$font-cursive: 'Wendy One', sans-serif;
-$font-default: 'Lato', sans-serif;
+$font-title: 'Inconsolata', monospace;
+$font-text: 'Work Sans', sans-serif;
+$font-color: black;
+$font-color-light: #9e9e9e;
 
 $font-regular: 400;
 $font-bold: 700;

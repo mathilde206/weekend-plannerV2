@@ -12,24 +12,38 @@ class HomeComponent extends React.Component {
         } = this.props;
 
         return (
-            <div className="container">
-                <Jumbotron className="home-jumbotron">
-                    <h2 className="capitalize">Welcome {user && user}</h2>
-                    <hr className="my-2" />
-                    <Form inline>
-                        <FormGroup className="mb-2 mr-sm-2 mb-sm-0">
-                            <Input type="text" name="search" id="search" placeholder="Start Exploring" />
-                        </FormGroup>
-                        <Button>Go!</Button>
-                    </Form>
-                </Jumbotron>
+            <div className="home-container">
+                <div className="container">
+                    <Jumbotron className="home-jumbotron">
+                        <h2 className="capitalize">Welcome {user && user}</h2>
+                        <p className="lead">Start planning your next weekend in Europe with 1-3 days trips recommendations. You can also join the community and propose your own itineraries. </p>
+                        <hr className="my-2" />
+                        <div className="buttons-inline">
+                            {
+                                user &&
+                                <Link to="/create/">
+                                    <Button color="primary" className='btn-mg-right'>
+                                        Create an Itinerary
+                                    </Button>
+                                </Link>
+                            }
+
+                            <Form inline>
+                                <FormGroup className="mb-2 mr-sm-2 mb-sm-0">
+                                    <Input type="text" name="search" id="search" placeholder="Start Exploring" />
+                                </FormGroup>
+                                <Button>Go!</Button>
+                            </Form>
+                        </div>
+                    </Jumbotron>
+                </div>
             </div>
         );
     }
 }
 
 const mapStateToProps = (state) => {
-    const { user } = state.authentication;
+    const { user } = state.user;
     return {
         user
     };

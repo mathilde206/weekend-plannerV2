@@ -52,7 +52,8 @@ function login(username, password) {
                 auth => {
                     userApi.getUsername(auth.access.user_id)
                         .then((username) => {
-                            dispatch(success(username, auth.access.token));
+                            dispatch(success(username, auth.access.token, auth));
+                            dispatch(alertActions.success('Successful Login'));
                             history.push('/');
                         });
                 },
@@ -90,7 +91,7 @@ function register(user) {
                 user => {
                     dispatch(success());
                     history.push('/login');
-                    dispatch(alertActions.success('Registration successful'));
+                    dispatch(alertActions.success('Registration successful, you can now Login'));
                 },
                 error => {
                     dispatch(failure(error.toString()));

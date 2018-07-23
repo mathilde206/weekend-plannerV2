@@ -58,7 +58,7 @@ class Login extends React.Component {
 };
 
 const mapStateToProps = (state) => {
-    const { loggingIn } = state.authentication;
+    const { loggingIn } = state.user;
     return {
         loggingIn
     };

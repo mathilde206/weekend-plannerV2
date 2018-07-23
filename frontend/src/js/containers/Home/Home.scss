@@ -1,3 +1,22 @@
-.home-jumbotron{
-    margin-top:70px;
+@import '../../../scss/variables';
+
+.home-container {
+    width: 100vw;
+    height: 100vh;
+    background: #fff url('/static/images/home.jpg') no-repeat right top;
+    background-size: cover;
+    padding-top: 70px;
+
+    .jumbotron {
+        background-color: $secondary;
+    }
+
+    .buttons-inline {
+        display: flex;
+        flex-direction: row;
+
+        .btn-mg-right{
+            margin-right: 1em;
+        }
+    }
 }

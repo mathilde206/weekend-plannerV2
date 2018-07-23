@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Alert, Button, Jumbotron, Form } from 'reactstrap';
 import { Link } from 'react-router-dom';
-import TextInputField from '../TextInputField/TextInputField';
+import InputField from '../InputField/InputField';
 
 const RegisterForm = ({errors, handleChange, handleSubmit, registering}) => (
     <Jumbotron className="container">
@@ -13,27 +13,27 @@ const RegisterForm = ({errors, handleChange, handleSubmit, registering}) => (
                         {errors.non_field_errors}
                     </Alert> : ''
             }
-            <TextInputField
+            <InputField
                 name="username"
                 label="Username"
                 error={errors.username}
                 onChange={handleChange}
             />
-            <TextInputField
+            <InputField
                 name="email"
                 label="Email"
                 error={errors.email}
                 type="email"
                 onChange={handleChange}
             />
-            <TextInputField
+            <InputField
                 name="email2"
                 label="Confirm Email"
                 error={errors.email2}
                 type="email"
                 onChange={handleChange}
             />
-            <TextInputField
+            <InputField
                 name="password"
                 label="Password"
                 error={errors.password}

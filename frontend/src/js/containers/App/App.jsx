@@ -9,7 +9,8 @@ import PrivateRoute from '../PrivateRoute/PrivateRoute';
 import Home from '../Home/Home';
 import LoginPage from '../LoginPage/LoginPage';
 import RegisterPage from '../RegisterPage/RegisterPage';
-import NavigationBar from '../../components/NavigationBar/NavigationBar';
+import NavigationBar from '../NavigationBar/NavigationBar';
+import CreateItinerary from '../CreateItinerary/CreateItinerary';
 
 import './App.scss';
 
@@ -23,6 +24,7 @@ class App extends React.Component {
         //     // dispatch(alertActions.clear());
         // });
     }
+
     //
     // componentWillMount() {
     //     if ( localStorage.getItem('auth')) {
@@ -30,31 +32,35 @@ class App extends React.Component {
     //     }
     // }
 
+    componentWillUnmount() {
+        localStorage.removeItem('auth');
+    }
+
     render() {
-        // const { alert } = this.props;
+        const { alert } = this.props;
 
         return (
             <Router history={history}>
                 <div className="container-fluid">
-                    <NavigationBar user={this.props.user || ''}/>
+                    <NavigationBar user={this.props.user || ''} />
                     <div className="col-sm-8 col-sm-offset-2">
-                        {/*{*/}
-                        {/*alert.message &&*/}
-                        {/*<div className={`alert ${alert.type}`}>{alert.message}</div>*/}
-                        {/*}*/}
+                        {
+                            alert && alert.message &&
+                            <div className={`alert ${alert.type}`}>{alert.message}</div>
+                        }
                     </div>
                     <Switch>
+                        <Home exact path="/" component={Home} />
                         <Route exact path="/login/" component={LoginPage} />
                         <Route exact path="/register/" component={RegisterPage} />
-                        <PrivateRoute path='/create/' component={CreateItinerary} />
-                        <PrivateRoute path="/" component={Home} />
+                        <PrivateRoute path="/create/" component={CreateItinerary} />
                     </Switch>
 
                 </div>
             </Router>
         );
     }
-};
+}
 
 function mapStateToProps(state) {
     const { alert } = state;
@@ -63,7 +69,4 @@ function mapStateToProps(state) {
     };
 }
 
-const connectedApp = connect(mapStateToProps)(App);
-export { connectedApp as App };
-
-export default App;
+export default connect(mapStateToProps)(App);

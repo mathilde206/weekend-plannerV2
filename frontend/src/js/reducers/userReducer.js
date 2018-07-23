@@ -1,7 +1,10 @@
+import { userApi } from '../api/userApi';
 import jwtDecode from 'jwt-decode';
 import {
+    LOGIN_REQUEST,
     LOGIN_SUCCESS,
     LOGIN_FAILURE,
+    LOGOUT,
     REGISTER_REQUEST,
     REGISTER_SUCCESS,
     REGISTER_FAILURE,
@@ -9,47 +12,72 @@ import {
     TOKEN_FAILURE,
 } from '../actions/userActions';
 
-const initialState = {
+
+function getInitialUser() {
+    if (localStorage.getItem('auth')) {
+        const id = JSON.parse(localStorage.getItem('auth')).access.user_id;
+        userApi.getUsername(id).then((username) => {
+            return {
+                loggedIn: true,
+                username,
+            };
+        });
+    }
+
+    return {};
+}
+
+const initialUser = getInitialUser();
+
+export function setAuthUser(state = initialUser, action) {
+    switch (action.type) {
+    case LOGIN_REQUEST:
+        return {
+            loggingIn: true,
+            user: action.user,
+        };
+    case LOGIN_SUCCESS:
+        return {
+            loggedIn: true,
+            user: action.user,
+        };
+    case LOGIN_FAILURE:
+        return {};
+    case LOGOUT:
+        return {};
+    default:
+        return state;
+    }
+}
+
+const initialAuthCredentials = {
     access: null,
     refresh: null,
     errors: {}
 };
 
-export function authenticationReducer(state=initialState, action) {
-    switch(action.type) {
+export function setAuthCredentials(state = initialAuthCredentials, action) {
+    switch (action.type) {
     case LOGIN_SUCCESS:
         return {
-            access: {
-                token: action.payload.access,
-                ...jwtDecode(action.payload.access)
-            },
-            refresh: {
-                token: action.payload.refresh,
-                ...jwtDecode(action.payload.refresh)
-            },
-            errors: {}
+            ...action.auth
         };
     case TOKEN_RECEIVED:
         return {
             ...state,
-            access: {
-                token: action.payload.access,
-                ...jwtDecode(action.payload.access)
-            }
+            access: {...action.auth.access}
         };
     case LOGIN_FAILURE:
     case TOKEN_FAILURE:
         return {
             access: null,
             refresh: null,
-            errors:
-             action.payload.response ||
-                {'non_field_errors': action.payload.statusText},
+            errors: action.auth.errors
         };
     default:
         return state;
     }
-};
+}
 
 export function accessToken(state) {
     if (state.access) {
@@ -59,7 +87,7 @@ export function accessToken(state) {
 
 export function refreshToken(state) {
     if (state.refresh) {
-        return  state.refresh.token;
+        return state.refresh.token;
     }
 }
 
@@ -82,7 +110,7 @@ export function isAuthenticated(state) {
 }
 
 export function errors(state) {
-    return  state.errors;
+    return state.errors;
 }
 
 export function registrationReducer(state = {}, action) {

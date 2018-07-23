@@ -1,48 +1,6 @@
 export function getFieldsforStep(step) {
     switch (step) {
-    case 0:
-        return ([
-            {
-                name: 'city',
-                label: 'City',
-                type: 'text'
-            },
-            {
-                name: 'number_of_days',
-                label: 'Number of Days',
-                type: 'text'
-            },
-        ]);
     case 1:
-        return ([
-            {
-                name: 'title',
-                label: 'Title of your Itinerary',
-                type: 'text'
-            },
-            {
-                name: 'description',
-                label: 'Short Description',
-                type: 'text'
-            },
-            {
-                name: 'description',
-                label: 'Short Description',
-                type: 'text'
-            },
-            {
-                budget: 'budget',
-                label: 'Budget',
-                type: 'select',
-                options: [ '$', '$$', '$$$', '$$$$' ]
-            },
-            {
-                budget: 'image',
-                label: 'Upload An Image',
-                type: 'file',
-            }
-        ]);
-    case 2:
         return ([
             {
                 name: 'city',
@@ -65,27 +23,46 @@ export function getFieldsforStep(step) {
                 type: 'text'
             },
         ]);
+    case 2:
+        return ([
+            {
+                name: 'title',
+                label: 'Title of your Itinerary',
+                type: 'text'
+            },
+            {
+                name: 'description',
+                label: 'Short Description',
+                type: 'textarea'
+            },
+            {
+                name: 'budget',
+                label: 'Budget',
+                type: 'select',
+                options: [ '$', '$$', '$$$', '$$$$' ]
+            }
+        ]);
     case 3:
         return ([
             {
                 name: 'day1_morning',
                 label: 'Day 1 - Morning',
-                type: 'text'
+                type: 'textarea'
             },
             {
                 name: 'day1_lunch',
-                label: 'Day 1 - Morning',
-                type: 'text'
+                label: 'Day 1 - Lunch',
+                type: 'textarea'
             },
             {
                 name: 'day1_afternoon',
                 label: 'Day 1 - Afternoon',
-                type: 'text'
+                type: 'textarea'
             },
             {
                 name: 'day1_diner',
                 label: 'Day 1 - Diner',
-                type: 'text'
+                type: 'textarea'
             },
 
         ]);
@@ -98,7 +75,7 @@ export function getFieldsforStep(step) {
             },
             {
                 name: 'day2_lunch',
-                label: 'Day 2 - Morning',
+                label: 'Day 2 - Lunch',
                 type: 'text'
             },
             {
@@ -122,7 +99,7 @@ export function getFieldsforStep(step) {
             },
             {
                 name: 'day3_lunch',
-                label: 'Day 3 - Morning',
+                label: 'Day 3 - Lunch',
                 type: 'text'
             },
             {
@@ -137,9 +114,26 @@ export function getFieldsforStep(step) {
             },
 
         ]);
+    case 6:
+        return ([ {
+            name: 'image',
+            label: 'Upload An Image',
+            type: 'file',
+        } ]);
+
+    default:
+        return ([
+            {
+                name: 'city',
+                label: 'City',
+                type: 'text'
+            },
+            {
+                name: 'numberOfDays',
+                label: 'Number of Days',
+                type: 'select',
+                options: [ 1, 2, 3 ]
+            },
+        ]);
     }
-}
-
-export function mapInitialAnswerToSteps(days, city) {
-
 }

@@ -1,9 +1,9 @@
 import LoginForm from './LoginForm/LoginForm';
-import Navbar from './NavigationBar/Navbar';
-import TextInputField from './TextInputField/TextInputField';\
+import NavigationBar from '../containers/NavigationBar/NavigationBar';
+import InputField from './InputField/InputField';
 
 export {
     LoginForm,
-    Navbar,
-    TextInputField,
+    NavigationBar,
+    InputField,
 };

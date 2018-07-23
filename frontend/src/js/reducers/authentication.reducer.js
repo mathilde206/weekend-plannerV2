@@ -1,5 +1,4 @@
-import { userConstants } from '../constants';
-import { userService } from '../api';
+import { userApi } from '../api/userApi';
 
 let user;
 

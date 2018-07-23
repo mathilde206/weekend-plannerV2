@@ -1,0 +1,20 @@
+@import '../../../scss/variables';
+
+nav.navbar.navbar-expand-md.navbar-light {
+    background: $primary; /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, $primary, $primary-dark); /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, $primary, $primary-dark); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+    a {
+        color: $font-color;
+
+        &:hover{
+            color: $secondary-dark;
+        }
+
+        &.navbar-brand {
+            font-family: $font-title;
+            font-size: $font-large;
+        }
+    }
+}

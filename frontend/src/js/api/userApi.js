@@ -9,6 +9,18 @@ export const userApi = {
     register,
 };
 
+function setAuthedUser() {
+    let user;
+
+    if (localStorage.getItem('auth')) {
+        const id = JSON.parse(localStorage.getItem('auth')).access.user_id;
+        userApi.getUsername(id).then((username) => {
+            user = username;
+        });
+
+    }
+}
+
 function login(username, password) {
     return axios.post('/api/auth/token/obtain/', { username, password })
         .then(({ data }) => {
@@ -54,11 +66,7 @@ function register({ username, email, email2, password }) {
         email,
         email2,
         password,
-    })
-        .then(response => {
-            //TODO: do something with the register response
-            console.log(response);
-        });
+    }).then(response => response.data);
 }
 
 // function update(user) {
