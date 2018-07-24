@@ -15,7 +15,6 @@ const InputField = ({ error, handleInputChange, label, name, options, type, valu
                     type={input_type}
                     name={name}
                     id={id} className={error ? 'is-invalid' : ''}
-                    {...rest}
                     onChange={handleInputChange}
                     value={value}
                 >
@@ -29,6 +28,25 @@ const InputField = ({ error, handleInputChange, label, name, options, type, valu
                 }
             </FormGroup>
         );
+    }
+
+    if (type === 'file') {
+        return (
+            <FormGroup color={error ? 'danger' : ''}>
+                {label ? <Label htmlFor={id}>{label}</Label> : ''}
+                <Input
+                    type={input_type}
+                    name={name}
+                    id={id} className={error ? 'is-invalid' : ''}
+                    onChange={handleInputChange}
+                />
+                {error ?
+                    <FormFeedback className="invalid-feedback">
+                        {error}
+                    </FormFeedback>
+                    : ''
+                }
+            </FormGroup>);
     }
     return (
         <FormGroup color={error ? 'danger' : ''}>

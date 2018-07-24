@@ -1,10 +1,12 @@
 import axios from 'axios';
-import { authHeader } from '../helpers/authHeader';
+import qs from 'qs';
+import { getAuthToken } from '../helpers/authHeader';
 
 export default {
     getItineraryList,
     getCity,
     createCity,
+    createItinerary,
 };
 
 function getItineraryList() {
@@ -16,11 +18,34 @@ function getItineraryList() {
 
 function getCity(city) {
     return axios.get(`/api/cities/?search=${city}`)
-        .then((response) => response.data);
-}
+        .then(({ data }) => {
+            const promisesUrls = data.map(city => axios.get(`/api/cities/${city.pk}`));
+            return Promise.all(promisesUrls).then(response => response.map(item => item.data));
+        }).then(response => response);
+};
 
 function createCity(cityObj) {
-    const header = authHeader();
-    return axios.post('/api/cities/create/', cityObj, { headers: header })
+    const authToken = getAuthToken();
+
+    return axios.post('/api/cities/create/', cityObj, {
+        headers: {
+            'Authorization': 'Bearer ' + authToken
+        }
+    })
+        .then(response => response.data);
+}
+
+function createItinerary(itineraryObj) {
+    const authToken = getAuthToken();
+    const options = {
+        method: 'POST',
+        headers: {
+            'Authorization': 'Bearer ' + authToken,
+            'content-type': 'multipart/form-data'
+        },
+        data: itineraryObj,
+        url: '/api/itineraries/create/',
+    };
+    return axios(options)
         .then(response => response.data);
 }

@@ -9,19 +9,52 @@ import CreateUpdateItineraryForm from '../../components/CreateUpdateItineraryFor
 class CreateItinerary extends React.Component {
     state = {
         step: 0,
-        numberOfDays: 1,
+        number_of_days: 1,
         city: '',
+        cityPk: null,
         country: '',
         language: '',
         currency: '',
         title: '',
         shortDescription: '',
-        budget: '$',
+        budget: 'Cheap',
+        day1_morning: '',
+        day1_lunch: '',
+        day1_afternoon: '',
+        day1_diner: '',
+        day2_morning: '',
+        day2_lunch: '',
+        day2_afternoon: '',
+        day2_diner: '',
+        day3_morning: '',
+        day3_lunch: '',
+        day3_afternoon: '',
+        day3_diner: '',
+        image: '',
     };
 
     handleInputChange = (event) => {
+        if (event.target.files) {
+            this.setState({
+                [ event.target.name ]: event.target.files[ 0 ],
+            });
+        } else {
+            this.setState({
+                [ event.target.name ]: event.target.value,
+            });
+        }
+    };
+
+    handleSelectExistingCity = (event, pk) => {
+        event.preventDefault();
+        const { name, currency, country, language } = this.props.previouslyCreatedCities.filter(city => city.pk === pk)[ 0 ];
         this.setState({
-            [ event.target.name ]: event.target.value,
+            city: name,
+            currency,
+            country,
+            language,
+            cityPk: pk,
+            step: this.props.steps[ this.state.step ],
         });
     };
 
@@ -29,13 +62,27 @@ class CreateItinerary extends React.Component {
         const {
             step,
             city,
+            cityPk,
             country,
             language,
             currency,
-            numberOfDays,
+            number_of_days,
             title,
             shortDescription,
             budget,
+            day1_morning,
+            day1_lunch,
+            day1_afternoon,
+            day1_diner,
+            day2_morning,
+            day2_lunch,
+            day2_afternoon,
+            day2_diner,
+            day3_morning,
+            day3_lunch,
+            day3_afternoon,
+            day3_diner,
+            image,
         } = this.state;
 
         event.preventDefault();
@@ -48,12 +95,22 @@ class CreateItinerary extends React.Component {
                 language,
                 currency,
             };
-            this.props.setCity(cityObj);
+
+                // This is only needed if the user goes back to previous step or update the itinerary
+            if (!cityPk) {
+                this.props.setCity(cityObj);
+            }
+
             this.setState({
                 step: this.props.steps[ step ],
             });
             break;
         case 2:
+            this.setState({
+                step: this.props.steps[ step ],
+                cityPk: this.state.cityPk || this.props.formData.pk,
+            });
+            break;
         case 3:
         case 4:
         case 5:
@@ -61,9 +118,37 @@ class CreateItinerary extends React.Component {
                 step: this.props.steps[ step ],
             });
             break;
+        case 6:
+            let formObj = new FormData();
+            formObj.append('city', cityPk);
+            formObj.append('number_of_days', String(number_of_days));
+            formObj.append('title', title);
+            formObj.append('shortDescription', shortDescription);
+            formObj.append('budget', budget);
+            formObj.append('day1_morning', day1_morning);
+            formObj.append('day1_lunch', day1_lunch);
+            formObj.append('day1_afternoon', day1_afternoon);
+            formObj.append('day1_diner', day1_diner);
+            formObj.append('image', image);
+
+            if (number_of_days > 1) {
+                formObj.append('day2_morning', day2_morning);
+                formObj.append('day2_lunch', day2_lunch);
+                formObj.append('day2_afternoon', day2_afternoon);
+                formObj.append('day2_diner', day2_diner);
+            }
+
+            if (number_of_days > 2) {
+                formObj.append('day3_morning', day3_morning);
+                formObj.append('day3_lunch', day3_lunch);
+                formObj.append('day3_afternoon', day3_afternoon);
+                formObj.append('day3_diner', day3_diner);
+            }
+            this.props.submitForm(formObj);
+            break;
         case 0:
         default:
-            this.props.onInitializeForm(city, numberOfDays);
+            this.props.onInitializeForm(city, number_of_days);
             this.setState({
                 step: 1,
             });
@@ -72,24 +157,26 @@ class CreateItinerary extends React.Component {
     };
 
     render() {
-        console.log(this.state);
         return (
             <div>
                 <CreateUpdateItineraryForm
-                    type="create"
-                    step={this.state.step}
                     handleSubmit={this.handleSubmit}
+                    handleSelectExistingCity={this.handleSelectExistingCity}
                     handleInputChange={this.handleInputChange}
+                    previouslyCreatedCities={this.props.previouslyCreatedCities}
+                    step={this.state.step}
+                    type="create"
                     values={this.state}
                 />
             </div>);
     }
-};
+}
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        onInitializeForm: (city, numberOfDays) => dispatch(itineraryActions.initializeCreate(city, numberOfDays)),
+        onInitializeForm: (city, number_of_days) => dispatch(itineraryActions.initializeCreate(city, number_of_days)),
         setCity: (cityObj) => dispatch(itineraryActions.setCity(cityObj)),
+        submitForm: (formObj) => dispatch(itineraryActions.createItinerary(formObj))
     };
 };
 

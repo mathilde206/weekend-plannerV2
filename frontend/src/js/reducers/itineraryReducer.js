@@ -1,4 +1,4 @@
-import { INITIALIZE_FORM, CITY_CREATE } from '../actions/itineraryActions';
+import { INITIALIZE_FORM, CITY_CREATE, FORM_SUBMITTED, ITINERARY_CREATED } from '../actions/itineraryActions';
 
 export function createUpdateItinerary(state = { currentStep: 0 }, action) {
     switch (action.type) {
@@ -6,14 +6,25 @@ export function createUpdateItinerary(state = { currentStep: 0 }, action) {
         return {
             formData: { ...action.formData },
             steps: action.steps,
+            previouslyCreatedCities: action.previouslyCreatedCities,
         };
     case CITY_CREATE:
         return {
             ...state,
             formData: {
                 ...state.formData,
-                ...action.data
+                ...action.data,
+                cityPk: action.data.pk
             },
+        };
+    case FORM_SUBMITTED:
+        return {
+            ...state,
+            formSubmitted: true,
+        };
+    case ITINERARY_CREATED:
+        return {
+            itinerarySlug: action.data.slug
         };
     default:
         return state;

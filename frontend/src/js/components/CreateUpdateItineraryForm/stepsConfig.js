@@ -39,7 +39,7 @@ export function getFieldsforStep(step) {
                 name: 'budget',
                 label: 'Budget',
                 type: 'select',
-                options: [ '$', '$$', '$$$', '$$$$' ]
+                options: [ 'Cheap', 'Affordable', 'Expensive', 'Very Expensive' ]
             }
         ]);
     case 3:
@@ -129,7 +129,7 @@ export function getFieldsforStep(step) {
                 type: 'text'
             },
             {
-                name: 'numberOfDays',
+                name: 'number_of_days',
                 label: 'Number of Days',
                 type: 'select',
                 options: [ 1, 2, 3 ]
