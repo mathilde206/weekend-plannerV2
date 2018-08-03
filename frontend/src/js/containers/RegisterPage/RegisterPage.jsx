@@ -51,7 +51,7 @@ class Register extends React.Component {
 
     render() {
         return (
-            <div className="login-page">
+            <div className="login-page container-wrapper">
                 <RegisterForm
                     handleChange={this.handleChange}
                     handleSubmit={this.handleSubmit}

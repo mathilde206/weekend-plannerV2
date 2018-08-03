@@ -15,6 +15,8 @@ import {
     DropdownItem
 } from 'reactstrap';
 
+import * as reducers from '../../reducers';
+
 import './NavigationBar.scss';
 
 class Navigation extends React.Component {
@@ -29,6 +31,10 @@ class Navigation extends React.Component {
     };
 
     render() {
+        const {
+            isAuthenticated
+        } = this.props;
+
         return (
             <div className="container-fluid">
                 <Navbar color="light" light expand="md">
@@ -50,9 +56,9 @@ class Navigation extends React.Component {
                                     <DropdownItem>
                                         <Link to="/login/">
                                             {
-                                                this.props.user
-                                                    ? 'Logout'
-                                                    : 'Login'
+                                                isAuthenticated ?
+                                                    'Logout' :
+                                                    'Login'
                                             }
                                         </Link>
                                     </DropdownItem>
@@ -71,9 +77,8 @@ class Navigation extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-    const { user } = state.user;
     return {
-        user,
+        isAuthenticated: reducers.isAuthenticated(state)
     };
 };
 

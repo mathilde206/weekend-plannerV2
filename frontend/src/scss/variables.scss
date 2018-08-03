@@ -1,14 +1,16 @@
 /*
 * 1. Colors
 */
-$primary: #b3e5fc;
+$primary: #b3e5fc ;
 $primary-light: #e6ffff;
 $primary-dark: #82b3c9;
 $secondary: #ffd180;
 $secondary-light: #ffffb1;
 $secondary-dark: #f57c00;
 
-$background: #FFFBF9;
+$background-dark: #E1E2E1;
+$background-light: #F5F5F6;
+$background-white: #fff;
 /*
 * 2. Fonts
 */
@@ -21,6 +23,6 @@ $font-regular: 400;
 $font-bold: 700;
 
 $font-large: 1.6rem;
-$font-medium: 1.2 rem;
-$font-small: 0.8 rem;
+$font-medium: 1.2rem;
+$font-small: 0.8rem;
 

@@ -2,9 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { Card, Button, CardTitle, CardText, Row, Col } from 'reactstrap';
+import './CityItem.scss';
 
 const CityItem = ({ country, currency, handleSelectExistingCity, language, name, pk }) => (
-    <Col sm="12" md="6">
+    <Col sm="12" md="4" className="city-item-card">
         <Card body>
             <CardTitle>{name}</CardTitle>
             <CardText>

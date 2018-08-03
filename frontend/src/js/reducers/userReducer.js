@@ -10,26 +10,10 @@ import {
     REGISTER_FAILURE,
     TOKEN_RECEIVED,
     TOKEN_FAILURE,
+    USER_RETRIEVED,
 } from '../actions/userActions';
 
-
-function getInitialUser() {
-    if (localStorage.getItem('auth')) {
-        const id = JSON.parse(localStorage.getItem('auth')).access.user_id;
-        userApi.getUsername(id).then((username) => {
-            return {
-                loggedIn: true,
-                username,
-            };
-        });
-    }
-
-    return {};
-}
-
-const initialUser = getInitialUser();
-
-export function setAuthUser(state = initialUser, action) {
+export function setAuthUser(state = {}, action) {
     switch (action.type) {
     case LOGIN_REQUEST:
         return {
@@ -37,6 +21,8 @@ export function setAuthUser(state = initialUser, action) {
             user: action.user,
         };
     case LOGIN_SUCCESS:
+    case TOKEN_RECEIVED:
+    case USER_RETRIEVED:
         return {
             loggedIn: true,
             user: action.user,
@@ -65,7 +51,7 @@ export function setAuthCredentials(state = initialAuthCredentials, action) {
     case TOKEN_RECEIVED:
         return {
             ...state,
-            access: {...action.auth.access}
+            access: { ...action.auth.access }
         };
     case LOGIN_FAILURE:
     case TOKEN_FAILURE:
@@ -74,6 +60,21 @@ export function setAuthCredentials(state = initialAuthCredentials, action) {
             refresh: null,
             errors: action.auth.errors
         };
+    case LOGOUT:
+        return {};
+    default:
+        return state;
+    }
+}
+
+export function registrationReducer(state = {}, action) {
+    switch (action.type) {
+    case REGISTER_REQUEST:
+        return { registering: true };
+    case REGISTER_SUCCESS:
+        return {};
+    case REGISTER_FAILURE:
+        return {};
     default:
         return state;
     }
@@ -113,15 +114,3 @@ export function errors(state) {
     return state.errors;
 }
 
-export function registrationReducer(state = {}, action) {
-    switch (action.type) {
-    case REGISTER_REQUEST:
-        return { registering: true };
-    case REGISTER_SUCCESS:
-        return {};
-    case REGISTER_FAILURE:
-        return {};
-    default:
-        return state;
-    }
-}

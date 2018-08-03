@@ -3,9 +3,11 @@ import { Route, Switch, Router } from 'react-router-dom';
 import { connect } from 'react-redux';
 // import { ConnectedRouter } from 'react-router-redux';
 
-import { history } from '../../helpers';
-// import { alertActions } from '../../actions';
+import { history } from '../../helpers/history';
+import { alertActions } from '../../actions/alertsActions';
+import { userActions} from '../../actions/userActions';
 import PrivateRoute from '../PrivateRoute/PrivateRoute';
+import ItineraryDetails from '../ItineraryDetails/ItineraryDetails';
 import Home from '../Home/Home';
 import LoginPage from '../LoginPage/LoginPage';
 import RegisterPage from '../RegisterPage/RegisterPage';
@@ -19,18 +21,19 @@ class App extends React.Component {
         super(props);
 
         const { dispatch } = this.props;
-        // history.listen((location, action) => {
-        //     // clear alert on location change
-        //     // dispatch(alertActions.clear());
-        // });
+        history.listen((location, action) => {
+            // clear alert on location change
+            dispatch(alertActions.clear());
+        });
     }
 
-    //
-    // componentWillMount() {
-    //     if ( localStorage.getItem('auth')) {
-    //         this.props.dispatch(userActions.getAll());
-    //     }
-    // }
+    componentWillMount() {
+        if (localStorage.getItem('persist:auth')) {
+            const auth = JSON.parse(localStorage.getItem('persist:auth'));
+            const id = JSON.parse(auth.auth).access.user_id;
+            this.props.dispatch(userActions.setAuthedUser(id));
+        }
+    }
 
     componentWillUnmount() {
         localStorage.removeItem('auth');
@@ -43,17 +46,12 @@ class App extends React.Component {
             <Router history={history}>
                 <div className="container-fluid">
                     <NavigationBar user={this.props.user || ''} />
-                    <div className="col-sm-8 col-sm-offset-2">
-                        {
-                            alert && alert.message &&
-                            <div className={`alert ${alert.type}`}>{alert.message}</div>
-                        }
-                    </div>
                     <Switch>
-                        <Home exact path="/" component={Home} />
+                        <Route exact path="/" component={Home} />
                         <Route exact path="/login/" component={LoginPage} />
                         <Route exact path="/register/" component={RegisterPage} />
                         <PrivateRoute path="/create/" component={CreateItinerary} />
+                        <Route path="/:slug" component={ItineraryDetails} />
                     </Switch>
 
                 </div>

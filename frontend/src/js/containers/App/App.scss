@@ -5,13 +5,21 @@ body, html {
     min-height: 100vh;
     font-family: $font-text;
 
-    background: $secondary-light;  /* fallback for old browsers */
-    background: -webkit-linear-gradient(to left, $background, #fff);  /* Chrome 10-25, Safari 5.1-6 */
-    background: linear-gradient(to left, $background, #fff); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    background: $background-light;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to left,  $background-dark, $background-light);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to left, $background-dark, $background-light); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 
     .container-fluid {
         padding-right: 0;
         padding-left: 0;
+    }
+
+    .container-wrapper{
+        padding-top:70px;
+    }
+
+    .container-wrapper .jumbotron-white {
+        background: $background-white;
     }
 
     .capitalize {

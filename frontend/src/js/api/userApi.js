@@ -1,25 +1,14 @@
 import axios from 'axios';
 import jwtDecode from 'jwt-decode';
-import { authHeader } from '../helpers';
+import { getAuthToken } from '../helpers/authHeader';
 
 export const userApi = {
     login,
     logout,
     getUsername,
     register,
+    refreshAccessToken,
 };
-
-function setAuthedUser() {
-    let user;
-
-    if (localStorage.getItem('auth')) {
-        const id = JSON.parse(localStorage.getItem('auth')).access.user_id;
-        userApi.getUsername(id).then((username) => {
-            user = username;
-        });
-
-    }
-}
 
 function login(username, password) {
     return axios.post('/api/auth/token/obtain/', { username, password })
@@ -36,21 +25,32 @@ function login(username, password) {
                 },
                 errors: {}
             };
-
-            localStorage.setItem('auth', JSON.stringify(auth));
+            // localStorage.setItem('auth', JSON.stringify(auth));
             return auth;
-        }).catch(response => {
-            return {
-                access: null,
-                refresh: null,
-                errors: { 'non_field_errors': response.statusText },
-            };
+        }).catch(response => ({
+            access: null,
+            refresh: null,
+            errors: { 'non_field_errors': response.statusText },
+        }));
+}
+
+function refreshAccessToken(token) {
+    return axios.post('/api/auth/token/refresh/', { refresh: token })
+        .then(({ data }) => {
+            console.log(data);
+            return ({
+                access: {
+                    token: data.access,
+                    ...jwtDecode(data.access)
+                }
+            }
+            );
         });
 }
 
 function logout() {
     // remove user from local storage to log user out
-    localStorage.removeItem('auth');
+    localStorage.removeItem('persist:auth');
 }
 
 function getUsername(id) {

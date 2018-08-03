@@ -158,7 +158,7 @@ class CreateItinerary extends React.Component {
 
     render() {
         return (
-            <div>
+            <div className='container-wrapper'>
                 <CreateUpdateItineraryForm
                     handleSubmit={this.handleSubmit}
                     handleSelectExistingCity={this.handleSelectExistingCity}

@@ -1,12 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { Jumbotron, Row } from 'reactstrap';
+import { Jumbotron, Row, Col } from 'reactstrap';
 
 import CreateUpdateFormStep from '../CreateUpdateFormStep/CreateUpdateFormStep';
 import CityItem from '../CityItem/CityItem';
 
-import { getFieldsforStep } from './stepsConfig';
+import { getFieldsforStep, getDescriptionforSteps } from './config';
+import './CreateUpdateItineraryForm.scss';
 
 const CreateUpdateItineraryForm = ({
     handleInputChange,
@@ -18,9 +19,10 @@ const CreateUpdateItineraryForm = ({
     values
 }) => {
     const stepFields = getFieldsforStep(step);
+    const stepDescription = getDescriptionforSteps(step);
 
     return (
-        <Jumbotron className="container create-form-container">
+        <Jumbotron className="container create-form-container jumbotron-white">
             {
                 type === 'create'
                     ? <h1>Create a New Itinerary</h1>
@@ -28,8 +30,15 @@ const CreateUpdateItineraryForm = ({
             }
 
             {
+                stepDescription.map(line => <p className="lead">{line}</p>)
+            }
+            <hr className="my-2" />
+            {
                 step === 1 && previouslyCreatedCities.length > 0 &&
                 <Row>
+                    <Col sm="12">
+                        <p>A city with that name was previously created, is it the same ?</p>
+                    </Col>
                     {previouslyCreatedCities.map(city => (
                         <CityItem
                             key={`${city.name}-${city.country}`}

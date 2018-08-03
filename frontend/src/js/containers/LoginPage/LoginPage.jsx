@@ -45,7 +45,7 @@ class Login extends React.Component {
 
     render() {
         return (
-            <div className="login-page">
+            <div className="login-page container-wrapper">
                 <LoginForm
                     handleChange={this.handleChange}
                     handleSubmit={this.handleSubmit}

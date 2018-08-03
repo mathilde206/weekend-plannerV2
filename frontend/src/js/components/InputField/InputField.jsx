@@ -1,56 +1,34 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { FormGroup, FormFeedback, Label, Input } from 'reactstrap';
+import { FormGroup, FormFeedback, Label, Input, Col } from 'reactstrap';
 
 const InputField = ({ error, handleInputChange, label, name, options, type, value, ...rest }) => {
-    const id = `id_${name}`,
-        input_type = type ? type : 'text';
+    const id = `id_${name}`;
+    const input_type = type ? type : 'text';
+    let input;
 
     if (type === 'select') {
-        return (
-            <FormGroup color={error ? 'danger' : ''}>
-                {label ? <Label htmlFor={id}>{label}</Label> : ''}
-                <Input
-                    type={input_type}
-                    name={name}
-                    id={id} className={error ? 'is-invalid' : ''}
-                    onChange={handleInputChange}
-                    value={value}
-                >
-                    {options.map(option => <option key={option}>{option}</option>)}
-                </Input>
-                {error ?
-                    <FormFeedback className="invalid-feedback">
-                        {error}
-                    </FormFeedback>
-                    : ''
-                }
-            </FormGroup>
-        );
-    }
-
-    if (type === 'file') {
-        return (
-            <FormGroup color={error ? 'danger' : ''}>
-                {label ? <Label htmlFor={id}>{label}</Label> : ''}
-                <Input
-                    type={input_type}
-                    name={name}
-                    id={id} className={error ? 'is-invalid' : ''}
-                    onChange={handleInputChange}
-                />
-                {error ?
-                    <FormFeedback className="invalid-feedback">
-                        {error}
-                    </FormFeedback>
-                    : ''
-                }
-            </FormGroup>);
-    }
-    return (
-        <FormGroup color={error ? 'danger' : ''}>
-            {label ? <Label htmlFor={id}>{label}</Label> : ''}
+        input = (
+            <Input
+                type={input_type}
+                name={name}
+                id={id} className={error ? 'is-invalid' : ''}
+                onChange={handleInputChange}
+                value={value}
+            >
+                {options.map(option => <option key={option}>{option}</option>)}
+            </Input>);
+    } else if (type === 'file') {
+        input = (
+            <Input
+                type={input_type}
+                name={name}
+                id={id} className={error ? 'is-invalid' : ''}
+                onChange={handleInputChange}
+            />);
+    } else {
+        input = (
             <Input
                 type={input_type}
                 name={name}
@@ -59,6 +37,12 @@ const InputField = ({ error, handleInputChange, label, name, options, type, valu
                 value={value}
                 {...rest}
             />
+        );
+    }
+    return (
+        <FormGroup row color={error ? 'danger' : ''}>
+            {label ? <Label htmlFor={id} sm={4}>{label}</Label> : ''}
+            <Col sm={8}>{input}</Col>
             {error ?
                 <FormFeedback className="invalid-feedback">
                     {error}
@@ -84,3 +68,6 @@ InputField.propTypes = {
 };
 
 export default InputField;
+
+
+

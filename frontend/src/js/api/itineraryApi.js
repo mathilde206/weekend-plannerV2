@@ -4,6 +4,7 @@ import { getAuthToken } from '../helpers/authHeader';
 
 export default {
     getItineraryList,
+    getItineraryDetails,
     getCity,
     createCity,
     createItinerary,
@@ -14,6 +15,11 @@ function getItineraryList() {
         .then((response) => {
             console.log(response);
         });
+}
+
+function getItineraryDetails(slug) {
+    return axios.get(`/api/itineraries/details/${slug}/`)
+        .then((response) => response.data);
 }
 
 function getCity(city) {

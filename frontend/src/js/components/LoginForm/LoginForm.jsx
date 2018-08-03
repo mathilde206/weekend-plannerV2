@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import InputField from '../InputField/InputField';
 
 const LoginForm = ({errors, handleChange, handleSubmit, loggingIn}) => (
-    <Jumbotron className="container">
+    <Jumbotron className="container jumbotron-white">
         <Form onSubmit={handleSubmit}>
             <h1>Login</h1>
             {
