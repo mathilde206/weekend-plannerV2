@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import {
@@ -16,10 +17,9 @@ import {
 } from 'reactstrap';
 
 import * as reducers from '../../reducers';
+import './NavigationBarTop.scss';
 
-import './NavigationBar.scss';
-
-class Navigation extends React.Component {
+class NavigationBarTop extends React.Component {
     state = {
         isOpen: false
     };
@@ -76,12 +76,18 @@ class Navigation extends React.Component {
     }
 }
 
+NavigationBarTop.defaultProps = {
+    isAuthenticated: false,
+};
+
+NavigationBarTop.propTypes = {
+    isAuthenticated: PropTypes.bool,
+};
+
 const mapStateToProps = (state) => {
     return {
         isAuthenticated: reducers.isAuthenticated(state)
     };
 };
 
-const NavigationBar = connect(mapStateToProps)(Navigation);
-
-export default NavigationBar;
+export default connect(mapStateToProps)(NavigationBarTop);

@@ -1,14 +1,20 @@
 import axios from 'axios';
 import jwtDecode from 'jwt-decode';
-import { getAuthToken } from '../helpers/authHeader';
 
 export const userApi = {
+    getUsername,
     login,
     logout,
-    getUsername,
     register,
     refreshAccessToken,
 };
+
+function getUsername(id) {
+    return axios.get(`/api/users/${id}/`)
+        .then((response) => {
+            return response.data.username;
+        });
+}
 
 function login(username, password) {
     return axios.post('/api/auth/token/obtain/', { username, password })
@@ -53,12 +59,6 @@ function logout() {
     localStorage.removeItem('persist:auth');
 }
 
-function getUsername(id) {
-    return axios.get(`/api/users/${id}/`)
-        .then((response) => {
-            return response.data.username;
-        });
-}
 
 function register({ username, email, email2, password }) {
     return axios.post('/api/users/register/', {

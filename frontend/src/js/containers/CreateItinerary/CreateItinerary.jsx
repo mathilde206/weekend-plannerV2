@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import itineraryActions from '../../actions/itineraryActions';
+import userActions from '../../actions/userActions';
+import * as reducers from '../../reducers/userReducer';
 
 import CreateUpdateItineraryForm from '../../components/CreateUpdateItineraryForm/CreateUpdateItineraryForm';
 
@@ -56,6 +58,11 @@ class CreateItinerary extends React.Component {
             cityPk: pk,
             step: this.props.steps[ this.state.step ],
         });
+    };
+
+    handleReset = (event) => {
+        event.preventDefault();
+        // CREATE AN ACTION THAT EMPTIES THE STORE FOR THE FORM;
     };
 
     handleSubmit = (event) => {
@@ -172,6 +179,12 @@ class CreateItinerary extends React.Component {
     }
 }
 
+CreateItinerary.propTypes = {
+    onInitializeForm: PropTypes.func.isRequired,
+    setCity: PropTypes.func.isRequired,
+    submitForm: PropTypes.func.isRequired,
+};
+
 const mapDispatchToProps = (dispatch) => {
     return {
         onInitializeForm: (city, number_of_days) => dispatch(itineraryActions.initializeCreate(city, number_of_days)),
@@ -181,10 +194,9 @@ const mapDispatchToProps = (dispatch) => {
 };
 
 const mapStateToProps = (state) => {
-    const { itineraryForm } = state;
-
+    const { itineraryForm, auth } = state;
     return {
-        ...itineraryForm
+        ...itineraryForm,
     };
 };
 

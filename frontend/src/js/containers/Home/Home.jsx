@@ -1,7 +1,8 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Jumbotron, Button, Form, FormGroup, Label, Input } from 'reactstrap';
 import { Link } from 'react-router-dom';
+import { Jumbotron, Button, Form, FormGroup, Label, Input } from 'reactstrap';
 
 import * as reducers from '../../reducers';
 
@@ -36,8 +37,17 @@ const HomeComponent = ({isAuthenticated, user }) => (
     </div>
 );
 
+HomeComponent.defaultProps = {
+    isAuthenticated: false,
+    user: '',
+};
+
+HomeComponent.propTypes = {
+    isAuthenticated: PropTypes.bool,
+    user: PropTypes.string,
+};
+
 const mapStateToProps = (state) => {
-    console.log(state)
     const { user } = state.user;
     return {
         user,
@@ -45,6 +55,4 @@ const mapStateToProps = (state) => {
     };
 };
 
-const Home = connect(mapStateToProps)(HomeComponent);
-
-export default Home;
+export default connect(mapStateToProps)(HomeComponent);

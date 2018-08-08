@@ -11,7 +11,7 @@ import ItineraryDetails from '../ItineraryDetails/ItineraryDetails';
 import Home from '../Home/Home';
 import LoginPage from '../LoginPage/LoginPage';
 import RegisterPage from '../RegisterPage/RegisterPage';
-import NavigationBar from '../NavigationBar/NavigationBar';
+import NavigationBarTop from '../NavigationBarTop/NavigationBarTop';
 import CreateItinerary from '../CreateItinerary/CreateItinerary';
 
 import './App.scss';
@@ -28,15 +28,17 @@ class App extends React.Component {
     }
 
     componentWillMount() {
-        if (localStorage.getItem('persist:auth')) {
+        const {
+            dispatch,
+        } = this.props;
+
+        if (localStorage.getItem('persist:auth')
+            && JSON.parse(JSON.parse(localStorage.getItem('persist:auth')).auth).access
+        ) {
             const auth = JSON.parse(localStorage.getItem('persist:auth'));
             const id = JSON.parse(auth.auth).access.user_id;
-            this.props.dispatch(userActions.setAuthedUser(id));
+            dispatch(userActions.setAuthedUser(id));
         }
-    }
-
-    componentWillUnmount() {
-        localStorage.removeItem('auth');
     }
 
     render() {
@@ -45,7 +47,7 @@ class App extends React.Component {
         return (
             <Router history={history}>
                 <div className="container-fluid">
-                    <NavigationBar user={this.props.user || ''} />
+                    <NavigationBarTop user={this.props.user || ''} />
                     <Switch>
                         <Route exact path="/" component={Home} />
                         <Route exact path="/login/" component={LoginPage} />

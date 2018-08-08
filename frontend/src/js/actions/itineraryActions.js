@@ -63,7 +63,6 @@ function createItinerary(formObj) {
         dispatch(submitItinerary());
         return itineraryApi.createItinerary(formObj)
             .then(response => {
-                console.log(response);
                 dispatch({
                     type: ITINERARY_CREATED,
                     data: response,

@@ -32,7 +32,6 @@ function getCity(city) {
 
 function createCity(cityObj) {
     const authToken = getAuthToken();
-
     return axios.post('/api/cities/create/', cityObj, {
         headers: {
             'Authorization': 'Bearer ' + authToken
@@ -41,7 +40,7 @@ function createCity(cityObj) {
         .then(response => response.data);
 }
 
-function createItinerary(itineraryObj) {
+function createItinerary(itineraryObj, token) {
     const authToken = getAuthToken();
     const options = {
         method: 'POST',

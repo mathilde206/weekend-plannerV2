@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Route, Redirect } from 'react-router-dom';
 
@@ -17,7 +18,15 @@ const PrivateRoute = ({ component: Component, isAuthenticated, ...rest }) => (
     )} />
 );
 
-const mapStateToProps = (state) => (    console.log('state', state) || {
+PrivateRoute.defaultProps = {
+    isAuthenticated: false,
+};
+
+PrivateRoute.propTypes = {
+    isAuthenticated: PropTypes.bool,
+};
+
+const mapStateToProps = (state) => ({
     isAuthenticated: reducers.isAuthenticated(state)
 });
 
