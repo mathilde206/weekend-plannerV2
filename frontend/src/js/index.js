@@ -12,7 +12,6 @@ import createHistory from 'history/createBrowserHistory';
 
 import { createLogger } from 'redux-logger';
 
-import apiMiddleware from './middleware/middleware';
 import rootReducer from './reducers';
 import { App } from './containers';
 
@@ -34,7 +33,6 @@ const reducer = persistReducer(
 const store = createStore(
     reducer,
     applyMiddleware(
-        apiMiddleware,
         thunk,
         loggerMiddleware,
         routerMiddleware(history)

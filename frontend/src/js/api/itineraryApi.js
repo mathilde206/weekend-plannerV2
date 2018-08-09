@@ -30,22 +30,20 @@ function getCity(city) {
         }).then(response => response);
 };
 
-function createCity(cityObj) {
-    const authToken = getAuthToken();
+function createCity(cityObj, token) {
     return axios.post('/api/cities/create/', cityObj, {
         headers: {
-            'Authorization': 'Bearer ' + authToken
+            'Authorization': 'Bearer ' + token
         }
     })
         .then(response => response.data);
 }
 
 function createItinerary(itineraryObj, token) {
-    const authToken = getAuthToken();
     const options = {
         method: 'POST',
         headers: {
-            'Authorization': 'Bearer ' + authToken,
+            'Authorization': 'Bearer ' + token,
             'content-type': 'multipart/form-data'
         },
         data: itineraryObj,

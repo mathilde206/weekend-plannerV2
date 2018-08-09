@@ -40,9 +40,9 @@ function initializeCreate(city, number_of_days) {
     };
 }
 
-function setCity(cityObj) {
+function setCity(cityObj, token) {
     return (dispatch) => {
-        return itineraryApi.createCity(cityObj)
+        return itineraryApi.createCity(cityObj, token)
             .then(data => {
                 dispatch({
                     type: CITY_CREATE,
@@ -58,10 +58,10 @@ function submitItinerary() {
     };
 }
 
-function createItinerary(formObj) {
+function createItinerary(formObj, token) {
     return (dispatch) => {
         dispatch(submitItinerary());
-        return itineraryApi.createItinerary(formObj)
+        return itineraryApi.createItinerary(formObj, token)
             .then(response => {
                 dispatch({
                     type: ITINERARY_CREATED,
