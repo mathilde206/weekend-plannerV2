@@ -1,43 +1,45 @@
-import { userApi } from '../api/userApi';
-import { alertActions } from '../actions/alertsActions';
-import { history } from '../helpers/history';
-
-export const DELETE_REQUEST = 'USERS_DELETE_REQUEST';
-export const DELETE_SUCCESS = 'USERS_DELETE_SUCCESS';
-export const DELETE_FAILURE = 'USERS_DELETE_FAILURE';
-
-export const GET_USER_REQUEST = 'GET_USER_REQUEST';
-export const GET_USER_SUCCESS = 'GET_USER_SUCCESS';
-export const GET_USER_FAILURE = 'GET_USER_FAILURE';
-
-export const LOGIN_REQUEST = 'USERS_LOGIN_REQUEST';
-export const LOGIN_SUCCESS = 'USERS_LOGIN_SUCCESS';
-export const LOGIN_FAILURE = 'USERS_LOGIN_FAILURE';
-
-export const LOGOUT = 'USERS_LOGOUT';
-
-export const USER_RETRIEVED = 'USER_RETRIEVED';
-
-export const TOKEN_REQUEST = 'TOKEN_REQUEST';
-export const TOKEN_RECEIVED = 'TOKEN_RECEIVED';
-export const TOKEN_FAILURE = 'TOKEN_FAILURE';
-
-export const REGISTER_REQUEST = 'USERS_REGISTER_REQUEST';
-export const REGISTER_SUCCESS = 'USERS_REGISTER_SUCCESS';
-export const REGISTER_FAILURE = 'USERS_REGISTER_FAILURE';
-
-export const userActions = {
+import {
+    getUsername,
     login,
     logout,
-    refreshAccess,
+    refreshAccessToken,
     register,
-    setAuthedUser,
-    delete: _delete
-};
+    deleteApi,
+} from '../api/';
+import {
+    alertSuccessAction,
+    alertClearAction,
+    alertErrorAction,
+} from '../actions/alertsActions';
+import { history } from '../helpers';
 
-function setAuthedUser(id) {
+const DELETE_REQUEST = 'USERS_DELETE_REQUEST';
+const DELETE_SUCCESS = 'USERS_DELETE_SUCCESS';
+const DELETE_FAILURE = 'USERS_DELETE_FAILURE';
+
+const GET_USER_REQUEST = 'GET_USER_REQUEST';
+const GET_USER_SUCCESS = 'GET_USER_SUCCESS';
+const GET_USER_FAILURE = 'GET_USER_FAILURE';
+
+const LOGIN_REQUEST = 'USERS_LOGIN_REQUEST';
+const LOGIN_SUCCESS = 'USERS_LOGIN_SUCCESS';
+const LOGIN_FAILURE = 'USERS_LOGIN_FAILURE';
+
+const LOGOUT = 'USERS_LOGOUT';
+
+const USER_RETRIEVED = 'USER_RETRIEVED';
+
+const TOKEN_REQUEST = 'TOKEN_REQUEST';
+const TOKEN_RECEIVED = 'TOKEN_RECEIVED';
+const TOKEN_FAILURE = 'TOKEN_FAILURE';
+
+const REGISTER_REQUEST = 'USERS_REGISTER_REQUEST';
+const REGISTER_SUCCESS = 'USERS_REGISTER_SUCCESS';
+const REGISTER_FAILURE = 'USERS_REGISTER_FAILURE';
+
+function setAuthedUserAction(id) {
     return dispatch => {
-        userApi.getUsername(id)
+        getUsername(id)
             .then((user) => {
                 dispatch({
                     type: USER_RETRIEVED,
@@ -47,7 +49,7 @@ function setAuthedUser(id) {
     };
 }
 
-function login(username, password) {
+function loginAction(username, password) {
     function request(user) {
         return { type: LOGIN_REQUEST, user };
     }
@@ -63,27 +65,27 @@ function login(username, password) {
     return dispatch => {
         dispatch(request({ username }));
 
-        userApi.login(username, password)
+        login(username, password)
             .then(auth => {
                 const {
                     access
                 } = auth;
 
-                userApi.getUsername(access.user_id)
+                getUsername(access.user_id)
                     .then((username) => {
                         dispatch(success(username, access.token, auth));
-                        dispatch(alertActions.success('Successful Login'));
+                        dispatch(alertSuccessAction('Successful Login'));
                         history.push('/');
                     });
             }).catch(error => {
                 dispatch(failure(error.toString()));
-                dispatch(alertActions.error(error.toString()));
+                dispatch(alertErrorAction(error.toString()));
             }
             );
     };
 }
 
-function refreshAccess(token) {
+function refreshAccessAction(token) {
     function request(user, token) {
         return { type: TOKEN_REQUEST, token };
     }
@@ -102,23 +104,23 @@ function refreshAccess(token) {
     return dispatch => {
         dispatch(request(token));
 
-        userApi.refreshAccessToken(token)
+        refreshAccessToken(token)
             .then((data) => {
                 dispatch(success(data.token));
             })
             .catch(error => {
                 dispatch(failure(error.toString()));
-                dispatch(alertActions.error(error.toString()));
+                dispatch(alertErrorAction(error.toString()));
             });
     };
 }
 
-function logout() {
-    userApi.logout();
+function logoutAction() {
+    logout();
     return { type: LOGOUT };
 }
 
-function register(user) {
+function registerAction(user) {
     function request(user) {
         return { type: REGISTER_REQUEST, user };
     }
@@ -134,23 +136,22 @@ function register(user) {
     return dispatch => {
         dispatch(request(user));
 
-        userApi.register(user)
+        register(user)
             .then(
                 user => {
                     dispatch(success());
                     history.push('/login');
-                    dispatch(alertActions.success('Registration successful, you can now Login'));
+                    dispatch(alertSuccessAction('Registration successful, you can now Login'));
                 },
                 error => {
                     dispatch(failure(error.toString()));
-                    dispatch(alertActions.error(error.toString()));
+                    dispatch(alertErrorAction(error.toString()));
                 }
             );
     };
 }
 
-// prefixed function name with underscore because delete is a reserved word in javascript
-function _delete(id) {
+function deleteAction(id) {
     function request(id) {
         return { type: DELETE_REQUEST, id };
     }
@@ -167,12 +168,38 @@ function _delete(id) {
         dispatch(request(id));
 
         //TODO: add the api to delete a user
-        userApi.delete(id)
+        deleteApi(id)
             .then(
                 user => dispatch(success(id)),
                 error => dispatch(failure(id, error.toString()))
             );
     };
 }
+
+export {
+    DELETE_REQUEST,
+    DELETE_SUCCESS,
+    DELETE_FAILURE,
+    GET_USER_REQUEST,
+    GET_USER_SUCCESS,
+    GET_USER_FAILURE,
+    LOGIN_REQUEST,
+    LOGIN_SUCCESS,
+    LOGIN_FAILURE,
+    LOGOUT,
+    USER_RETRIEVED,
+    TOKEN_REQUEST,
+    TOKEN_RECEIVED,
+    TOKEN_FAILURE,
+    REGISTER_REQUEST,
+    REGISTER_SUCCESS,
+    REGISTER_FAILURE,
+    loginAction,
+    logoutAction,
+    refreshAccessAction,
+    registerAction,
+    setAuthedUserAction,
+    deleteAction,
+};
 
 //TODO: Add api to update user info and show user info

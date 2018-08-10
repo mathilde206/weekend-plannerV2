@@ -1,24 +1,28 @@
 import {
-    SUCCESS,
-    ERROR,
-    CLEAR
-} from '../actions/alertsActions';
+    ALERT_SUCCESS,
+    ALERT_ERROR,
+    ALERT_CLEAR
+} from '../actions';
 
-export function alert(state = {}, action) {
+function alertReducer(state = {}, action) {
     switch (action.type) {
-    case SUCCESS:
+    case ALERT_SUCCESS:
         return {
             type: 'alert-success',
             message: action.message
         };
-    case ERROR:
+    case ALERT_ERROR:
         return {
             type: 'alert-danger',
             message: action.message
         };
-    case CLEAR:
+    case ALERT_CLEAR:
         return {};
     default:
         return state;
     }
 }
+
+export {
+    alertReducer,
+};

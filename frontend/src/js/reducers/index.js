@@ -1,32 +1,52 @@
 import { combineReducers } from 'redux';
 import { routerReducer } from 'react-router-redux';
-
-import * as fromAuth from './userReducer';
-import { createUpdateItinerary } from './itineraryReducer';
 import { loadingBarReducer } from 'react-redux-loading';
-import { alert } from '../reducers/alertsReducer';
+
+import { createUpdateItineraryReducer } from './itineraryReducer';
+import { alertReducer } from './alertsReducer';
+import {
+    getAccessToken,
+    getRefreshToken,
+    getIsAccessTokenExpired,
+    getIsRefreshTokenExpired,
+    getIsAuthenticated,
+    getUserErrors,
+    setAuthUserReducer,
+    setAuthCredentialsReducer,
+    registrationReducer,
+} from './userReducer';
+
 
 const rootReducer = combineReducers({
-    user: fromAuth.setAuthUser,
-    auth: fromAuth.setAuthCredentials,
-    registration: fromAuth.registrationReducer,
+    user: setAuthUserReducer,
+    auth: setAuthCredentialsReducer,
+    registration: registrationReducer,
     loadingBar: loadingBarReducer,
-    alerts: alert,
-    itineraryForm: createUpdateItinerary,
+    alerts: alertReducer,
+    itineraryForm: createUpdateItineraryReducer,
     router: routerReducer
 });
 
 export default rootReducer;
 
-export const isAuthenticated =
- state => fromAuth.isAuthenticated(state.auth);
-export const accessToken =
-  state => fromAuth.accessToken(state.auth);
-export const isAccessTokenExpired =
-  state => fromAuth.isAccessTokenExpired(state.auth);
-export const refreshToken =
-  state => fromAuth.refreshToken(state.auth);
-export const isRefreshTokenExpired =
-  state => fromAuth.isRefreshTokenExpired(state.auth);
-export const authErrors =
-  state => fromAuth.errors(state.auth);
+const isAuthenticated =
+ state => getIsAuthenticated(state.auth);
+const accessToken =
+  state => getAccessToken(state.auth);
+const isAccessTokenExpired =
+  state => getIsAccessTokenExpired(state.auth);
+const refreshToken =
+  state => getRefreshToken(state.auth);
+const isRefreshTokenExpired =
+  state => getIsRefreshTokenExpired(state.auth);
+const authErrors =
+  state => getUserErrors(state.auth);
+
+export {
+    isAuthenticated,
+    accessToken,
+    isAccessTokenExpired,
+    refreshToken,
+    isRefreshTokenExpired,
+    authErrors,
+};

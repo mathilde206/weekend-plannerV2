@@ -1,14 +1,6 @@
 import axios from 'axios';
 import jwtDecode from 'jwt-decode';
 
-export const userApi = {
-    getUsername,
-    login,
-    logout,
-    register,
-    refreshAccessToken,
-};
-
 function getUsername(id) {
     return axios.get(`/api/users/${id}/`)
         .then((response) => {
@@ -20,7 +12,7 @@ function login(username, password) {
     return axios.post('/api/auth/token/obtain/', { username, password })
         .then(({ data }) => {
             const decoded = jwtDecode(data.access);
-            const auth = {
+            return {
                 access: {
                     token: data.access,
                     ...jwtDecode(data.access)
@@ -32,7 +24,6 @@ function login(username, password) {
                 errors: {}
             };
             // localStorage.setItem('auth', JSON.stringify(auth));
-            return auth;
         }).catch(response => ({
             access: null,
             refresh: null,
@@ -88,3 +79,11 @@ function register({ username, email, email2, password }) {
 //
 //     return fetch(`${config.apiUrl}/users/${id}`, requestOptions).then(handleResponse);
 // }
+
+export {
+    getUsername,
+    login,
+    logout,
+    register,
+    refreshAccessToken,
+};

@@ -1,4 +1,4 @@
-export default function getBudget(budgetChoice) {
+function getBudgetChoices(budgetChoice) {
     const budgetVal = {
         $: 'Cheap',
         $$: 'Affordable',
@@ -6,3 +6,5 @@ export default function getBudget(budgetChoice) {
         $$$$: 'Very Expensive',
     }
 }
+
+export default getBudgetChoices;

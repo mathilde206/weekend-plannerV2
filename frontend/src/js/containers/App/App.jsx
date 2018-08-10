@@ -3,16 +3,19 @@ import { Route, Switch, Router } from 'react-router-dom';
 import { connect } from 'react-redux';
 // import { ConnectedRouter } from 'react-router-redux';
 
-import { history } from '../../helpers/history';
-import { alertActions } from '../../actions/alertsActions';
-import { userActions} from '../../actions/userActions';
-import PrivateRoute from '../PrivateRoute/PrivateRoute';
-import ItineraryDetails from '../ItineraryDetails/ItineraryDetails';
+import { history } from '../../helpers/';
+import {
+    alertClearAction,
+    setAuthedUserAction,
+} from '../../actions';
+
 import Home from '../Home/Home';
+import ItineraryDetails from '../ItineraryDetails/ItineraryDetails';
 import LoginPage from '../LoginPage/LoginPage';
 import RegisterPage from '../RegisterPage/RegisterPage';
 import NavigationBarTop from '../NavigationBarTop/NavigationBarTop';
 import CreateItinerary from '../CreateItinerary/CreateItinerary';
+import PrivateRoute from '../PrivateRoute/PrivateRoute';
 
 import './App.scss';
 
@@ -23,7 +26,7 @@ class App extends React.Component {
         const { dispatch } = this.props;
         history.listen((location, action) => {
             // clear alert on location change
-            dispatch(alertActions.clear());
+            dispatch(alertClearAction());
         });
     }
 
@@ -37,7 +40,7 @@ class App extends React.Component {
         ) {
             const auth = JSON.parse(localStorage.getItem('persist:auth'));
             const id = JSON.parse(auth.auth).access.user_id;
-            dispatch(userActions.setAuthedUser(id));
+            dispatch(setAuthedUserAction(id));
         }
     }
 
@@ -62,11 +65,10 @@ class App extends React.Component {
     }
 }
 
-function mapStateToProps(state) {
-    const { alert } = state;
-    return {
+const mapStateToProps = ({ alert }) => (
+    {
         alert
-    };
-}
+    }
+);
 
 export default connect(mapStateToProps)(App);

@@ -2,7 +2,6 @@ import React from 'react';
 import {
     CardColumns
 } from 'reactstrap';
-import TripCard from '../TripCard/TripCard';
 
 const CardDisplay = (props) => {
     return (
@@ -51,4 +50,4 @@ const CardDisplay = (props) => {
     );
 };
 
-export default Example;
+export default CardDisplay;

@@ -3,21 +3,21 @@ import Link from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import LoginForm from '../../components/LoginForm/LoginForm';
-
-import { userActions } from '../../actions/userActions';
-
-// import { authErrors, isAuthenticated } from '../../reducers/index';
+import {
+    loginAction,
+    logoutAction,
+} from '../../actions';
 
 class Login extends React.Component {
     state = {
         username: '',
         password: '',
-        errors:[],
+        errors: [],
         submitted: false,
     };
 
     componentWillMount() {
-        this.props.dispatch(userActions.logout());
+        this.props.dispatch(logoutAction());
     }
 
     handleChange = (e) => {
@@ -38,7 +38,7 @@ class Login extends React.Component {
         });
 
         if (username && password) {
-            dispatch(userActions.login(username, password));
+            dispatch(loginAction(username, password));
         }
 
     };
@@ -55,7 +55,7 @@ class Login extends React.Component {
             </div>
         );
     }
-};
+}
 
 const mapStateToProps = (state) => {
     const { loggingIn } = state.user;

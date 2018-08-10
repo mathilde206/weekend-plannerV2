@@ -2,11 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import itineraryApi from '../../api/itineraryApi';
+import { getItineraryDetails } from '../../api/itineraryApi';
 
 class ItineraryDetails extends React.Component {
     componentWillMount() {
-        itineraryApi.getItineraryDetails(this.props.match.params.slug)
+        getItineraryDetails(this.props.match.params.slug)
             .then(response => console.log(response));
     }
 

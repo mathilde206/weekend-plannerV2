@@ -1,5 +1,3 @@
-import { userApi } from '../api/userApi';
-import jwtDecode from 'jwt-decode';
 import {
     LOGIN_REQUEST,
     LOGIN_SUCCESS,
@@ -11,9 +9,9 @@ import {
     TOKEN_RECEIVED,
     TOKEN_FAILURE,
     USER_RETRIEVED,
-} from '../actions/userActions';
+} from '../actions';
 
-export function setAuthUser(state = {}, action) {
+function setAuthUserReducer(state = {}, action) {
     switch (action.type) {
     case LOGIN_REQUEST:
         return {
@@ -42,7 +40,7 @@ const initialAuthCredentials = {
     errors: {}
 };
 
-export function setAuthCredentials(state = initialAuthCredentials, action) {
+function setAuthCredentialsReducer(state = initialAuthCredentials, action) {
     switch (action.type) {
     case LOGIN_SUCCESS:
         return {
@@ -67,7 +65,7 @@ export function setAuthCredentials(state = initialAuthCredentials, action) {
     }
 }
 
-export function registrationReducer(state = {}, action) {
+function registrationReducer(state = {}, action) {
     switch (action.type) {
     case REGISTER_REQUEST:
         return { registering: true };
@@ -80,38 +78,48 @@ export function registrationReducer(state = {}, action) {
     }
 }
 
-export function accessToken(state) {
+function getAccessToken(state) {
     if (state.auth && state.auth.access) {
         return state.auth.access.token;
     }
 }
 
-export function refreshToken(state) {
+function getRefreshToken(state) {
     if (state.auth && state.auth.refresh) {
         return state.auth.refresh.token;
     }
 }
 
-export function isAccessTokenExpired(state) {
+function getIsAccessTokenExpired(state) {
     if (state.access && state.access.exp) {
         return 1000 * state.access.exp - (new Date()).getTime() < 5000;
     }
     return true;
 }
 
-export function isRefreshTokenExpired(state) {
+function getIsRefreshTokenExpired(state) {
     if (state.refresh && state.refresh.exp) {
         return 1000 * state.refresh.exp - (new Date()).getTime() < 5000;
     }
     return true;
 }
 
-export function isAuthenticated(state) {
-    return !isRefreshTokenExpired(state);
+function getIsAuthenticated(state) {
+    return !getIsRefreshTokenExpired(state);
 }
 
-
-export function errors(state) {
+function getUserErrors(state) {
     return state.errors;
 }
 
+export {
+    getAccessToken,
+    getRefreshToken,
+    getIsAccessTokenExpired,
+    getIsRefreshTokenExpired,
+    getIsAuthenticated,
+    getUserErrors,
+    setAuthUserReducer,
+    setAuthCredentialsReducer,
+    registrationReducer,
+};

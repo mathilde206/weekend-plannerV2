@@ -1,6 +1,11 @@
-import { INITIALIZE_FORM, CITY_CREATE, FORM_SUBMITTED, ITINERARY_CREATED } from '../actions/itineraryActions';
+import {
+    INITIALIZE_FORM,
+    CITY_CREATE,
+    FORM_SUBMITTED,
+    ITINERARY_CREATED
+} from '../actions';
 
-export function createUpdateItinerary(state = { currentStep: 0 }, action) {
+function createUpdateItineraryReducer(state = { currentStep: 0 }, action) {
     switch (action.type) {
     case INITIALIZE_FORM:
         return {
@@ -30,3 +35,7 @@ export function createUpdateItinerary(state = { currentStep: 0 }, action) {
         return state;
     }
 }
+
+export {
+    createUpdateItineraryReducer,
+};

@@ -1,15 +1,13 @@
-import itineraryApi from '../api/itineraryApi';
-
-export const INITIALIZE_FORM = 'INITIALIZE_FORM';
-export const CITY_CREATE = 'CITY_CREATE';
-export const FORM_SUBMITTED = 'FORM_SUBMITTED';
-export const ITINERARY_CREATED = 'FORM_CREATED';
-
-export default {
-    initializeCreate,
-    setCity,
+import {
     createItinerary,
-};
+    createCity,
+    getCity,
+} from '../api';
+
+const INITIALIZE_FORM = 'INITIALIZE_FORM';
+const CITY_CREATE = 'CITY_CREATE';
+const FORM_SUBMITTED = 'FORM_SUBMITTED';
+const ITINERARY_CREATED = 'FORM_CREATED';
 
 function getSteps(number_of_days) {
     if (number_of_days === 1) {
@@ -21,11 +19,11 @@ function getSteps(number_of_days) {
     return [ 1, 2, 3, 4, 5, 6 ];
 }
 
-function initializeCreate(city, number_of_days) {
+function initializeCreateAction(city, number_of_days) {
     const steps = getSteps(number_of_days);
 
     return (dispatch) => {
-        return itineraryApi.getCity(city)
+        return getCity(city)
             .then(cities => {
                 dispatch({
                     type: INITIALIZE_FORM,
@@ -40,9 +38,9 @@ function initializeCreate(city, number_of_days) {
     };
 }
 
-function setCity(cityObj, token) {
+function setCityAction(cityObj, token) {
     return (dispatch) => {
-        return itineraryApi.createCity(cityObj, token)
+        return createCity(cityObj, token)
             .then(data => {
                 dispatch({
                     type: CITY_CREATE,
@@ -58,10 +56,10 @@ function submitItinerary() {
     };
 }
 
-function createItinerary(formObj, token) {
+function createItineraryAction(formObj, token) {
     return (dispatch) => {
         dispatch(submitItinerary());
-        return itineraryApi.createItinerary(formObj, token)
+        return createItinerary(formObj, token)
             .then(response => {
                 dispatch({
                     type: ITINERARY_CREATED,
@@ -70,3 +68,13 @@ function createItinerary(formObj, token) {
             });
     };
 }
+
+export {
+    INITIALIZE_FORM,
+    CITY_CREATE,
+    FORM_SUBMITTED,
+    ITINERARY_CREATED,
+    initializeCreateAction,
+    setCityAction,
+    createItineraryAction,
+};

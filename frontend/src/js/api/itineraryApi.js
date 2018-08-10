@@ -1,14 +1,5 @@
 import axios from 'axios';
 import qs from 'qs';
-import { getAuthToken } from '../helpers/authHeader';
-
-export default {
-    getItineraryList,
-    getItineraryDetails,
-    getCity,
-    createCity,
-    createItinerary,
-};
 
 function getItineraryList() {
     return axios.get('/api/itineraries/')
@@ -52,3 +43,11 @@ function createItinerary(itineraryObj, token) {
     return axios(options)
         .then(response => response.data);
 }
+
+export {
+    getItineraryList,
+    getItineraryDetails,
+    getCity,
+    createCity,
+    createItinerary,
+};

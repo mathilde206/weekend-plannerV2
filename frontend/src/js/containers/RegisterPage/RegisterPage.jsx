@@ -4,8 +4,8 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
-import { userActions } from '../../actions/userActions';
-import RegisterForm from '../../components/RegisterForm/RegisterForm';
+import { registerAction } from '../../actions';
+import {RegisterForm} from '../../components';
 
 class Register extends React.Component {
     state = {
@@ -45,7 +45,7 @@ class Register extends React.Component {
             user.email === user.email2 &&
             user.password
         ) {
-            dispatch(userActions.register(user));
+            dispatch(registerAction(user));
         }
     };
 
