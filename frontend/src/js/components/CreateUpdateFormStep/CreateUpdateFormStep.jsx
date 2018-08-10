@@ -17,6 +17,7 @@ const CreateUpdateFormStep = ({ errors, handleInputChange, handleSubmit, stepFie
             stepFields.map(item =>
                 <InputField
                     {...item}
+                    error={errors[ item.name ] ? errors[ item.name ] : ''}
                     handleInputChange={handleInputChange}
                     key={item.name}
                     value={values[ item.name ]}
@@ -31,8 +32,13 @@ const CreateUpdateFormStep = ({ errors, handleInputChange, handleSubmit, stepFie
 );
 
 CreateUpdateFormStep.defaultProps = {
-    errors: '',
+    errors: {},
 };
+
+CreateUpdateFormStep.propTypes = {
+    errors: PropTypes.objectOf(PropTypes.string)
+};
+
 
 export default CreateUpdateFormStep;
 

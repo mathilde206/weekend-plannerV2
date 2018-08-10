@@ -31,7 +31,7 @@ export function getFieldsforStep(step) {
                 type: 'text'
             },
             {
-                name: 'description',
+                name: 'shortDescription',
                 label: 'Short Description',
                 type: 'textarea'
             },

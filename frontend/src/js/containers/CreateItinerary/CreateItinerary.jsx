@@ -22,6 +22,14 @@ import {
     CreateUpdateItineraryForm,
 } from '../../components';
 
+import {
+    createFormObj,
+    validateStep0Input,
+    validateStep1Input,
+    validateStep2Input,
+    validateDayInput,
+} from '../../helpers';
+
 class CreateItinerary extends React.Component {
     state = {
         step: 0,
@@ -47,6 +55,7 @@ class CreateItinerary extends React.Component {
         day3_afternoon: '',
         day3_diner: '',
         image: '',
+        errors: {},
     };
 
     handleInputChange = (event) => {
@@ -104,74 +113,100 @@ class CreateItinerary extends React.Component {
             day3_afternoon,
             day3_diner,
             image,
+            errors,
         } = this.state;
 
         event.preventDefault();
 
         switch (this.state.step) {
         case 1:
-            let cityObj = {
-                name: city,
-                country,
-                language,
-                currency,
-            };
+            let errorsStep1 = validateStep1Input(city, country, language, currency);
 
-            if (!cityPk) {
-                if (this.props.isAccessTokenExpired) {
-                    refreshAccessToken(this.props.refreshToken)
-                        .then(response => {
-                            this.props.setCity(cityObj, response.access.token);
-                        });
-                } else {
-                    this.props.setCity(cityObj, this.props.accessToken);
+            if (errorsStep1.city || errorsStep1.country || errorsStep1.language || errorsStep1.currency) {
+                this.setState({
+                    errors: errorsStep1,
+                });
+            } else {
+                let cityObj = {
+                    name: city,
+                    country,
+                    language,
+                    currency,
+                };
+
+                if (!cityPk) {
+                    if (this.props.isAccessTokenExpired) {
+                        refreshAccessToken(this.props.refreshToken)
+                            .then(response => {
+                                this.props.setCity(cityObj, response.access.token);
+                            });
+                    } else {
+                        this.props.setCity(cityObj, this.props.accessToken);
+                    }
                 }
-            }
 
-            this.setState({
-                step: this.props.steps[ step ],
-            });
+                this.setState({
+                    errors: {},
+                    step: this.props.steps[ step ],
+                });
+            }
             break;
         case 2:
-            this.setState({
-                step: this.props.steps[ step ],
-                cityPk: this.state.cityPk || this.props.formData.pk,
-            });
+            let errorsStep2 = validateStep2Input(title, shortDescription);
+            if (errorsStep2.title || errorsStep2.shortDescription) {
+                this.setState({
+                    errors: errorsStep2
+                });
+            } else {
+                this.setState({
+                    errors: {},
+                    step: this.props.steps[ step ],
+                    cityPk: this.state.cityPk || this.props.formData.pk,
+                });
+            }
+
             break;
         case 3:
+            let errorsDay1 = validateDayInput(day1_morning, day1_lunch, day1_afternoon, day1_diner, 'day1');
+            if (errorsDay1.day1_morning || errorsDay1.day1_lunch || errorsDay1.day1_afternoon || errorsDay1.day1_diner) {
+                this.setState({
+                    errors: errorsDay1
+                });
+            } else {
+                this.setState({
+                    errors: {},
+                    step: this.props.steps[ step ],
+                });
+            }
+            break;
         case 4:
+            let errorsDay2 = validateDayInput(day2_morning, day2_lunch, day2_afternoon, day2_diner, 'day2');
+            if (errorsDay2.day2_morning || errorsDay2.day2_lunch || errorsDay2.day2_afternoon || errorsDay2.day2_diner) {
+                this.setState({
+                    errors: errorsDay2
+                });
+            } else {
+                this.setState({
+                    errors: {},
+                    step: this.props.steps[ step ],
+                });
+            }
+            break;
         case 5:
-            this.setState({
-                step: this.props.steps[ step ],
-            });
+            let errorsDay3 = validateDayInput(day3_morning, day3_lunch, day3_afternoon, day3_diner, 'day3');
+            if (errorsDay3.day3_morning || errorsDay3.day3_lunch || errorsDay3.day3_afternoon || errorsDay3.day3_diner) {
+                this.setState({
+                    errors: errorsDay3
+                });
+            } else {
+                this.setState({
+                    errors: {},
+                    step: this.props.steps[ step ],
+                });
+            }
             break;
         case 6:
-            let formObj = new FormData();
-            formObj.append('city', cityPk);
-            formObj.append('number_of_days', String(number_of_days));
-            formObj.append('title', title);
-            formObj.append('shortDescription', shortDescription);
-            formObj.append('budget', budget);
-            formObj.append('day1_morning', day1_morning);
-            formObj.append('day1_lunch', day1_lunch);
-            formObj.append('day1_afternoon', day1_afternoon);
-            formObj.append('day1_diner', day1_diner);
-            formObj.append('image', image);
-
-            if (number_of_days > 1) {
-                formObj.append('day2_morning', day2_morning);
-                formObj.append('day2_lunch', day2_lunch);
-                formObj.append('day2_afternoon', day2_afternoon);
-                formObj.append('day2_diner', day2_diner);
-            }
-
-            if (number_of_days > 2) {
-                formObj.append('day3_morning', day3_morning);
-                formObj.append('day3_lunch', day3_lunch);
-                formObj.append('day3_afternoon', day3_afternoon);
-                formObj.append('day3_diner', day3_diner);
-            }
-
+            let formObj = createFormObj(this.state);
             if (this.props.isAccessTokenExpired) {
                 refreshAccessToken(this.props.refreshToken)
                     .then(response => {
@@ -183,10 +218,20 @@ class CreateItinerary extends React.Component {
             break;
         case 0:
         default:
-            this.props.onInitializeForm(city, number_of_days);
-            this.setState({
-                step: 1,
-            });
+            let errorsStep0 = validateStep0Input(city);
+
+            if (errorsStep0.city) {
+                this.setState({
+                    errors: errorsStep0,
+                });
+            } else {
+                this.props.onInitializeForm(city, number_of_days);
+                this.setState({
+                    errors: {},
+                    step: 1,
+                });
+
+            }
             break;
         }
     };
@@ -202,6 +247,7 @@ class CreateItinerary extends React.Component {
                     step={this.state.step}
                     type="create"
                     values={this.state}
+                    errors={this.state.errors}
                 />
             </div>);
     }

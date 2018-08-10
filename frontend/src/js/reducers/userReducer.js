@@ -79,14 +79,14 @@ function registrationReducer(state = {}, action) {
 }
 
 function getAccessToken(state) {
-    if (state.auth && state.auth.access) {
-        return state.auth.access.token;
+    if (state.access) {
+        return state.access.token;
     }
 }
 
 function getRefreshToken(state) {
-    if (state.auth && state.auth.refresh) {
-        return state.auth.refresh.token;
+    if (state.refresh) {
+        return state.refresh.token;
     }
 }
 

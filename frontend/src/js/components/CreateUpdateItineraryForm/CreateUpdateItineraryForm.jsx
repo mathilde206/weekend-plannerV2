@@ -10,6 +10,7 @@ import { getFieldsforStep, getDescriptionforSteps } from './config';
 import './CreateUpdateItineraryForm.scss';
 
 const CreateUpdateItineraryForm = ({
+    errors,
     handleInputChange,
     handleSelectExistingCity,
     handleSubmit,
@@ -20,7 +21,6 @@ const CreateUpdateItineraryForm = ({
 }) => {
     const stepFields = getFieldsforStep(step);
     const stepDescription = getDescriptionforSteps(step);
-
     return (
         <Jumbotron className="container create-form-container jumbotron-white">
             {
@@ -30,7 +30,7 @@ const CreateUpdateItineraryForm = ({
             }
 
             {
-                stepDescription.map(line => <p className="lead">{line}</p>)
+                stepDescription.map(line => <p className="lead" key={line}>{line}</p>)
             }
             <hr className="my-2" />
             {
@@ -53,6 +53,7 @@ const CreateUpdateItineraryForm = ({
                 handleSubmit={handleSubmit}
                 handleInputChange={handleInputChange}
                 values={values}
+                errors={errors}
             />
 
         </Jumbotron>
@@ -61,6 +62,7 @@ const CreateUpdateItineraryForm = ({
 
 CreateUpdateItineraryForm.defaultProps = {
     previouslyCreatedCities: [],
+    errors: {},
 };
 
 CreateUpdateItineraryForm.propTypes = {
@@ -71,6 +73,7 @@ CreateUpdateItineraryForm.propTypes = {
     step: PropTypes.number.isRequired,
     type: PropTypes.string.isRequired,
     values: PropTypes.object,
+    errors: PropTypes.objectOf(PropTypes.string),
 };
 
 export default CreateUpdateItineraryForm;

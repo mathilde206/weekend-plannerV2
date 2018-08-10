@@ -8,22 +8,6 @@ from accounts.serializers import UserDetailSerializer
 
 from .models import Itinerary
 
-itinerary_url = HyperlinkedIdentityField(
-    view_name='recommendations-api:detail_recommendation',
-    lookup_field='slug'
-)
-
-itinerary_update_url = HyperlinkedIdentityField(
-    view_name='recommendations-api:update_recommendation',
-    lookup_field='slug'
-)
-
-itinerary_delete_url = HyperlinkedIdentityField(
-    view_name='recommendations-api:delete_recommendation',
-    lookup_field='slug'
-)
-
-
 class ItineraryCreateUpdateSerializer(ModelSerializer):
     class Meta:
         model = Itinerary
@@ -55,10 +39,7 @@ class ItineraryCreateUpdateSerializer(ModelSerializer):
 class ItineraryDetailSerializer(ModelSerializer):
     city = SerializerMethodField()
     comments = SerializerMethodField()
-    delete_url = itinerary_delete_url
     image = SerializerMethodField()
-    url = itinerary_url
-    update_url = itinerary_update_url
     user = UserDetailSerializer(read_only=True)
 
     @staticmethod
@@ -107,14 +88,10 @@ class ItineraryDetailSerializer(ModelSerializer):
             'user',
             'views',
             'created_date',
-            'url',
-            'update_url',
-            'delete_url',
         ]
 
 
 class ItineraryListSerializer(ModelSerializer):
-    url = itinerary_url
     user = UserDetailSerializer(read_only=True)
 
     class Meta:
@@ -125,7 +102,6 @@ class ItineraryListSerializer(ModelSerializer):
             'likes',
             'number_of_days',
             'slug',
-            'url',
             'user',
             'views'
         ]

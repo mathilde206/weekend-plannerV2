@@ -42,13 +42,10 @@ const InputField = ({ error, handleInputChange, label, name, options, type, valu
     return (
         <FormGroup row color={error ? 'danger' : ''}>
             {label ? <Label htmlFor={id} sm={4}>{label}</Label> : ''}
-            <Col sm={8}>{input}</Col>
-            {error ?
-                <FormFeedback className="invalid-feedback">
-                    {error}
-                </FormFeedback>
-                : ''
-            }
+            <Col sm={8}>
+                {input}
+                <FormFeedback className="invalid-feedback">{error}</FormFeedback>
+            </Col>
         </FormGroup>
     );
 };
