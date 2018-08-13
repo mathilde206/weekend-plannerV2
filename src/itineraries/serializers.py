@@ -38,11 +38,9 @@ class ItineraryCreateUpdateSerializer(ModelSerializer):
 
 class ItineraryDetailSerializer(ModelSerializer):
     city = SerializerMethodField()
-    comments = SerializerMethodField()
     image = SerializerMethodField()
     user = UserDetailSerializer(read_only=True)
 
-    @staticmethod
     def get_image(self, obj):
         """
         If an image was uploaded, we add its url
@@ -54,7 +52,6 @@ class ItineraryDetailSerializer(ModelSerializer):
             image = None
         return image
 
-    @staticmethod
     def get_city(self, obj):
         return {
             'name': obj.city.name,
@@ -69,7 +66,6 @@ class ItineraryDetailSerializer(ModelSerializer):
             'title',
             'budget',
             'city',
-            'comments',
             'day1_morning',
             'day1_lunch',
             'day1_afternoon',

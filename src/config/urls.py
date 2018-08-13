@@ -1,4 +1,6 @@
 from django.contrib import admin
+from django.conf.urls.static import static
+from django.conf import settings
 from django.conf.urls import url, include
 from django.urls import path
 from django.views.generic import TemplateView
@@ -13,20 +15,21 @@ from itineraries import urls as itineraries_urls
 from cities import urls as cities_urls
 
 urlpatterns = [
-    path('api/', get_schema_view()),
-    path('api/auth/', include(
-        'rest_framework.urls', namespace='rest_framework'
-    )),
-    path('api/auth/', include(
-        'rest_framework.urls', namespace='rest_framework'
-    )),
-    path('api/auth/token/obtain/', TokenObtainPairView.as_view()),
-    path('api/auth/token/refresh/', TokenRefreshView.as_view()),
-    path('api/users/', include((users_urls, 'users'), namespace='users-api')),
-    path('api/itineraries/',
-        include((itineraries_urls, 'itineraries'), namespace='itineraries-api')),
-    path('api/cities/',
-        include((cities_urls, 'cities'), namespace='cities-api')),
-    path('admin/', admin.site.urls),
-    url(r'', TemplateView.as_view(template_name='react.html')),
-]
+                  path('api/', get_schema_view()),
+                  path('api/auth/', include(
+                      'rest_framework.urls', namespace='rest_framework'
+                  )),
+                  path('api/auth/', include(
+                      'rest_framework.urls', namespace='rest_framework'
+                  )),
+                  path('api/auth/token/obtain/', TokenObtainPairView.as_view()),
+                  path('api/auth/token/refresh/', TokenRefreshView.as_view()),
+                  path('api/users/', include((users_urls, 'users'), namespace='users-api')),
+                  path('api/itineraries/',
+                      include((itineraries_urls, 'itineraries'), namespace='itineraries-api')),
+                  path('api/cities/',
+                      include((cities_urls, 'cities'), namespace='cities-api')),
+                  path('admin/', admin.site.urls),
+              ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+urlpatterns.append(url(r'', TemplateView.as_view(template_name='react.html')))

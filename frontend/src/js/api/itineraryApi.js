@@ -9,7 +9,7 @@ function getItineraryList() {
 }
 
 function getItineraryDetails(slug) {
-    return axios.get(`/api/itineraries/details/${slug}/`)
+    return axios.get(`/api/itineraries/${slug}`)
         .then((response) => response.data);
 }
 

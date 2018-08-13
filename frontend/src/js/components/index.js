@@ -2,6 +2,7 @@ import CardDisplay from './CardDisplay/CardDisplay';
 import CityItem from './CityItem/CityItem';
 import CreateUpdateFormStep from './CreateUpdateFormStep/CreateUpdateFormStep';
 import CreateUpdateItineraryForm from './CreateUpdateItineraryForm/CreateUpdateItineraryForm';
+import DayDetails from './DayDetails/DayDetails';
 import InputField from './InputField/InputField';
 import LoginForm from './LoginForm/LoginForm';
 import RegisterForm from './RegisterForm/RegisterForm';
@@ -13,6 +14,7 @@ export {
     CityItem,
     CreateUpdateFormStep,
     CreateUpdateItineraryForm,
+    DayDetails,
     InputField,
     LoginForm,
     RegisterForm,

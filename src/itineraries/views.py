@@ -51,7 +51,7 @@ class ItineraryDelete(DestroyAPIView):
 
 class ItineraryDetailAPIView(RetrieveAPIView):
     lookup_field = 'slug'
-    permission_classes = ['AllowAny']
+    permission_classes = [AllowAny]
     queryset = Itinerary.objects.all()
     serializer_class = ItineraryDetailSerializer
 
