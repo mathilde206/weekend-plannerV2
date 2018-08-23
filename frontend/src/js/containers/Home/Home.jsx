@@ -6,9 +6,11 @@ import { Jumbotron, Button, Form, FormGroup, Label, Input } from 'reactstrap';
 
 import * as reducers from '../../reducers';
 
+import ItinerariesList from '../../components/ItinerariesList/ItinerariesList';
+
 import './Home.scss';
 
-const HomeComponent = ({isAuthenticated, user }) => (
+const Home = ({ isAuthenticated, itineraries, user }) => (console.log(itineraries) ||
     <div className="home-container container-wrapper">
         <div className="container">
             <Jumbotron className="jumbotron">
@@ -33,17 +35,25 @@ const HomeComponent = ({isAuthenticated, user }) => (
                     </Form>
                 </div>
             </Jumbotron>
+            {
+                itineraries.itinerariesList &&
+                <ItinerariesList
+                    itineraries={itineraries.itinerariesList}
+                />
+            }
         </div>
     </div>
 );
 
-HomeComponent.defaultProps = {
+Home.defaultProps = {
     isAuthenticated: false,
+    itineraries: {},
     user: '',
 };
 
-HomeComponent.propTypes = {
+Home.propTypes = {
     isAuthenticated: PropTypes.bool,
+    itineraries: PropTypes.objectOf(PropTypes.object),
     user: PropTypes.string,
 };
 
@@ -51,8 +61,9 @@ const mapStateToProps = (state) => {
     const { user } = state.user;
     return {
         user,
-        isAuthenticated: reducers.isAuthenticated(state)
+        isAuthenticated: reducers.isAuthenticated(state),
+        itineraries: state.itineraries,
     };
 };
 
-export default connect(mapStateToProps)(HomeComponent);
+export default connect(mapStateToProps)(Home);

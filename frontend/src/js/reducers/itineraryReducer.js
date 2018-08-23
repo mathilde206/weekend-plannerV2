@@ -2,13 +2,16 @@ import {
     INITIALIZE_FORM,
     CITY_CREATE,
     FORM_SUBMITTED,
-    ITINERARY_CREATED
+    ITINERARY_CREATED,
+    REQUEST_ITINERARIES_LIST,
+    RECEIVE_ITINERARIES_LIST,
 } from '../actions';
 
 function createUpdateItineraryReducer(state = { currentStep: 0 }, action) {
     switch (action.type) {
     case INITIALIZE_FORM:
         return {
+            ...state,
             formData: { ...action.formData },
             steps: action.steps,
             previouslyCreatedCities: action.previouslyCreatedCities,
@@ -29,6 +32,7 @@ function createUpdateItineraryReducer(state = { currentStep: 0 }, action) {
         };
     case ITINERARY_CREATED:
         return {
+            ...state,
             itinerarySlug: action.data.slug
         };
     default:
@@ -36,6 +40,27 @@ function createUpdateItineraryReducer(state = { currentStep: 0 }, action) {
     }
 }
 
+function itinerariesListReducer(state = {}, action) {
+    console.log(action)
+    switch (action.type) {
+    case REQUEST_ITINERARIES_LIST:
+        return {
+            ...state,
+            isLoading: true,
+        };
+    case RECEIVE_ITINERARIES_LIST: {
+        return {
+            ...state,
+            isLoading: action.isLoading,
+            itinerariesList: action.itinerariesList,
+        };
+    }
+    default:
+        return state;
+    }
+}
+
 export {
     createUpdateItineraryReducer,
+    itinerariesListReducer,
 };

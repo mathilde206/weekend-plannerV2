@@ -6,8 +6,8 @@ import DayDetails from './DayDetails/DayDetails';
 import InputField from './InputField/InputField';
 import LoginForm from './LoginForm/LoginForm';
 import RegisterForm from './RegisterForm/RegisterForm';
-import TripCard from './TripCard/TripCard';
-import Trips from './Trips/Trips';
+import ItineraryCard from './ItineraryCard/ItineraryCard';
+import ItinerariesList from './ItinerariesList/ItinerariesList';
 
 export {
     CardDisplay,
@@ -18,6 +18,6 @@ export {
     InputField,
     LoginForm,
     RegisterForm,
-    TripCard,
-    Trips,
+    ItineraryCard,
+    ItinerariesList,
 };

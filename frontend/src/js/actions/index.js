@@ -12,9 +12,13 @@ import {
     CITY_CREATE,
     FORM_SUBMITTED,
     ITINERARY_CREATED,
+    RECEIVE_ITINERARIES_LIST,
+    REQUEST_ITINERARIES_LIST,
     initializeCreateAction,
     setCityAction,
     createItineraryAction,
+    receiveItinerariesList,
+    requestItinerariesList,
 } from './itineraryActions';
 
 import {
@@ -68,6 +72,8 @@ export {
     REGISTER_REQUEST,
     REGISTER_SUCCESS,
     REGISTER_FAILURE,
+    RECEIVE_ITINERARIES_LIST,
+    REQUEST_ITINERARIES_LIST,
     alertClearAction,
     alertErrorAction,
     alertSuccessAction,
@@ -80,4 +86,6 @@ export {
     registerAction,
     setAuthedUserAction,
     deleteAction,
+    receiveItinerariesList,
+    requestItinerariesList,
 };

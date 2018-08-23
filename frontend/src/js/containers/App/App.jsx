@@ -7,7 +7,10 @@ import { history } from '../../helpers/';
 import {
     alertClearAction,
     setAuthedUserAction,
+    requestItinerariesList,
+    receiveItinerariesList,
 } from '../../actions';
+import { getItineraryList } from '../../api';
 
 import Home from '../Home/Home';
 import ItineraryDetails from '../ItineraryDetails/ItineraryDetails';
@@ -23,25 +26,27 @@ class App extends React.Component {
     constructor(props) {
         super(props);
 
-        const { dispatch } = this.props;
         history.listen((location, action) => {
             // clear alert on location change
-            dispatch(alertClearAction());
+            this.props.alertClearAction();
         });
     }
 
     componentWillMount() {
-        const {
-            dispatch,
-        } = this.props;
-
         if (localStorage.getItem('persist:auth')
             && JSON.parse(JSON.parse(localStorage.getItem('persist:auth')).auth).access
         ) {
             const auth = JSON.parse(localStorage.getItem('persist:auth'));
             const id = JSON.parse(auth.auth).access.user_id;
-            dispatch(setAuthedUserAction(id));
+            this.props.setAuthedUserAction(id);
         }
+
+        this.props.requestItinerariesList();
+        getItineraryList()
+            .then((data) => {
+                this.props.receiveItinerariesList(data.results);
+            });
+
     }
 
     render() {
@@ -65,10 +70,17 @@ class App extends React.Component {
     }
 }
 
+const mapDispatchToProps = (dispatch) => ({
+    alertClearAction: () => dispatch(alertClearAction),
+    requestItinerariesList: () => dispatch(requestItinerariesList()),
+    receiveItinerariesList: (itinerariesList) => dispatch(receiveItinerariesList(itinerariesList)),
+    setAuthedUserAction: (id) => dispatch(setAuthedUserAction(id)),
+});
+
 const mapStateToProps = ({ alert }) => (
     {
         alert
     }
 );
 
-export default connect(mapStateToProps)(App);
+export default connect(mapStateToProps, mapDispatchToProps)(App);

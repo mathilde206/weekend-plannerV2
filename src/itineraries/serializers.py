@@ -8,6 +8,7 @@ from accounts.serializers import UserDetailSerializer
 
 from .models import Itinerary
 
+
 class ItineraryCreateUpdateSerializer(ModelSerializer):
     class Meta:
         model = Itinerary
@@ -89,12 +90,19 @@ class ItineraryDetailSerializer(ModelSerializer):
 
 class ItineraryListSerializer(ModelSerializer):
     user = UserDetailSerializer(read_only=True)
+    city = SerializerMethodField()
+
+    def get_city(self, obj):
+        return {
+            'name': obj.city.name,
+        }
 
     class Meta:
         model = Itinerary
         fields = [
             'title',
             'city',
+            'image',
             'likes',
             'number_of_days',
             'slug',

@@ -8,6 +8,8 @@ const INITIALIZE_FORM = 'INITIALIZE_FORM';
 const CITY_CREATE = 'CITY_CREATE';
 const FORM_SUBMITTED = 'FORM_SUBMITTED';
 const ITINERARY_CREATED = 'FORM_CREATED';
+const REQUEST_ITINERARIES_LIST = 'REQUEST_ITINERARIES_LIST';
+const RECEIVE_ITINERARIES_LIST = 'RECEIVE_ITINERARIES_LIST';
 
 function getSteps(number_of_days) {
     if (number_of_days === 1) {
@@ -69,12 +71,30 @@ function createItineraryAction(formObj, token) {
     };
 }
 
+function requestItinerariesList() {
+    return {
+        type: REQUEST_ITINERARIES_LIST,
+        isLoading: true,
+    };
+}
+
+function receiveItinerariesList(itinerariesList) {
+    return {
+        type: RECEIVE_ITINERARIES_LIST,
+        itinerariesList,
+    };
+};
+
 export {
     INITIALIZE_FORM,
     CITY_CREATE,
     FORM_SUBMITTED,
     ITINERARY_CREATED,
+    RECEIVE_ITINERARIES_LIST,
+    REQUEST_ITINERARIES_LIST,
     initializeCreateAction,
     setCityAction,
     createItineraryAction,
+    requestItinerariesList,
+    receiveItinerariesList,
 };

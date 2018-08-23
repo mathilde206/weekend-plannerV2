@@ -3,9 +3,7 @@ import qs from 'qs';
 
 function getItineraryList() {
     return axios.get('/api/itineraries/')
-        .then((response) => {
-            console.log(response);
-        });
+        .then((response) => (response.data));
 }
 
 function getItineraryDetails(slug) {
