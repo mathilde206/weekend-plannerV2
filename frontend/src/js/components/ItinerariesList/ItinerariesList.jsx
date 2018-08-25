@@ -11,14 +11,17 @@ import ItineraryCard from '../ItineraryCard/ItineraryCard';
 
 const ItinerariesList = ({ itineraries }) => (
     <CardColumns>
-        {itineraries.map(({ city, description, id, image, title, slug }) => (
+        {itineraries.map(({ city, description, id, image, likes, title, slug, views,  }) => (
             <ItineraryCard
                 city={city.name}
                 image={image}
                 description={description}
+                key={slug}
                 id={id}
+                likes={views}
                 title={title}
                 slug={slug}
+                views={views}
             />
         )
         )}

@@ -1,3 +1,14 @@
+@import '../../../scss/variables';
+
 .city-item-card {
     margin-bottom: 20px;
+
+    .btn {
+        background-color: $primary-dark;
+        border: $primary-dark;
+
+        &:hover{
+          background-color: $primary-light;
+        }
+    }
 }

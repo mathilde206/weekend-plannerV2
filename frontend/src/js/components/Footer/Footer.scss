@@ -1,0 +1,9 @@
+@import '../../../scss/variables';
+
+.footer {
+    min-height: 50px;
+    width: 100%;
+    background-color: $primary-dark;
+    color: $font-color-light;
+    padding: 20px;
+}

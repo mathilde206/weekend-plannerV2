@@ -4,22 +4,22 @@ export function getFieldsforStep(step) {
         return ([
             {
                 name: 'city',
-                label: 'City',
+                label: 'City *',
                 type: 'text'
             },
             {
                 name: 'country',
-                label: 'Country',
+                label: 'Country *',
                 type: 'text'
             },
             {
                 name: 'language',
-                label: 'Language',
+                label: 'Language *',
                 type: 'text'
             },
             {
                 name: 'currency',
-                label: 'Currency',
+                label: 'Currency *',
                 type: 'text'
             },
         ]);
@@ -27,17 +27,17 @@ export function getFieldsforStep(step) {
         return ([
             {
                 name: 'title',
-                label: 'Title of your Itinerary',
+                label: 'Title of your Itinerary *',
                 type: 'text'
             },
             {
                 name: 'shortDescription',
-                label: 'Short Description',
+                label: 'Short Description *',
                 type: 'textarea'
             },
             {
                 name: 'budget',
-                label: 'Budget',
+                label: 'Budget *',
                 type: 'select',
                 options: [ 'Cheap', 'Affordable', 'Expensive', 'Very Expensive' ]
             }
@@ -46,22 +46,22 @@ export function getFieldsforStep(step) {
         return ([
             {
                 name: 'day1_morning',
-                label: 'Day 1 - Morning',
+                label: 'Day 1 - Morning *',
                 type: 'textarea'
             },
             {
                 name: 'day1_lunch',
-                label: 'Day 1 - Lunch',
+                label: 'Day 1 - Lunch *',
                 type: 'textarea'
             },
             {
                 name: 'day1_afternoon',
-                label: 'Day 1 - Afternoon',
+                label: 'Day 1 - Afternoon *',
                 type: 'textarea'
             },
             {
                 name: 'day1_diner',
-                label: 'Day 1 - Diner',
+                label: 'Day 1 - Diner *',
                 type: 'textarea'
             },
 
@@ -125,12 +125,12 @@ export function getFieldsforStep(step) {
         return ([
             {
                 name: 'city',
-                label: 'City',
+                label: 'City *',
                 type: 'text'
             },
             {
                 name: 'number_of_days',
-                label: 'Number of Days',
+                label: 'Number of Days *',
                 type: 'select',
                 options: [ 1, 2, 3 ]
             },

@@ -11,6 +11,8 @@ import {
 
 import DayDetails from '../DayDetails/DayDetails';
 
+import './DayTabs.scss';
+
 class DayTabs extends React.Component {
     state = {
         activeDayTab: 'day1',

@@ -19,6 +19,8 @@ import {
 
 import ItineraryDetailsActions from '../ItineraryDetailsActions/ItineraryDetailsActions';
 
+import './ItineraryDetailsHeader.scss';
+
 library.add(
     faDollarSign,
     faMapMarkerAlt,
@@ -47,7 +49,9 @@ const ItineraryDetailsHeader = ({
             image &&
             <Row>
                 <Col xs="12" md={{ size: 10, offset: 1 }}>
-                    <img className="itinerary-image img-fluid rounded mx-auto d-block" src={image} />
+                    <div className="image-container">
+                        <img className="itinerary-image img-fluid rounded mx-auto d-block" src={image} />
+                    </div>
                 </Col>
             </Row>
         }

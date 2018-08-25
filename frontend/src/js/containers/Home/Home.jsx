@@ -6,40 +6,31 @@ import { Jumbotron, Button, Form, FormGroup, Label, Input } from 'reactstrap';
 
 import * as reducers from '../../reducers';
 
-import ItinerariesList from '../../components/ItinerariesList/ItinerariesList';
+import {
+    HomeJumbotron,
+    ItinerariesList,
+} from '../../components';
 
 import './Home.scss';
 
-const Home = ({ isAuthenticated, itineraries, user }) => (console.log(itineraries) ||
-    <div className="home-container container-wrapper">
-        <div className="container">
-            <Jumbotron className="jumbotron">
-                <h2 className="capitalize">Welcome {user ? user : ''}</h2>
-                <p className="lead">Start planning your next weekend in Europe with 1-3 days trips recommendations. You can also join the community and propose your own itineraries. </p>
-                <hr className="my-2" />
-                <div className="buttons-inline">
-                    {
-                        isAuthenticated &&
-                        <Link to="/create/">
-                            <Button color="primary" className="btn-mg-right">
-                                Create an Itinerary
-                            </Button>
-                        </Link>
-                    }
-
-                    <Form inline>
-                        <FormGroup className="mb-2 mr-sm-2 mb-sm-0">
-                            <Input type="text" name="search" id="search" placeholder="Start Exploring" />
-                        </FormGroup>
-                        <Button>Go!</Button>
-                    </Form>
-                </div>
-            </Jumbotron>
+const Home = ({ isAuthenticated, itineraries, user }) => (
+    <div className="container-fluid home-wrapper">
+        <div className="home-container">
+            <HomeJumbotron
+                isAuthenticated={isAuthenticated}
+                user={user}
+            />
+        </div>
+        <div className="list-container">
+            <h2 className="border-title">Where will you go next weekend...</h2>
             {
-                itineraries.itinerariesList &&
-                <ItinerariesList
-                    itineraries={itineraries.itinerariesList}
-                />
+                itineraries.isLoading ?
+                    <h3 className="border-title">Loading...</h3> :
+                    <div className="container">
+                        <ItinerariesList
+                            itineraries={itineraries.itinerariesList}
+                        />
+                    </div>
             }
         </div>
     </div>
@@ -53,7 +44,10 @@ Home.defaultProps = {
 
 Home.propTypes = {
     isAuthenticated: PropTypes.bool,
-    itineraries: PropTypes.objectOf(PropTypes.object),
+    itineraries: PropTypes.shape({
+        isLoading: PropTypes.bool,
+        itinerariesList: PropTypes.arrayOf(PropTypes.object)
+    }),
     user: PropTypes.string,
 };
 

@@ -12,6 +12,10 @@ import {
 } from '../../actions';
 import { getItineraryList } from '../../api';
 
+import {
+    Footer
+} from '../../components';
+
 import Home from '../Home/Home';
 import ItineraryDetails from '../ItineraryDetails/ItineraryDetails';
 import LoginPage from '../LoginPage/LoginPage';
@@ -56,14 +60,16 @@ class App extends React.Component {
             <Router history={history}>
                 <div className="container-fluid">
                     <NavigationBarTop user={this.props.user || ''} />
-                    <Switch>
-                        <Route exact path="/" component={Home} />
-                        <Route exact path="/login/" component={LoginPage} />
-                        <Route exact path="/register/" component={RegisterPage} />
-                        <PrivateRoute path="/create/" component={CreateItinerary} />
-                        <Route path="/:slug" component={ItineraryDetails} />
-                    </Switch>
-
+                    <div className="app-container">
+                        <Switch>
+                            <Route exact path="/" component={Home} />
+                            <Route exact path="/login/" component={LoginPage} />
+                            <Route exact path="/register/" component={RegisterPage} />
+                            <PrivateRoute path="/create/" component={CreateItinerary} />
+                            <Route path="/:slug" component={ItineraryDetails} />
+                        </Switch>
+                    </div>
+                    <Footer />
                 </div>
             </Router>
         );

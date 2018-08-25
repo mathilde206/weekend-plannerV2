@@ -5,6 +5,7 @@ import {
     ITINERARY_CREATED,
     REQUEST_ITINERARIES_LIST,
     RECEIVE_ITINERARIES_LIST,
+    RESET_FORM,
 } from '../actions';
 
 function createUpdateItineraryReducer(state = { currentStep: 0 }, action) {
@@ -34,6 +35,10 @@ function createUpdateItineraryReducer(state = { currentStep: 0 }, action) {
         return {
             ...state,
             itinerarySlug: action.data.slug
+        };
+    case RESET_FORM:
+        return {
+            formData: {}
         };
     default:
         return state;

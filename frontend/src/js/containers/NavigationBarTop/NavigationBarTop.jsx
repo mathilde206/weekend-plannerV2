@@ -46,7 +46,7 @@ class NavigationBarTop extends React.Component {
                                 <NavLink href="/explore/">Explore</NavLink>
                             </NavItem>
                             <NavItem>
-                                <NavLink href="/add/">Add an Itinerary</NavLink>
+                                <NavLink href="/create">Add an Itinerary</NavLink>
                             </NavItem>
                             <UncontrolledDropdown nav inNavbar>
                                 <DropdownToggle nav caret>

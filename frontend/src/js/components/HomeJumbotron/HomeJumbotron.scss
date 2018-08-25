@@ -1,13 +1,9 @@
 @import '../../../scss/variables';
 
-.itinerary-card {
-    margin-bottom: 2em;
+.home-jumbotron {
+    background-color: $background-white;
 
-    .card-image {
-        width: 100%;
-    }
-
-    .btn.btn-secondary {
+    .btn {
         background-color: $primary-dark;
         border-color: $primary-dark;
 
@@ -17,3 +13,4 @@
         }
     }
 }
+

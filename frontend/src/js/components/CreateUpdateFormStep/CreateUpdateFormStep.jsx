@@ -4,6 +4,8 @@ import PropTypes from 'prop-types';
 import { Alert, Button, Form, Jumbotron } from 'reactstrap';
 import InputField from '../InputField/InputField';
 
+import './CreateUpdateFormStep.scss';
+
 const CreateUpdateFormStep = ({ errors, handleInputChange, handleSubmit, stepFields, values }) => (
     <Form>
         {
@@ -25,7 +27,7 @@ const CreateUpdateFormStep = ({ errors, handleInputChange, handleSubmit, stepFie
             )
         }
 
-        <Button color="primary" size="lg" onClick={handleSubmit}>
+        <Button className="form-button" size="lg" onClick={handleSubmit}>
             Ok
         </Button>
     </Form>

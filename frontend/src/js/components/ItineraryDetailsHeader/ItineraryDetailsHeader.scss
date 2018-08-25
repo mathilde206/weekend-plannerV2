@@ -1,0 +1,24 @@
+@import '../../../scss/variables';
+
+.details-wrapper {
+    background-color: white;
+    button {
+        margin-right: 0.5em;
+    }
+
+    .image-container {
+        max-height: 60vh;
+        margin-top: 1em;
+
+        .itinerary-image {
+            width: 100%;
+        }
+    }
+
+    .jumbotron {
+        padding: 4rem 2rem 1rem 2rem;
+        background-color: $background-white;
+        border: $heavy-border;
+        color: $font-color-dark;
+    }
+}

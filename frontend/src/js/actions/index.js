@@ -14,11 +14,13 @@ import {
     ITINERARY_CREATED,
     RECEIVE_ITINERARIES_LIST,
     REQUEST_ITINERARIES_LIST,
+    RESET_FORM,
     initializeCreateAction,
     setCityAction,
     createItineraryAction,
     receiveItinerariesList,
     requestItinerariesList,
+    resetForm,
 } from './itineraryActions';
 
 import {
@@ -80,6 +82,7 @@ export {
     RECEIVE_ITINERARIES_LIST,
     RECEIVE_USER_LIKES,
     REQUEST_ITINERARIES_LIST,
+    RESET_FORM,
     alertClearAction,
     alertErrorAction,
     alertSuccessAction,
@@ -95,4 +98,5 @@ export {
     receiveItinerariesList,
     receiveUserItineraryLikes,
     requestItinerariesList,
+    resetForm,
 };

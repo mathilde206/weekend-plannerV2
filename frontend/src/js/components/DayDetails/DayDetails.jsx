@@ -6,17 +6,19 @@ import {
     Row,
 } from 'reactstrap';
 
+import './DayDetails.scss';
+
 const DayDetails = ({ morning, lunch, afternoon, diner }) => {
     return (
         <Row>
             <Col xs="12" md={{ size: 10, offset: 1 }} className="day-details-wrapper">
-                <h2 className="text-center">In the morning...</h2>
+                <h3 className="text-center itinerary-header">In the morning...</h3>
                 <p className="text-center">{morning}</p>
-                <h2 className="text-center">For lunch</h2>
+                <h3 className="text-center itinerary-header">For lunch</h3>
                 <p className="text-center">{lunch}</p>
-                <h2 className="text-center">In the afternoon...</h2>
+                <h3 className="text-center itinerary-header">In the afternoon...</h3>
                 <p className="text-center">{afternoon}</p>
-                <h2 className="text-center">...And for diner</h2>
+                <h3 className="text-center itinerary-header">...And for diner</h3>
                 <p className="text-center">{diner}</p>
             </Col>
         </Row>

@@ -11,7 +11,9 @@ import './CreateUpdateItineraryForm.scss';
 
 const CreateUpdateItineraryForm = ({
     errors,
+    handleClickBack,
     handleInputChange,
+    handleReset,
     handleSelectExistingCity,
     handleSubmit,
     previouslyCreatedCities,
@@ -55,6 +57,10 @@ const CreateUpdateItineraryForm = ({
                 values={values}
                 errors={errors}
             />
+            {
+                values.city &&
+                <button className="btn btn-link reset-button" onClick={handleReset}>Reset</button>
+            }
 
         </Jumbotron>
     );
@@ -66,14 +72,16 @@ CreateUpdateItineraryForm.defaultProps = {
 };
 
 CreateUpdateItineraryForm.propTypes = {
+    errors: PropTypes.objectOf(PropTypes.string),
+    handleClickBack: PropTypes.func.isRequired,
     handleInputChange: PropTypes.func.isRequired,
     handleSelectExistingCity: PropTypes.func.isRequired,
     handleSubmit: PropTypes.func.isRequired,
+    handleReset: PropTypes.func.isRequired,
     previouslyCreatedCities: PropTypes.arrayOf(PropTypes.object),
     step: PropTypes.number.isRequired,
     type: PropTypes.string.isRequired,
     values: PropTypes.object,
-    errors: PropTypes.objectOf(PropTypes.string),
 };
 
 export default CreateUpdateItineraryForm;

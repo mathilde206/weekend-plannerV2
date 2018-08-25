@@ -1,18 +1,13 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import {
     isAuthenticated,
-    refreshToken,
-    accessToken,
-    isAccessTokenExpired,
 } from '../../reducers';
 import {
     getItineraryDetails,
     increaseViewsCounter,
-    addLike,
-    refreshAccessToken,
 } from '../../api';
 
 import {
@@ -94,9 +89,6 @@ class ItineraryDetails extends React.Component {
 
         const {
             isAuthenticated,
-            loggedInUser,
-            userLikes,
-            userId,
         } = this.props;
 
         const slug = this.props.match.params.slug;
@@ -132,7 +124,6 @@ class ItineraryDetails extends React.Component {
                     day3_diner={day3_diner}
                     number_of_days={number_of_days}
                 />
-                <hr />
             </div>
         );
     }
@@ -140,13 +131,11 @@ class ItineraryDetails extends React.Component {
 
 ItineraryDetails.defaultProps = {
     isAuthenticated: false,
-    loggedInUser: '',
     userLikes: []
 };
 
 ItineraryDetails.propTypes = {
     isAuthenticated: PropTypes.bool,
-    loggedInUser: PropTypes.string,
     userLikes: PropTypes.arrayOf(PropTypes.number),
 };
 
@@ -156,12 +145,7 @@ const mapStateToProps = (state) => {
     } = state;
 
     return ({
-        loggedInUser: state.user.user,
-        userId: state.user.userId,
         isAuthenticated: isAuthenticated(state),
-        refreshToken: refreshToken(state),
-        accessToken: accessToken(state),
-        isAccessTokenExpired: isAccessTokenExpired(state),
         userLikes: userLikes.itinerary_likes,
     });
 };

@@ -13,17 +13,32 @@ import {
 
 import './ItineraryCard.scss';
 
+import { library } from '@fortawesome/fontawesome-svg-core/index';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {
+    faMapMarkerAlt,
+    faStar,
+    faEye,
+} from '@fortawesome/free-solid-svg-icons';
+
+library.add(
+    faMapMarkerAlt,
+    faStar,
+    faEye,
+);
+
 //TODO: add the callback
 
 const ItineraryCard = ({
     city,
     image,
     description,
-    id,
+    likes,
     photo,
     title,
     slug,
-}) => {console.log(slug)
+    views,
+}) => {
     return (
         <Card
             className="itinerary-card"
@@ -36,9 +51,13 @@ const ItineraryCard = ({
             />
             <CardBody>
                 <CardTitle>{title}</CardTitle>
-                <CardSubtitle>{city}</CardSubtitle>
+                <CardSubtitle>
+                    <FontAwesomeIcon icon="map-marker-alt" /> {city}
+                    &nbsp;<FontAwesomeIcon icon="eye" /> {views}
+                    &nbsp;<FontAwesomeIcon icon="star" /> {likes}
+                </CardSubtitle>
                 <CardText>{description}</CardText>
-                <Link to={slug}><Button>Button</Button></Link>
+                <Link to={slug}><Button>More</Button></Link>
             </CardBody>
         </Card>
     );
@@ -46,14 +65,18 @@ const ItineraryCard = ({
 
 ItineraryCard.defaultProps = {
     image: '/static/images/genericCard.jpg',
+    likes: 0,
+    description: '',
+    views: 0,
 };
 
 ItineraryCard.propTypes = {
     city: PropTypes.string.isRequired,
-    description: PropTypes.string.isRequired,
-    id: PropTypes.string.isRequired,
+    description: PropTypes.string,
     image: PropTypes.string,
+    likes: PropTypes.number,
     title: PropTypes.string.isRequired,
+    views: PropTypes.number,
 };
 
 export default ItineraryCard;

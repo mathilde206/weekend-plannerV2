@@ -1,0 +1,12 @@
+@import '../../../scss/variables';
+
+.day-tabs{
+    .nav-item {
+        font-size: 1.4em;
+        font-family: $font-title;
+
+        &:hover{
+            cursor: pointer;
+        }
+    }
+}

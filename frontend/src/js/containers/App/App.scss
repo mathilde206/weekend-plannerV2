@@ -1,13 +1,12 @@
 @import '../../../scss/variables';
+@import '../../../scss/reset';
 
 body, html {
     min-width: 100vw;
     min-height: 100vh;
     font-family: $font-text;
 
-    background: $background-light;  /* fallback for old browsers */
-    background: -webkit-linear-gradient(to left,  $background-dark, $background-light);  /* Chrome 10-25, Safari 5.1-6 */
-    background: linear-gradient(to left, $background-dark, $background-light); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    background: $background-white;
 
     h1, h2, h3, h4 {
         font-family: $font-title;
@@ -38,5 +37,8 @@ body, html {
     .title {
         font-family: $font-title;
     }
-}
 
+    .app-container{
+        min-height:90vh;
+    }
+}

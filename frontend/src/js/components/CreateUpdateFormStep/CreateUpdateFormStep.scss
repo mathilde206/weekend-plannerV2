@@ -1,0 +1,11 @@
+@import '../../../scss/variables';
+
+.form-button {
+    background-color: $primary-dark;
+    border-color: $primary-dark;
+
+    &:hover {
+        background-color: $primary-light;
+        border-color: $primary-light;
+    }
+}

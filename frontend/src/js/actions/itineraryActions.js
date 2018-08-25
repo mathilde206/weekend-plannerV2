@@ -7,9 +7,10 @@ import {
 const INITIALIZE_FORM = 'INITIALIZE_FORM';
 const CITY_CREATE = 'CITY_CREATE';
 const FORM_SUBMITTED = 'FORM_SUBMITTED';
-const ITINERARY_CREATED = 'FORM_CREATED';
+const ITINERARY_CREATED = 'ITINERARY_CREATED';
 const REQUEST_ITINERARIES_LIST = 'REQUEST_ITINERARIES_LIST';
 const RECEIVE_ITINERARIES_LIST = 'RECEIVE_ITINERARIES_LIST';
+const RESET_FORM = 'RESET_FORM';
 
 function getSteps(number_of_days) {
     if (number_of_days === 1) {
@@ -83,7 +84,13 @@ function receiveItinerariesList(itinerariesList) {
         type: RECEIVE_ITINERARIES_LIST,
         itinerariesList,
     };
-};
+}
+
+function resetForm() {
+    return {
+        type: RESET_FORM,
+    };
+}
 
 export {
     INITIALIZE_FORM,
@@ -92,9 +99,11 @@ export {
     ITINERARY_CREATED,
     RECEIVE_ITINERARIES_LIST,
     REQUEST_ITINERARIES_LIST,
+    RESET_FORM,
     initializeCreateAction,
     setCityAction,
     createItineraryAction,
     requestItinerariesList,
     receiveItinerariesList,
+    resetForm,
 };

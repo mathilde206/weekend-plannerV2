@@ -5,11 +5,25 @@ nav.navbar.navbar-expand-md.navbar-light {
     background: -webkit-linear-gradient(to right, $primary, $primary-dark); /* Chrome 10-25, Safari 5.1-6 */
     background: linear-gradient(to right, $primary, $primary-dark); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 
-    a {
-        color: $font-color;
+    .show>.nav-link {
+        color: $secondary;
+    }
 
-        &:hover{
-            color: $secondary-dark;
+    .dropdown-item {
+        a {
+            color: $font-color-dark;
+
+            &:hover, &:active{
+                color: $primary;
+            }
+        }
+    }
+
+    a {
+        color: $font-color-light;
+
+        &:hover, &:active{
+            color: $secondary;
         }
 
         &.navbar-brand {
