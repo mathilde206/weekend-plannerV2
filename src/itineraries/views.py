@@ -1,9 +1,12 @@
+from django.contrib.auth import get_user_model
+from django.forms.models import model_to_dict
 from rest_framework.filters import (
     SearchFilter,
     OrderingFilter,
 )
 
 from rest_framework.generics import (
+    GenericAPIView,
     CreateAPIView,
     DestroyAPIView,
     ListAPIView,
@@ -11,11 +14,16 @@ from rest_framework.generics import (
     RetrieveUpdateAPIView,
 )
 
+from django.shortcuts import get_object_or_404
+from rest_framework.response import Response
+
 from rest_framework.permissions import (
     AllowAny,
     IsAuthenticated,
     IsAdminUser,
 )
+
+from accounts.models import Account
 
 from .models import Itinerary
 from .pagination import RecommendationPageNumberPagination
@@ -24,8 +32,12 @@ from .serializers import (
     ItineraryCreateUpdateSerializer,
     ItineraryDetailSerializer,
     ItineraryListSerializer,
+    ItineraryUpdateNumberOfViews,
 )
 
+from accounts.serializers import (UserDetailSerializer, UserLikesSerializer)
+
+User = get_user_model()
 
 class ItineraryCreateView(CreateAPIView):
     """
@@ -76,6 +88,45 @@ class ItineraryUpdateAPIView(RetrieveUpdateAPIView):
     queryset = Itinerary.objects.all()
     serializer_class = ItineraryCreateUpdateSerializer
     permission_classes = [IsOwnerOrReadOnly]
+
+
+class ItineraryUpdateNumberOfViewsView(RetrieveUpdateAPIView):
+    lookup_field = 'slug'
+    queryset = Itinerary.objects.all()
+    serializer_class = ItineraryUpdateNumberOfViews
+    permission_classes = [AllowAny]
+
+
+class ItineraryUpdateLikes(GenericAPIView):
+    lookup_field = 'slug'
+    queryset = Itinerary.objects.all()
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request, slug=None, format=None):
+        obj = get_object_or_404(Itinerary, slug=slug)
+        user = self.request.user
+        userId = User.objects.filter(username=user)[0].id
+        account = Account.objects.filter(user=userId)[0]
+
+        if account in obj.likes.all():
+            obj.likes.remove(account)
+            obj.save()
+            print(account.likes.all())
+        else:
+            obj.likes.add(account)
+            obj.save()
+            print(account.likes.all())
+
+        userLikes = []
+        for itinerary in account.likes.all():
+            userLikes.append(itinerary.id)
+
+        data = {
+            "userLikes": userLikes,
+        }
+        return Response(data)
+
+
 
 # TODO: Add a Recommendation list for posts from a user and posts about a city (use filter on
 # queryset instead of all)

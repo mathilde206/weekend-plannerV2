@@ -6,6 +6,8 @@ from .views import (
     ItineraryDetailAPIView,
     ItineraryUpdateAPIView,
     ItineraryListAPIView,
+    ItineraryUpdateNumberOfViewsView,
+    ItineraryUpdateLikes,
 )
 
 urlpatterns = [
@@ -13,5 +15,7 @@ urlpatterns = [
     path('<slug>', ItineraryDetailAPIView.as_view()),
     path('create/', ItineraryCreateView.as_view()),
     path('<slug>/delete', ItineraryDelete.as_view()),
-    path('<slug>/update', ItineraryUpdateAPIView.as_view())
+    path('<slug>/update', ItineraryUpdateAPIView.as_view()),
+    path('<slug>/views', ItineraryUpdateNumberOfViewsView.as_view()),
+    path('<slug>/like', ItineraryUpdateLikes.as_view()),
 ]

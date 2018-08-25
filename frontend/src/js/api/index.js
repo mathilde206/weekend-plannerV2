@@ -4,6 +4,8 @@ import {
     getCity,
     createCity,
     createItinerary,
+    increaseViewsCounter,
+    addLike,
 } from './itineraryApi';
 
 import {
@@ -12,6 +14,7 @@ import {
     logout,
     register,
     refreshAccessToken,
+    getUserLikes,
 } from './userApi';
 
 export {
@@ -25,4 +28,7 @@ export {
     logout,
     register,
     refreshAccessToken,
+    increaseViewsCounter,
+    addLike,
+    getUserLikes,
 };

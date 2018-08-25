@@ -22,6 +22,11 @@ import {
 } from './itineraryActions';
 
 import {
+    RECEIVE_USER_LIKES,
+    receiveUserItineraryLikes,
+} from './likesActions';
+
+import {
     DELETE_REQUEST,
     DELETE_SUCCESS,
     DELETE_FAILURE,
@@ -73,6 +78,7 @@ export {
     REGISTER_SUCCESS,
     REGISTER_FAILURE,
     RECEIVE_ITINERARIES_LIST,
+    RECEIVE_USER_LIKES,
     REQUEST_ITINERARIES_LIST,
     alertClearAction,
     alertErrorAction,
@@ -87,5 +93,6 @@ export {
     setAuthedUserAction,
     deleteAction,
     receiveItinerariesList,
+    receiveUserItineraryLikes,
     requestItinerariesList,
 };

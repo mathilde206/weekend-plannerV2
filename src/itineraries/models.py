@@ -4,6 +4,7 @@ from django.conf import settings
 from django.utils.text import slugify
 
 from cities.models import City
+from accounts.models import Account
 
 
 # TODO: Once I add the city field, need to update the location to --> <city>/filename
@@ -21,7 +22,7 @@ class Itinerary(models.Model):
 
     title = models.CharField(max_length=120)
     created_date = models.DateTimeField(auto_now_add=True)
-    likes = models.IntegerField(default=0)
+    likes = models.ManyToManyField(Account, related_name='likes')
     slug = models.SlugField(unique=True)
     updated_date = models.DateTimeField(auto_now_add=True)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)

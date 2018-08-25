@@ -60,6 +60,12 @@ function register({ username, email, email2, password }) {
     }).then(response => response.data);
 }
 
+function getUserLikes(userId) {
+    return axios.get(`/api/users/${userId}/getLikes/`)
+        .then(response => response.data);
+}
+
+
 // function update(user) {
 //     const requestOptions = {
 //         method: 'PUT',
@@ -86,4 +92,5 @@ export {
     logout,
     register,
     refreshAccessToken,
+    getUserLikes,
 };

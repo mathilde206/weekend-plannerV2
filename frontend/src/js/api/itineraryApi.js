@@ -1,6 +1,9 @@
 import axios from 'axios';
 import qs from 'qs';
 
+axios.defaults.xsrfHeaderName = 'X-CSRFTOKEN';
+axios.defaults.xsrfCookieName = 'csrftoken';
+
 function getItineraryList() {
     return axios.get('/api/itineraries/')
         .then((response) => (response.data));
@@ -42,10 +45,32 @@ function createItinerary(itineraryObj, token) {
         .then(response => response.data);
 }
 
+function increaseViewsCounter(slug) {
+    return axios.put(
+        `/api/itineraries/${slug}/views`)
+        .then(response => response.data);
+}
+
+function addLike(slug, likeObj, token) {
+    const options = {
+        method: 'GET',
+        headers: {
+            'Authorization': 'Bearer ' + token,
+            'content-type': 'multipart/form-data'
+        },
+        url: `/api/itineraries/${slug}/like`,
+    };
+    return axios(options)
+        .then(response => response.data);
+
+}
+
 export {
     getItineraryList,
     getItineraryDetails,
     getCity,
     createCity,
     createItinerary,
+    increaseViewsCounter,
+    addLike,
 };

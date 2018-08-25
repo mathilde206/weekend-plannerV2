@@ -24,6 +24,7 @@ function setAuthUserReducer(state = {}, action) {
         return {
             loggedIn: true,
             user: action.user,
+            userId: action.id
         };
     case LOGIN_FAILURE:
         return {};

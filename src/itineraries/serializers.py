@@ -41,6 +41,7 @@ class ItineraryDetailSerializer(ModelSerializer):
     city = SerializerMethodField()
     image = SerializerMethodField()
     user = UserDetailSerializer(read_only=True)
+    likes = SerializerMethodField()
 
     def get_image(self, obj):
         """
@@ -61,9 +62,14 @@ class ItineraryDetailSerializer(ModelSerializer):
             'language': obj.city.language
         }
 
+    def get_likes(self, obj):
+        return obj.likes.count()
+
+
     class Meta:
         model = Itinerary
         fields = [
+            'pk',
             'title',
             'budget',
             'city',
@@ -108,4 +114,22 @@ class ItineraryListSerializer(ModelSerializer):
             'slug',
             'user',
             'views'
+        ]
+
+
+class ItineraryUpdateNumberOfViews(ModelSerializer):
+    views = SerializerMethodField('increment_views')
+
+    def increment_views(self, obj):
+        obj.views += 1
+        obj.save()
+
+    class Meta:
+        model = Itinerary
+        fields = [
+            'slug',
+            'views'
+        ]
+        read_only_fields = [
+            'slug',
         ]

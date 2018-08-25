@@ -1,50 +1,33 @@
-import { library } from '@fortawesome/fontawesome-svg-core/index';
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-    faDollarSign,
-    faMapMarkerAlt,
-    faCalendarAlt,
-    faStar,
-    faEye,
-    faThumbsUp,
-    faPencilAlt,
-    faTrash
-} from '@fortawesome/free-solid-svg-icons';
-
-import { isAuthenticated } from '../../reducers';
-import { getItineraryDetails } from '../../api/itineraryApi';
 
 import {
-    Button,
-    Col,
-    Jumbotron,
-    Row,
-} from 'reactstrap';
+    isAuthenticated,
+    refreshToken,
+    accessToken,
+    isAccessTokenExpired,
+} from '../../reducers';
+import {
+    getItineraryDetails,
+    increaseViewsCounter,
+    addLike,
+    refreshAccessToken,
+} from '../../api';
 
-import { DayDetails } from '../../components';
+import {
+    DayTabs,
+    ItineraryDetailsHeader,
+} from '../../components';
 
 import './ItineraryDetails.scss';
-
-library.add(
-    faDollarSign,
-    faMapMarkerAlt,
-    faCalendarAlt,
-    faStar,
-    faEye,
-    faThumbsUp,
-    faPencilAlt,
-    faTrash,
-);
 
 class ItineraryDetails extends React.Component {
     state = {
         isLoading: false,
         title: '',
         budget: '',
-        city: '',
+        city: {},
         created_date: '',
         day1_afternoon: '',
         day1_diner: '',
@@ -59,25 +42,28 @@ class ItineraryDetails extends React.Component {
         day3_lunch: '',
         day3_morning: '',
         image: '',
-        likes: '',
-        number_of_days: '',
-        user: '',
-        views: '',
+        likes: 0,
+        number_of_days: 0,
+        user: {},
+        views: 0,
+        pk: 0,
     };
 
     componentWillMount() {
         this.setState({
             isLoading: true,
         });
+
         getItineraryDetails(this.props.match.params.slug)
             .then(response => {
-                console.log(response);
-
                 this.setState({
                     isLoading: false,
                     ...response
                 });
             });
+
+        increaseViewsCounter(this.props.match.params.slug)
+            .then(response => console.log(response));
     }
 
     render() {
@@ -91,89 +77,62 @@ class ItineraryDetails extends React.Component {
             title,
             user,
             views,
+            pk,
             day1_morning,
             day1_lunch,
             day1_afternoon,
             day1_diner,
+            day2_morning,
+            day2_lunch,
+            day2_afternoon,
+            day2_diner,
+            day3_morning,
+            day3_lunch,
+            day3_afternoon,
+            day3_diner,
         } = this.state;
 
         const {
             isAuthenticated,
-            loggedInUser
+            loggedInUser,
+            userLikes,
+            userId,
         } = this.props;
 
-        const isOwner = isAuthenticated && loggedInUser === user.username;
+        const slug = this.props.match.params.slug;
 
         return (
             <div className="details-wrapper">
-                {
-                    image &&
-                    <Row>
-                        <Col xs="12" md={{ size: 10, offset: 1 }}>
-                            <img className="itinerary-image img-fluid rounded mx-auto d-block" src={image} />
-                        </Col>
-                    </Row>
-                }
-                <Row>
-                    <Col xs="12" md={{ size: 10, offset: 1 }}>
-                        <Jumbotron>
-                            <h1 className="display-3">{title}</h1>
-                            <Row>
-                                <Col sm="12" md="2">
-                                    <p className="lead">
-                                        <FontAwesomeIcon icon="map-marker-alt" />
-                                        &nbsp;{city.name}
-                                    </p>
-                                </Col>
-                                <Col sm="12" md="2">
-                                    <p className="lead">
-                                        <FontAwesomeIcon icon="calendar-alt" />
-                                        &nbsp;{number_of_days} days
-                                    </p>
-                                </Col>
-                                <Col sm="12" md="2">
-                                    <p className="lead">
-                                        <FontAwesomeIcon icon="dollar-sign" />
-                                        &nbsp;{budget}
-                                    </p>
-                                </Col>
-                            </Row>
-                            <hr className="my-2" />
-                            <p className="text-muted">
-                                Created by {user.username} on {created_date}
-                                - <FontAwesomeIcon icon="star" /> {likes} likes
-                                - <FontAwesomeIcon icon="eye" /> {views} views
-                            </p>
-                            <p className="lead">
-                                <Button color="primary">
-                                    <FontAwesomeIcon icon="thumbs-up" />
-                                    &nbsp;Like
-                                </Button>
-
-                                {
-                                    isOwner &&
-                                    <Button color="primary">
-                                        <FontAwesomeIcon icon="pencil-alt" />
-                                        &nbsp;Edit
-                                    </Button>
-                                }
-                                {
-                                    isOwner &&
-                                    <Button color="danger">
-                                        <FontAwesomeIcon icon="trash" />
-                                        &nbsp;Delete
-                                    </Button>
-                                }
-                            </p>
-                        </Jumbotron>
-                    </Col>
-                </Row>
-                <DayDetails
-                    morning={day1_diner}
-                    lunch={day1_lunch}
-                    afternoon={day1_afternoon}
-                    diner={day1_diner}
+                <ItineraryDetailsHeader
+                    pk={pk}
+                    city={city}
+                    created_date={created_date}
+                    budget={budget}
+                    isAuthenticated={isAuthenticated}
+                    image={image}
+                    likes={likes}
+                    number_of_days={number_of_days}
+                    slug={slug}
+                    title={title}
+                    user={user}
+                    views={views}
                 />
+                <DayTabs
+                    day1_morning={day1_morning}
+                    day1_lunch={day1_lunch}
+                    day1_afternoon={day1_afternoon}
+                    day1_diner={day1_diner}
+                    day2_morning={day2_morning}
+                    day2_lunch={day2_lunch}
+                    day2_afternoon={day2_afternoon}
+                    day2_diner={day2_diner}
+                    day3_morning={day3_morning}
+                    day3_lunch={day3_lunch}
+                    day3_afternoon={day3_afternoon}
+                    day3_diner={day3_diner}
+                    number_of_days={number_of_days}
+                />
+                <hr />
             </div>
         );
     }
@@ -182,25 +141,31 @@ class ItineraryDetails extends React.Component {
 ItineraryDetails.defaultProps = {
     isAuthenticated: false,
     loggedInUser: '',
+    userLikes: []
 };
 
 ItineraryDetails.propTypes = {
     isAuthenticated: PropTypes.bool,
     loggedInUser: PropTypes.string,
+    userLikes: PropTypes.arrayOf(PropTypes.number),
 };
 
 const mapStateToProps = (state) => {
     const {
-        user
+        userLikes,
     } = state;
 
     return ({
-        loggedInUser: user.user,
-        isAuthenticated: isAuthenticated(state)
+        loggedInUser: state.user.user,
+        userId: state.user.userId,
+        isAuthenticated: isAuthenticated(state),
+        refreshToken: refreshToken(state),
+        accessToken: accessToken(state),
+        isAccessTokenExpired: isAccessTokenExpired(state),
+        userLikes: userLikes.itinerary_likes,
     });
 };
 
 export default connect(mapStateToProps)(ItineraryDetails);
 
-// TODO: increase counter on each view
 // TODO: Add comments

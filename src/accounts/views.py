@@ -23,10 +23,12 @@ from rest_framework.permissions import (
 # from recommendations.permissions import IsOwnerOrReadOnly
 
 User = get_user_model()
+from accounts.models import Account
 
 from .serializers import (
     UserDetailSerializer,
     UserCreateSerializer,
+    UserLikesSerializer,
 )
 
 
@@ -40,7 +42,14 @@ class UserCreateApiView(CreateAPIView):
     serializer_class = UserCreateSerializer
     permission_classes = [AllowAny]
     queryset = User.objects.all()
-#
+
+
+class UserLikesRetrieve(RetrieveAPIView):
+    lookup_field = 'user'
+    serializer_class = UserLikesSerializer
+    permission_classes = [AllowAny]
+    queryset = Account.objects.all()
+
 #
 # class UserLoginApiView(APIView):
 #     permission_classes = [AllowAny]

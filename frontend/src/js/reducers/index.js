@@ -2,7 +2,7 @@ import { combineReducers } from 'redux';
 import { routerReducer } from 'react-router-redux';
 import { loadingBarReducer } from 'react-redux-loading';
 
-import { createUpdateItineraryReducer } from './itineraryReducer';
+import { createUpdateItineraryReducer, itinerariesListReducer } from './itineraryReducer';
 import { alertReducer } from './alertsReducer';
 import {
     getAccessToken,
@@ -15,6 +15,7 @@ import {
     setAuthCredentialsReducer,
     registrationReducer,
 } from './userReducer';
+import userLikesReducer from './likesReducer';
 
 
 const rootReducer = combineReducers({
@@ -24,7 +25,9 @@ const rootReducer = combineReducers({
     loadingBar: loadingBarReducer,
     alerts: alertReducer,
     itineraryForm: createUpdateItineraryReducer,
-    router: routerReducer
+    itineraries: itinerariesListReducer,
+    router: routerReducer,
+    userLikes: userLikesReducer,
 });
 
 export default rootReducer;

@@ -6,7 +6,10 @@ from rest_framework.serializers import (
     EmailField,
     ModelSerializer,
     ValidationError,
+    SerializerMethodField,
 )
+
+from .models import Account
 
 User = get_user_model()
 
@@ -60,4 +63,12 @@ class UserDetailSerializer(ModelSerializer):
         fields = [
             'username',
             'email',
+        ]
+
+
+class UserLikesSerializer(ModelSerializer):
+    class Meta:
+        model = Account
+        fields = [
+            'likes',
         ]

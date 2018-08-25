@@ -41,7 +41,6 @@ function createUpdateItineraryReducer(state = { currentStep: 0 }, action) {
 }
 
 function itinerariesListReducer(state = {}, action) {
-    console.log(action)
     switch (action.type) {
     case REQUEST_ITINERARIES_LIST:
         return {

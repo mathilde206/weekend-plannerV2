@@ -5,12 +5,18 @@ import {
     refreshAccessToken,
     register,
     deleteApi,
+    getUserLikes,
 } from '../api/';
 import {
     alertSuccessAction,
     alertClearAction,
     alertErrorAction,
 } from '../actions/alertsActions';
+
+import {
+    receiveUserItineraryLikes,
+} from '../actions/likesActions';
+
 import { history } from '../helpers';
 
 const DELETE_REQUEST = 'USERS_DELETE_REQUEST';
@@ -44,7 +50,12 @@ function setAuthedUserAction(id) {
                 dispatch({
                     type: USER_RETRIEVED,
                     user,
+                    id,
                 });
+            });
+        getUserLikes(id)
+            .then(response => {
+                dispatch(receiveUserItineraryLikes(response.likes));
             });
     };
 }
@@ -77,11 +88,12 @@ function loginAction(username, password) {
                         dispatch(alertSuccessAction('Successful Login'));
                         history.push('/');
                     });
+
             }).catch(error => {
                 dispatch(failure(error.toString()));
                 dispatch(alertErrorAction(error.toString()));
             }
-            );
+        );
     };
 }
 
