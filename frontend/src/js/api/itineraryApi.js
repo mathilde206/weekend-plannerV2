@@ -4,8 +4,9 @@ import qs from 'qs';
 axios.defaults.xsrfHeaderName = 'X-CSRFTOKEN';
 axios.defaults.xsrfCookieName = 'csrftoken';
 
-function getItineraryList() {
-    return axios.get('/api/itineraries/')
+function getItineraryList(pageNumber='') {
+    const pageQuery = pageNumber ? `?page=${pageNumber}` : '';
+    return axios.get(`/api/itineraries/${pageQuery}`)
         .then((response) => (response.data));
 }
 

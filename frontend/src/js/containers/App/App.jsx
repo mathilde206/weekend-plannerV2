@@ -48,7 +48,7 @@ class App extends React.Component {
         this.props.requestItinerariesList();
         getItineraryList()
             .then((data) => {
-                this.props.receiveItinerariesList(data.results);
+                this.props.receiveItinerariesList(data);
             });
 
     }

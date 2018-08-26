@@ -26,7 +26,7 @@ from rest_framework.permissions import (
 from accounts.models import Account
 
 from .models import Itinerary
-from .pagination import RecommendationPageNumberPagination
+from .pagination import ItinerariesListPagination
 from .permissions import IsOwnerOrReadOnly
 from .serializers import (
     ItineraryCreateUpdateSerializer,
@@ -80,7 +80,7 @@ class ItineraryListAPIView(ListAPIView):
     filter_backends = [SearchFilter, OrderingFilter]
     search_fields = ['title', 'content_day1', 'content_day2', 'content_day3', 'user__first_name',
         'user__last_name', 'user__username']
-    pagination_class = RecommendationPageNumberPagination
+    pagination_class = ItinerariesListPagination
 
 
 class ItineraryUpdateAPIView(RetrieveUpdateAPIView):

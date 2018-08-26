@@ -79,10 +79,13 @@ function requestItinerariesList() {
     };
 }
 
-function receiveItinerariesList(itinerariesList) {
+function receiveItinerariesList(data) {
     return {
         type: RECEIVE_ITINERARIES_LIST,
-        itinerariesList,
+        itinerariesList: data.results,
+        count: data.count,
+        navigation: data.navigation,
+        total_pages: data.total_pages,
     };
 }
 

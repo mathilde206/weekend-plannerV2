@@ -11,6 +11,7 @@ import ItineraryCard from './ItineraryCard/ItineraryCard';
 import ItineraryDetailsHeader from './ItineraryDetailsHeader/ItineraryDetailsHeader';
 import ItinerariesList from './ItinerariesList/ItinerariesList';
 import LoginForm from './LoginForm/LoginForm';
+import Paginator from './Paginator/Paginator';
 import RegisterForm from './RegisterForm/RegisterForm';
 
 export {
@@ -27,5 +28,6 @@ export {
     ItineraryDetailsHeader,
     ItinerariesList,
     LoginForm,
+    Paginator,
     RegisterForm,
 };

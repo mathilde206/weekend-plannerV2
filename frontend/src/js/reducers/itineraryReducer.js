@@ -57,6 +57,9 @@ function itinerariesListReducer(state = {}, action) {
             ...state,
             isLoading: action.isLoading,
             itinerariesList: action.itinerariesList,
+            count: action.count,
+            navigation: action.navigation,
+            total_pages: action.total_pages,
         };
     }
     default:
