@@ -28,6 +28,8 @@ const Home = ({
             <HomeJumbotron
                 isAuthenticated={isAuthenticated}
                 user={user}
+                requestItinerariesList={requestItinerariesList}
+                receiveItinerariesList={receiveItinerariesList}
             />
         </div>
         <div className="list-container">
@@ -76,7 +78,6 @@ const mapDispatchToProps = (dispatch) => ({
         dispatch(requestItinerariesList());
     },
     receiveItinerariesList: (itinerariesData) => {
-        console.log('hello');
         dispatch(receiveItinerariesList(itinerariesData));
     },
 });

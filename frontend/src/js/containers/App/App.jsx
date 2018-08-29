@@ -16,6 +16,7 @@ import {
     Footer
 } from '../../components';
 
+import ExploreItineraries from '../ExploreItineraries/ExploreItineraries';
 import Home from '../Home/Home';
 import ItineraryDetails from '../ItineraryDetails/ItineraryDetails';
 import LoginPage from '../LoginPage/LoginPage';
@@ -65,6 +66,7 @@ class App extends React.Component {
                             <Route exact path="/" component={Home} />
                             <Route exact path="/login/" component={LoginPage} />
                             <Route exact path="/register/" component={RegisterPage} />
+                            <Route exact path="/explore/" component={ExploreItineraries} />
                             <PrivateRoute path="/create/" component={CreateItinerary} />
                             <Route path="/:slug" component={ItineraryDetails} />
                         </Switch>

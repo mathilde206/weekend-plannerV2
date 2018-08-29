@@ -39,6 +39,7 @@ from accounts.serializers import (UserDetailSerializer, UserLikesSerializer)
 
 User = get_user_model()
 
+
 class ItineraryCreateView(CreateAPIView):
     """
     This view allows an authenticated user to create a new recommendation
@@ -73,13 +74,29 @@ class ItineraryListAPIView(ListAPIView):
     This api view gets all the non draft recommendations and can be filtered with query
     parameters (?search=)
     """
-    # TODO: allow to search only specific fields (ex: just city) or is it useless ?
+    # TODO: add search by budget/ order by views / likes
     queryset = Itinerary.objects.all()
     serializer_class = ItineraryListSerializer
     permission_classes = [AllowAny]
     filter_backends = [SearchFilter, OrderingFilter]
-    search_fields = ['title', 'content_day1', 'content_day2', 'content_day3', 'user__first_name',
-        'user__last_name', 'user__username']
+    search_fields = [
+        "city__name",
+        "created_date",
+        "day1_afternoon",
+        "day1_diner",
+        "day1_lunch",
+        "day1_morning",
+        "day2_afternoon",
+        "day2_diner",
+        "day2_lunch",
+        "day2_morning",
+        "day3_afternoon",
+        "day3_diner",
+        "day3_lunch",
+        "day3_morning",
+        "image",
+        "title"
+    ]
     pagination_class = ItinerariesListPagination
 
 
@@ -125,8 +142,6 @@ class ItineraryUpdateLikes(GenericAPIView):
             "userLikes": userLikes,
         }
         return Response(data)
-
-
 
 # TODO: Add a Recommendation list for posts from a user and posts about a city (use filter on
 # queryset instead of all)
