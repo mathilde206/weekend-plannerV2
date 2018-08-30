@@ -1,0 +1,28 @@
+@import '../../../scss/variables';
+
+.search-form {
+    margin: 1em auto;
+    padding: 0.6em 2em;
+    background-color: white;
+    border: $heavy-border;
+    color: $font-color-dark;
+
+    .search-form-label {
+        margin-right: 1em;
+        margin-left: 2em;
+    }
+
+    button {
+        margin-left: 2em;
+        background-color: $primary-dark;
+        border-color: $primary-dark;
+
+        &:hover {
+            background-color: $primary-light;
+            border-color: $primary-light;
+        }
+
+    }
+}
+
+

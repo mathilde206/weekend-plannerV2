@@ -68,6 +68,7 @@ class App extends React.Component {
                             <Route exact path="/register/" component={RegisterPage} />
                             <Route exact path="/explore/" component={ExploreItineraries} />
                             <PrivateRoute path="/create/" component={CreateItinerary} />
+                            <Route exact path="/explore/:slug" component={ItineraryDetails} />
                             <Route path="/:slug" component={ItineraryDetails} />
                         </Switch>
                     </div>

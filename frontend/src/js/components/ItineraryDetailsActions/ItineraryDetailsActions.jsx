@@ -85,7 +85,7 @@ class ItineraryDetailsActions extends React.Component {
         return (
             <p className="lead">
                 {
-                    isAuthenticated && !isLiked &&
+                    (isAuthenticated && !isLiked) &&
                     (<Button
                         color="primary"
                         onClick={this.handleLikeClick}
@@ -95,7 +95,7 @@ class ItineraryDetailsActions extends React.Component {
                     </Button>)
                 }
                 {
-                    isAuthenticated && isLiked &&
+                    Boolean(isAuthenticated && isLiked) &&
                     (<Button
                         color="primary"
                         onClick={this.handleLikeClick}

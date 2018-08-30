@@ -5,6 +5,7 @@ import { Jumbotron, Button, Form, FormGroup, Input } from 'reactstrap';
 
 import { getItineraryList } from '../../api';
 
+
 import './HomeJumbotron.scss';
 
 class HomeJumbotron extends React.Component {
@@ -29,14 +30,16 @@ class HomeJumbotron extends React.Component {
             searchQuery,
         } = this.state;
 
+        const query = `search=${searchQuery}`;
+
         const {
             requestItinerariesList,
             receiveItinerariesList,
         } = this.props;
 
-        if (searchQuery !== '') {
+        if (searchQuery) {
             requestItinerariesList();
-            getItineraryList(1, searchQuery)
+            getItineraryList(1, query)
                 .then((response) => {
                     receiveItinerariesList(response);
                     this.setState({
@@ -55,8 +58,6 @@ class HomeJumbotron extends React.Component {
         const {
             submitted,
         } = this.state;
-
-        console.log(submitted);
 
         if (submitted) {
             return (

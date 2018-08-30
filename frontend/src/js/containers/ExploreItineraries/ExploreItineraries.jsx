@@ -6,13 +6,85 @@ import {
     receiveItinerariesList,
     requestItinerariesList
 } from '../../actions';
+import { getFilteredItineraryList } from '../../api';
 
+import {
+    ItinerariesList,
+    ItinerariesSearchForm
+} from '../../components';
 
-
-import { ItinerariesList } from '../../components';
+import './ExploreItineraries.scss';
 
 class ExploreItineraries extends React.Component {
+    state = {
+        searchCity: '',
+        budget: '',
+        numberOfDays: '',
+    };
+
+    handleFieldChange = (field, event) => {
+        this.setState({
+            [ field ]: event.target.value,
+        });
+    };
+
+    handleReset = (event) => {
+        event.preventDefault();
+
+        this.setState({
+            searchCity: '',
+            budget: '',
+            numberOfDays: '',
+        });
+    };
+
+    handleSubmit = (event) => {
+        const {
+            searchCity,
+            budget,
+            numberOfDays,
+        } = this.state;
+
+        const {
+            requestItinerariesList,
+            receiveItinerariesList
+        } = this.props;
+
+        let query = '';
+
+        event.preventDefault();
+        if (searchCity !== '') {
+            console.log('hello');
+            query = query.concat(`city=${searchCity}`);
+        }
+        if (budget !== '') {
+            query = !query ? '&' : '';
+            query = query.concat(`budget=${budget}`);
+        }
+        if (numberOfDays !== '') {
+            query = !query ? '&' : '';
+            query = query.concat(`numberOfDays=${numberOfDays}`);
+        }
+
+        if (searchCity || budget || numberOfDays) {
+            requestItinerariesList();
+            getFilteredItineraryList(1, query)
+                .then((response) => {
+                    receiveItinerariesList(response);
+                });
+        }
+
+    };
+
     render() {
+        const {
+            budget,
+            searchCity,
+            numberOfDays,
+        } = this.state;
+
+        console.log(this.state);
+
         const {
             itineraries,
             requestItinerariesList,
@@ -20,15 +92,28 @@ class ExploreItineraries extends React.Component {
         } = this.props;
 
         const {
+            isLoading,
             count,
             itinerariesList,
             navigation,
             total_pages
         } = itineraries;
 
+        if (isLoading || !count) {
+            return (<h1>Loading...</h1>);
+        }
+
         return (
-            <div className="container">
-                <h2>Explore Itineraries</h2>
+            <div className="container explore-wrapper">
+                <h1 className="margin-top">Explore Itineraries</h1>
+                <ItinerariesSearchForm
+                    budget={budget}
+                    onFieldChange={this.handleFieldChange}
+                    onReset={this.handleReset}
+                    onSubmit={this.handleSubmit}
+                    searchCity={searchCity}
+                    numberOfDays={numberOfDays}
+                />
                 <ItinerariesList
                     count={count}
                     itineraries={itinerariesList}
@@ -42,6 +127,26 @@ class ExploreItineraries extends React.Component {
     }
 }
 
+ExploreItineraries.propTypes = {
+    itineraries: PropTypes.shape({
+        count: PropTypes.number,
+        isLoading: PropTypes.bool,
+        itinerariesList: PropTypes.arrayOf(PropTypes.object),
+        navigation: PropTypes.shape({
+            next: PropTypes.number,
+            previous: PropTypes.number,
+        }),
+        total_pages: PropTypes.number,
+    }),
+    requestItinerariesList: PropTypes.func,
+    receiveItinerariesList: PropTypes.func,
+};
+
+ExploreItineraries.defaultProps = {
+    itineraries: {},
+    requestItinerariesList: () => null,
+    receiveItinerariesList: () => null,
+};
 
 const mapDispatchToProps = (dispatch) => ({
     requestItinerariesList: () => {

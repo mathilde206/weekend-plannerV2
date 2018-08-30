@@ -6,12 +6,14 @@ from .views import (
     ItineraryDetailAPIView,
     ItineraryUpdateAPIView,
     ItineraryListAPIView,
+    ItineraryListCustomFilterAPIView,
     ItineraryUpdateNumberOfViewsView,
     ItineraryUpdateLikes,
 )
 
 urlpatterns = [
     path('', ItineraryListAPIView.as_view()),
+    path('list/', ItineraryListCustomFilterAPIView.as_view()),
     path('<slug>', ItineraryDetailAPIView.as_view()),
     path('create/', ItineraryCreateView.as_view()),
     path('<slug>/delete', ItineraryDelete.as_view()),

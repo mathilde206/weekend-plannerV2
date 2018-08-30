@@ -1,5 +1,6 @@
 import {
     getItineraryList,
+    getFilteredItineraryList,
     getItineraryDetails,
     getCity,
     createCity,
@@ -19,6 +20,7 @@ import {
 
 export {
     getItineraryList,
+    getFilteredItineraryList,
     getItineraryDetails,
     getCity,
     createCity,

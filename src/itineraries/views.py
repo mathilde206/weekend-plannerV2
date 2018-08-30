@@ -71,10 +71,8 @@ class ItineraryDetailAPIView(RetrieveAPIView):
 
 class ItineraryListAPIView(ListAPIView):
     """
-    This api view gets all the non draft recommendations and can be filtered with query
-    parameters (?search=)
+    This api view gets either all itineraries or filtered by basic search query from django
     """
-    # TODO: add search by budget/ order by views / likes
     queryset = Itinerary.objects.all()
     serializer_class = ItineraryListSerializer
     permission_classes = [AllowAny]
@@ -98,6 +96,29 @@ class ItineraryListAPIView(ListAPIView):
         "title"
     ]
     pagination_class = ItinerariesListPagination
+
+
+class ItineraryListCustomFilterAPIView(ListAPIView):
+    """
+    This view returns a list of itinerary filtered by city, budget and/or number of days
+    """
+    serializer_class = ItineraryListSerializer
+    pagination_class = ItinerariesListPagination
+    permission_classes = [AllowAny]
+
+    def get_queryset(self):
+        queryset = Itinerary.objects.all()
+        city = self.request.query_params.get('city', None)
+        budget = self.request.query_params.get('budget', None)
+        numberOfDays = self.request.query_params.get('numberOfDays', None)
+
+        if city is not None:
+            queryset = queryset.filter(city__name__contains=city)
+        if budget is not None:
+            queryset = queryset.filter(budget__contains=budget)
+        if numberOfDays is not None:
+            queryset = queryset.filter(number_of_days__exact=numberOfDays)
+        return queryset
 
 
 class ItineraryUpdateAPIView(RetrieveUpdateAPIView):

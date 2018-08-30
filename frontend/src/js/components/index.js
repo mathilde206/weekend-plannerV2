@@ -10,6 +10,7 @@ import InputField from './InputField/InputField';
 import ItineraryCard from './ItineraryCard/ItineraryCard';
 import ItineraryDetailsHeader from './ItineraryDetailsHeader/ItineraryDetailsHeader';
 import ItinerariesList from './ItinerariesList/ItinerariesList';
+import ItinerariesSearchForm from './ItinerariesSearchForm/ItinerariesSearchForm';
 import LoginForm from './LoginForm/LoginForm';
 import Paginator from './Paginator/Paginator';
 import RegisterForm from './RegisterForm/RegisterForm';
@@ -27,6 +28,7 @@ export {
     ItineraryCard,
     ItineraryDetailsHeader,
     ItinerariesList,
+    ItinerariesSearchForm,
     LoginForm,
     Paginator,
     RegisterForm,
