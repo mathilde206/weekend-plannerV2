@@ -1,0 +1,19 @@
+@import '../../../scss/variables';
+
+.details-container {
+    background-color: white;
+    padding: 2em;
+
+    .details-row {
+        margin-bottom: 2em;
+
+        .details-info {
+            margin: 0.5em;
+        }
+
+        .no-data {
+            font-size: 1em;
+            color: gray;
+        }
+    }
+}

@@ -62,7 +62,7 @@ class UserDetailSerializer(ModelSerializer):
         model = User
         fields = [
             'username',
-            'email',
+            'email'
         ]
 
 
@@ -71,4 +71,18 @@ class UserLikesSerializer(ModelSerializer):
         model = Account
         fields = [
             'likes',
+        ]
+
+
+class AccountDetailSerializer(ModelSerializer):
+    user = UserDetailSerializer(read_only=True)
+
+    class Meta:
+        model = Account
+        fields = [
+            'user',
+            'birth_date',
+            'bio',
+            'location',
+            'website'
         ]

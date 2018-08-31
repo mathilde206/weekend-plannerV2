@@ -9,13 +9,13 @@ from rest_framework.generics import (
     DestroyAPIView,
     ListAPIView,
     RetrieveAPIView,
-    RetrieveUpdateAPIView,
+    RetrieveUpdateAPIView
 )
 
 from rest_framework.permissions import (
     AllowAny,
     IsAuthenticated,
-    IsAdminUser,
+    IsAdminUser
 )
 
 #
@@ -26,9 +26,10 @@ User = get_user_model()
 from accounts.models import Account
 
 from .serializers import (
+    AccountDetailSerializer,
     UserDetailSerializer,
     UserCreateSerializer,
-    UserLikesSerializer,
+    UserLikesSerializer
 )
 
 
@@ -36,6 +37,13 @@ class UserRetrieveAPIView(RetrieveAPIView):
     serializer_class = UserDetailSerializer
     permission_classes = [AllowAny]
     queryset = User.objects.all()
+
+
+class AccountRetrieveAPIView(RetrieveAPIView):
+    lookup_field = 'user'
+    serializer_class = AccountDetailSerializer
+    permission_classes = [AllowAny]
+    queryset = Account.objects.all()
 
 
 class UserCreateApiView(CreateAPIView):

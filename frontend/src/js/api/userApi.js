@@ -66,6 +66,13 @@ function getUserLikes(userId) {
 }
 
 
+function getUserProfile(userId) {
+    return axios.get(`/api/users/${userId}/profile/`)
+        .then((response) => {
+            return response.data;
+        });
+}
+
 // function update(user) {
 //     const requestOptions = {
 //         method: 'PUT',
@@ -88,6 +95,7 @@ function getUserLikes(userId) {
 
 export {
     getUsername,
+    getUserProfile,
     login,
     logout,
     register,

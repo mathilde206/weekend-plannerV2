@@ -129,6 +129,7 @@ ItineraryDetailsActions.propTypes = {
     accessToken: PropTypes.string,
     isAccessTokenExpired: PropTypes.bool,
     isAuthenticated: PropTypes.bool,
+    loggedInUser: PropTypes.string,
     pk: PropTypes.number.isRequired,
     user: PropTypes.objectOf(PropTypes.string),
     userId: PropTypes.number,

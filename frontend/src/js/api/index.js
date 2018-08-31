@@ -11,6 +11,7 @@ import {
 
 import {
     getUsername,
+    getUserProfile,
     login,
     logout,
     register,
@@ -23,6 +24,7 @@ export {
     getFilteredItineraryList,
     getItineraryDetails,
     getCity,
+    getUserProfile,
     createCity,
     createItinerary,
     getUsername,

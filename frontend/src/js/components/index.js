@@ -13,6 +13,8 @@ import ItinerariesList from './ItinerariesList/ItinerariesList';
 import ItinerariesSearchForm from './ItinerariesSearchForm/ItinerariesSearchForm';
 import LoginForm from './LoginForm/LoginForm';
 import Paginator from './Paginator/Paginator';
+import ProfileInfoTile from './ProfileInfoTile/ProfileInfoTile';
+import ProfileInfoTileEdit from './ProfileInfoTileEdit/ProfileInfoTileEdit';
 import RegisterForm from './RegisterForm/RegisterForm';
 
 export {
@@ -31,5 +33,7 @@ export {
     ItinerariesSearchForm,
     LoginForm,
     Paginator,
+    ProfileInfoTile,
+    ProfileInfoTileEdit,
     RegisterForm,
 };
