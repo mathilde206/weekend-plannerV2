@@ -1,3 +1,4 @@
+import axios from 'axios/index';
 import {
     getUsername,
     login,
@@ -6,6 +7,7 @@ import {
     register,
     deleteApi,
     getUserLikes,
+    updateUserProfile,
 } from '../api/';
 import {
     alertSuccessAction,
@@ -42,6 +44,12 @@ const TOKEN_FAILURE = 'TOKEN_FAILURE';
 const REGISTER_REQUEST = 'USERS_REGISTER_REQUEST';
 const REGISTER_SUCCESS = 'USERS_REGISTER_SUCCESS';
 const REGISTER_FAILURE = 'USERS_REGISTER_FAILURE';
+
+const PROFILE_UPDATE_SUBMITTED = 'PROFILE_UPDATE_SUBMITTED';
+const PROFILE_UPDATED = 'PROFILE_UPDATED';
+
+axios.defaults.xsrfHeaderName = 'X-CSRFTOKEN';
+axios.defaults.xsrfCookieName = 'csrftoken';
 
 function setAuthedUserAction(id) {
     return dispatch => {

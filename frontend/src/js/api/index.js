@@ -17,6 +17,7 @@ import {
     register,
     refreshAccessToken,
     getUserLikes,
+    updateUserProfile,
 } from './userApi';
 
 export {
@@ -35,4 +36,5 @@ export {
     increaseViewsCounter,
     addLike,
     getUserLikes,
+    updateUserProfile,
 };

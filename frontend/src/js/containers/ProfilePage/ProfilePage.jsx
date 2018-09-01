@@ -2,8 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import { getUserProfile } from '../../api';
-import { isAuthenticated } from '../../reducers';
+import { getUserProfile, refreshAccessToken, updateUserProfile } from '../../api';
+import { isAuthenticated, accessToken, isAccessTokenExpired, refreshToken } from '../../reducers';
 
 import {
     Jumbotron,
@@ -47,7 +47,55 @@ class ProfilePage extends React.Component {
     };
 
     handleSubmit = (event) => {
+        const {
+            bio,
+            birth_date,
+            location,
+            website,
+        } = this.state;
+
+        const {
+            accessToken,
+            match,
+            refreshToken,
+        } = this.props;
+
+        const {
+            params
+        } = match;
+
         event.preventDefault();
+
+        let formObj = new FormData;
+        formObj.append('user', params.userId);
+        formObj.append('bio', bio);
+        formObj.append('birth_date', birth_date);
+        formObj.append('location', location);
+        formObj.append('website', website);
+
+        if (isAccessTokenExpired) {
+            refreshAccessToken(refreshToken)
+                .then(response => {
+                    updateUserProfile(params.userId, response.access.token, formObj)
+                        .then(({
+                            birth_date,
+                            bio,
+                            location,
+                            website,
+                        }) => {
+                            this.setState({
+                                birth_date,
+                                bio,
+                                location,
+                                website,
+                                isEditing: false,
+                            });
+                        });
+
+                });
+        } else {
+            updateUserProfile(formObj, accessToken);
+        }
 
     };
 
@@ -172,8 +220,11 @@ const mapStateToProps = (state) => {
     } = state;
 
     return ({
+        accessToken: accessToken(state),
+        isAccessTokenExpired: isAccessTokenExpired(state),
         isAuthenticated: isAuthenticated(state),
         loggedInUser: user.user,
+        refreshToken: refreshToken(state),
     });
 };
 

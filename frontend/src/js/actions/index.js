@@ -46,12 +46,15 @@ import {
     REGISTER_REQUEST,
     REGISTER_SUCCESS,
     REGISTER_FAILURE,
+    PROFILE_UPDATE_SUBMITTED,
+    PROFILE_UPDATED,
     loginAction,
     logoutAction,
     refreshAccessAction,
     registerAction,
     setAuthedUserAction,
     deleteAction,
+    updateProfileAction,
 } from './userActions';
 
 export {
@@ -83,6 +86,8 @@ export {
     RECEIVE_USER_LIKES,
     REQUEST_ITINERARIES_LIST,
     RESET_FORM,
+    PROFILE_UPDATE_SUBMITTED,
+    PROFILE_UPDATED,
     alertClearAction,
     alertErrorAction,
     alertSuccessAction,
@@ -99,4 +104,5 @@ export {
     receiveUserItineraryLikes,
     requestItinerariesList,
     resetForm,
+    updateProfileAction,
 };

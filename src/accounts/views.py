@@ -1,8 +1,6 @@
 from django.contrib.auth import get_user_model
 
-from rest_framework.response import Response
-from rest_framework.status import HTTP_200_OK, HTTP_400_BAD_REQUEST
-from rest_framework.views import APIView
+from .permissions import IsOwnerOrReadOnly
 
 from rest_framework.generics import (
     CreateAPIView,
@@ -57,6 +55,13 @@ class UserLikesRetrieve(RetrieveAPIView):
     serializer_class = UserLikesSerializer
     permission_classes = [AllowAny]
     queryset = Account.objects.all()
+
+
+class AccountUpdateAPIView(RetrieveUpdateAPIView):
+    lookup_field = 'user'
+    queryset = Account.objects.all()
+    serializer_class = AccountDetailSerializer
+    permission_classes = [IsOwnerOrReadOnly]
 
 #
 # class UserLoginApiView(APIView):

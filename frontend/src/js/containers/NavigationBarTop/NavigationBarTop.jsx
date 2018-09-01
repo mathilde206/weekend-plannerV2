@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
@@ -32,7 +32,8 @@ class NavigationBarTop extends React.Component {
 
     render() {
         const {
-            isAuthenticated
+            isAuthenticated,
+            userId,
         } = this.props;
 
         return (
@@ -62,10 +63,16 @@ class NavigationBarTop extends React.Component {
                                             }
                                         </Link>
                                     </DropdownItem>
-                                    <DropdownItem divider />
-                                    <DropdownItem>
-                                        Profile
-                                    </DropdownItem>
+                                    {
+                                        isAuthenticated &&
+                                        (<Fragment>
+                                            <DropdownItem divider />
+                                            <DropdownItem>
+                                                <Link to={`/${userId}/profile/`}>Profile</Link>
+                                            </DropdownItem>
+                                        </Fragment>)
+                                    }
+
                                 </DropdownMenu>
                             </UncontrolledDropdown>
                         </Nav>
@@ -78,15 +85,22 @@ class NavigationBarTop extends React.Component {
 
 NavigationBarTop.defaultProps = {
     isAuthenticated: false,
+    userId: null,
 };
 
 NavigationBarTop.propTypes = {
     isAuthenticated: PropTypes.bool,
+    userId: PropTypes.number,
 };
 
 const mapStateToProps = (state) => {
+    const {
+        user
+    } = state;
+
     return {
-        isAuthenticated: reducers.isAuthenticated(state)
+        isAuthenticated: reducers.isAuthenticated(state),
+        userId: user.userId,
     };
 };
 
