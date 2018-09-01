@@ -26,7 +26,7 @@ class ProductPage extends React.Component {
             .then((productList) => {
                 const basicProducts = productList.filter(({ type }) => (type !== 'Premium' && type !== 'Deluxe'));
                 const premiumProducts = productList.filter(({ type }) => (type !== 'Basic' && type !== 'Deluxe'));
-                const deluxeProducts = productList.filter(({ type }) => (type !== 'Premium' && type !== 'Deluxe'));
+                const deluxeProducts = productList.filter(({ type }) => (type !== 'Basic' && type !== 'Premium'));
                 this.setState({
                     basicProducts,
                     premiumProducts,
@@ -122,7 +122,7 @@ ProductPage.defaultProps = {
 };
 
 const mapDispatchToProps = (dispatch) => ({
-    addToCart: (productId) => {
+    addToCart: (productId, cart) => {
         dispatch(addToCartAction(productId));
     },
     removeFromCart: (productId) => {

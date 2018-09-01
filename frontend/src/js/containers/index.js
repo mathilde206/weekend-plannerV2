@@ -5,6 +5,7 @@ import LoginPage from './LoginPage/LoginPage';
 import NavigationBarTop from './NavigationBarTop/NavigationBarTop';
 import PrivateRoute from './PrivateRoute/PrivateRoute';
 import RegisterPage from './RegisterPage/RegisterPage';
+import SaleContainer from './SaleContainer/SaleContainer';
 
 export {
     App,
@@ -14,4 +15,5 @@ export {
     NavigationBarTop,
     RegisterPage,
     PrivateRoute,
+    SaleContainer,
 };

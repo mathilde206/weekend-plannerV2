@@ -3,6 +3,7 @@ from rest_framework.filters import (
 )
 
 from rest_framework.generics import (
+    RetrieveAPIView,
     ListAPIView,
 )
 
@@ -16,8 +17,13 @@ from .models import Product
 
 class ProductList(ListAPIView):
     queryset = Product.objects.all()
-    lookup_field = 'name'
     permission_classes = [AllowAny]
     serializer_class = ProductSerializer
     filter_backends = [SearchFilter]
     search_fields = ['name']
+
+
+class ProductDetailsList(RetrieveAPIView):
+    queryset = Product.objects.all()
+    permission_classes = [AllowAny]
+    serializer_class = ProductSerializer

@@ -27,6 +27,7 @@ import NavigationBarTop from '../NavigationBarTop/NavigationBarTop';
 import CreateItinerary from '../CreateItinerary/CreateItinerary';
 import PrivateRoute from '../PrivateRoute/PrivateRoute';
 import ProfilePage from '../ProfilePage/ProfilePage';
+import SaleContainer from '../SaleContainer/SaleContainer';
 
 import './App.scss';
 
@@ -71,6 +72,7 @@ class App extends React.Component {
                             <Route exact path="/register/" component={RegisterPage} />
                             <Route exact path="/explore/" component={ExploreItineraries} />
                             <Route exact path="/products/" component={ProductPage} />
+                            <PrivateRoute exact path="/:userId/sale/" component={SaleContainer} />
                             <PrivateRoute path="/create/" component={CreateItinerary} />
                             <Route exact path="/:userId/profile" component={ProfilePage} />
                             <Route exact path="/explore/:slug" component={ItineraryDetails} />

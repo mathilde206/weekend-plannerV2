@@ -89,7 +89,7 @@ class NavigationBarTop extends React.Component {
                                             to={
                                                 itemsInCart === 0 ?
                                                     '/products/' :
-                                                    `/${userId}/sale/0`
+                                                    `/${userId}/sale/`
                                             }>
                                             <FontAwesomeIcon icon="shopping-cart" /> Cart&nbsp;
                                             <span

@@ -9,13 +9,13 @@ import {
 import { library } from '@fortawesome/fontawesome-svg-core/index';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
-    faDollarSign,
+    faEuroSign,
 } from '@fortawesome/free-solid-svg-icons';
 
 import CartActionButton from '../CartActionButton/CartActionButton';
 
 library.add(
-    faDollarSign
+    faEuroSign
 );
 
 const ProductItem = ({
@@ -32,7 +32,7 @@ const ProductItem = ({
             {name}
         </Col>
         <Col xs="4" md="4" lg="4">
-            <FontAwesomeIcon icon="dollar-sign"/> {price}
+            <FontAwesomeIcon icon="euro-sign"/> {price}
         </Col>
         <Col xs="4" md={{size: 4, offset: 8}} lg="4">
             <CartActionButton

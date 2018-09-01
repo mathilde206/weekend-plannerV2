@@ -8,6 +8,19 @@ function getProductList() {
     return axios.get('/api/products/')
         .then((response) => (response.data));
 }
+
+function getProductDetail(productId) {
+    return axios.get(`/api/products/${productId}/`)
+        .then((response) => (response.data));
+}
+
+function getCartDetails(cart) {
+    return axios.all(
+        cart.map(item => getProductDetail(item))
+    ).then(response => response);
+}
+
 export {
-    getProductList
+    getProductList,
+    getCartDetails,
 };

@@ -1,0 +1,16 @@
+.sale-confirm-wrapper {
+    min-width: 100%;
+
+    .total {
+        text-align: right;
+        margin: 1em;
+    }
+    .price-col {
+        text-align: right;
+    }
+
+    button.main-button{
+        float: right;
+        margin-bottom: 2em;
+    }
+}

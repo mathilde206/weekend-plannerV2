@@ -20,6 +20,7 @@ import ProductItem from './ProductItem/ProductItem';
 import ProfileInfoTile from './ProfileInfoTile/ProfileInfoTile';
 import ProfileInfoTileEdit from './ProfileInfoTileEdit/ProfileInfoTileEdit';
 import RegisterForm from './RegisterForm/RegisterForm';
+import SalePage from './SalePage/SalePage';
 
 export {
     CardDisplay,
@@ -43,4 +44,5 @@ export {
     ProfileInfoTile,
     ProfileInfoTileEdit,
     RegisterForm,
+    SalePage,
 };

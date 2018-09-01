@@ -20,6 +20,11 @@ import {
     updateUserProfile,
 } from './userApi';
 
+import {
+    getProductList,
+    getCartDetails,
+} from './saleApi';
+
 export {
     getItineraryList,
     getFilteredItineraryList,
@@ -37,4 +42,6 @@ export {
     addLike,
     getUserLikes,
     updateUserProfile,
+    getProductList,
+    getCartDetails,
 };
