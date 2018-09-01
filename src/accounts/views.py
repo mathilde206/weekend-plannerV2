@@ -7,13 +7,13 @@ from rest_framework.generics import (
     DestroyAPIView,
     ListAPIView,
     RetrieveAPIView,
-    RetrieveUpdateAPIView
+    RetrieveUpdateAPIView,
 )
 
 from rest_framework.permissions import (
     AllowAny,
     IsAuthenticated,
-    IsAdminUser
+    IsAdminUser,
 )
 
 #
@@ -27,7 +27,8 @@ from .serializers import (
     AccountDetailSerializer,
     UserDetailSerializer,
     UserCreateSerializer,
-    UserLikesSerializer
+    UserLikesSerializer,
+    BillingInfoSerializer,
 )
 
 
@@ -61,6 +62,21 @@ class AccountUpdateAPIView(RetrieveUpdateAPIView):
     lookup_field = 'user'
     queryset = Account.objects.all()
     serializer_class = AccountDetailSerializer
+    permission_classes = [IsOwnerOrReadOnly]
+
+
+class AccountRetrieveBillingInfo(RetrieveAPIView):
+    # TODO: allow only user to access his own profile
+    lookup_field = 'user'
+    queryset = Account.objects.all()
+    serializer_class = BillingInfoSerializer
+    permission_classes = [AllowAny]
+
+
+class AccountBillingInfoUpdateAPIView(RetrieveUpdateAPIView):
+    lookup_field = 'user'
+    queryset = Account.objects.all()
+    serializer_class = BillingInfoSerializer
     permission_classes = [IsOwnerOrReadOnly]
 
 #

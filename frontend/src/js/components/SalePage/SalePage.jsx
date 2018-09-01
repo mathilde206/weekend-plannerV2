@@ -3,22 +3,94 @@ import PropTypes from 'prop-types';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 
 import SaleConfirmCart from '../SaleConfirmCart/SaleConfirmCart';
-import { getCartDetails } from '../../api';
+import UserAddressConf from '../UserAddressConf/UserAddressConf';
+import Payment from '../Payment/Payment';
+import { getCartDetails, getUserBillingInfo, refreshAccessToken, updateBillingInfo } from '../../api';
 
 class SalePage extends React.Component {
     state = {
-        billingAddressLine1: '',
-        billingAddressLine2: '',
-        billingPostCode: '',
-        billingState: '',
-        billingCity: '',
-        billingCountry: '',
+        billing_address_line1: '',
+        billing_address_line2: '',
+        billing_city: '',
+        billing_country: '',
+        billing_phone_number: '',
+        billing_postcode: '',
+        billing_state: '',
+        first_name: '',
+        last_name: '',
         orders: [],
         total: null,
+        step: 'confirmCart',
+    };
+
+    handleFieldChange = (field, event) => {
+        this.setState({
+            [ field ]: event.target.value,
+        });
+    };
+
+    handleStepChange = (nextStep) => {
+        this.setState({
+            step: nextStep
+        });
+    };
+
+    handleBillingInfoSubmit = () => {
+        const {
+            accessToken,
+            dispatch,
+            isAccessTokenExpired,
+            refreshToken,
+            userId,
+        } = this.props;
+
+        const {
+            billing_address_line1,
+            billing_address_line2,
+            billing_city,
+            billing_country,
+            billing_phone_number,
+            billing_postcode,
+            billing_state,
+            first_name,
+            last_name
+        } = this.state;
+
+        let formObj = new FormData();
+        formObj.append('billing_address_line1', billing_address_line1);
+        formObj.append('billing_address_line2', billing_address_line2);
+        formObj.append('billing_city', billing_city);
+        formObj.append('billing_country', billing_country);
+        formObj.append('billing_phone_number', billing_phone_number);
+        formObj.append('billing_postcode', billing_postcode);
+        formObj.append('billing_state', billing_state);
+        formObj.append('first_name', first_name);
+        formObj.append('last_name', last_name);
+
+        if (isAccessTokenExpired) {
+            refreshAccessToken(refreshToken)
+                .then(response => {
+                    updateBillingInfo(userId, response.access.token, formObj)
+                        .then((response) => {
+                            this.setState({
+                                step: 'payment'
+                            });
+                        });
+                });
+        } else {
+            updateBillingInfo(userId, accessToken, formObj)
+                .then((response) => {
+                    console.log(response);
+                });
+        }
+
     };
 
     componentWillMount() {
-        const { cart } = this.props;
+        const {
+            cart,
+            userId
+        } = this.props;
 
         getCartDetails(cart)
             .then((response) => {
@@ -28,6 +100,33 @@ class SalePage extends React.Component {
                     total,
                 });
             });
+
+        getUserBillingInfo(userId)
+            .then(({
+                billing_address_line1,
+                billing_address_line2,
+                billing_city,
+                billing_country,
+                billing_phone_number,
+                billing_postcode,
+                billing_state,
+                first_name,
+                last_name
+            }) => {
+                this.setState({
+                    billing_address_line1,
+                    billing_address_line2,
+                    billing_city,
+                    billing_country,
+                    billing_phone_number,
+                    billing_postcode,
+                    billing_state,
+                    first_name,
+                    last_name,
+                });
+            }
+            )
+        ;
     }
 
     UNSAFE_componentWillReceiveProps(nextProps) {
@@ -39,28 +138,67 @@ class SalePage extends React.Component {
                         orders: response,
                         total,
                     });
-                });
+                }
+                )
+            ;
         }
     }
 
     render() {
-        const { orders, total } = this.state;
-        const { removeFromCart } = this.props;
+        const {
+            billing_address_line1,
+            billing_address_line2,
+            billing_city,
+            billing_country,
+            billing_phone_number,
+            billing_postcode,
+            billing_state,
+            first_name,
+            last_name,
+            orders,
+            total,
+            step,
+        } = this.state;
+        const { removeFromCart, userId, url } = this.props;
+        console.log(this.state);
 
-        return (
-            <BrowserRouter>
-                <Switch>
-                    <Route render={(props) => (
-                        <SaleConfirmCart
-                            {...props}
-                            orders={orders}
-                            total={total}
-                            removeFromCart={removeFromCart}
-                        />
-                    )} />
-                </Switch>
-            </BrowserRouter>
-        );
+        switch (step) {
+        case 'confirmAddress':
+            return (
+                <UserAddressConf
+                    billing_address_line1={billing_address_line1}
+                    billing_address_line2={billing_address_line2}
+                    billing_city={billing_city}
+                    billing_country={billing_country}
+                    billing_phone_number={billing_phone_number}
+                    billing_postcode={billing_postcode}
+                    billing_state={billing_state}
+                    first_name={first_name}
+                    onFieldChange={this.handleFieldChange}
+                    onStepChange={this.handleStepChange}
+                    onSubmit={this.handleBillingInfoSubmit}
+                    last_name={last_name}
+                />
+            );
+        case 'payment':
+            return (
+                <Payment
+                />
+            );
+
+        case 'confirmCart':
+        default:
+            return (
+                <SaleConfirmCart
+                    orders={orders}
+                    total={total}
+                    removeFromCart={removeFromCart}
+                    userId={userId}
+                    url={url}
+                    onStepChange={this.handleStepChange}
+                />
+            );
+        }
     }
 }
 

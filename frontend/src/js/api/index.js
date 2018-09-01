@@ -18,6 +18,8 @@ import {
     refreshAccessToken,
     getUserLikes,
     updateUserProfile,
+    getUserBillingInfo,
+    updateBillingInfo,
 } from './userApi';
 
 import {
@@ -44,4 +46,6 @@ export {
     updateUserProfile,
     getProductList,
     getCartDetails,
+    getUserBillingInfo,
+    updateBillingInfo,
 };

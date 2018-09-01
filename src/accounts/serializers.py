@@ -86,3 +86,22 @@ class AccountDetailSerializer(ModelSerializer):
             'location',
             'website'
         ]
+
+
+class BillingInfoSerializer(ModelSerializer):
+    user = UserDetailSerializer(read_only=True)
+
+    class Meta:
+        model = Account
+        fields = [
+            'user',
+            'first_name',
+            'last_name',
+            'billing_address_line1',
+            'billing_address_line2',
+            'billing_postcode',
+            'billing_state',
+            'billing_city',
+            'billing_country',
+            'billing_phone_number'
+        ]
