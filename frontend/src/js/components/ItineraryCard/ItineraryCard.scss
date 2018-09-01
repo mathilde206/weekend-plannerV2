@@ -6,14 +6,4 @@
     .card-image {
         width: 100%;
     }
-
-    .btn.btn-secondary {
-        background-color: $primary-dark;
-        border-color: $primary-dark;
-
-        &:hover {
-            background-color: $primary-light;
-            border-color: $primary-light;
-        }
-    }
 }

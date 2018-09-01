@@ -57,6 +57,15 @@ import {
     updateProfileAction,
 } from './userActions';
 
+import {
+    ADD_TO_CART,
+    REMOVE_FROM_CART,
+    EMPTY_CART,
+    addToCartAction,
+    removeFromCartAction,
+    emptyCartAction,
+} from './saleAction';
+
 export {
     ALERT_CLEAR,
     ALERT_ERROR,
@@ -86,8 +95,9 @@ export {
     RECEIVE_USER_LIKES,
     REQUEST_ITINERARIES_LIST,
     RESET_FORM,
-    PROFILE_UPDATE_SUBMITTED,
-    PROFILE_UPDATED,
+    ADD_TO_CART,
+    REMOVE_FROM_CART,
+    EMPTY_CART,
     alertClearAction,
     alertErrorAction,
     alertSuccessAction,
@@ -104,5 +114,7 @@ export {
     receiveUserItineraryLikes,
     requestItinerariesList,
     resetForm,
-    updateProfileAction,
+    addToCartAction,
+    removeFromCartAction,
+    emptyCartAction,
 };

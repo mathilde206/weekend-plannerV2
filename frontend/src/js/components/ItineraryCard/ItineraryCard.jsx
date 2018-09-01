@@ -27,8 +27,6 @@ library.add(
     faEye,
 );
 
-//TODO: add the callback
-
 const ItineraryCard = ({
     city,
     image,
@@ -57,7 +55,7 @@ const ItineraryCard = ({
                     &nbsp;<FontAwesomeIcon icon="star" /> {likes}
                 </CardSubtitle>
                 <CardText>{description}</CardText>
-                <Link to={slug}><Button>More</Button></Link>
+                <Link to={slug}><Button className="main-button">More</Button></Link>
             </CardBody>
         </Card>
     );

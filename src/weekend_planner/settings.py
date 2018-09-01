@@ -27,9 +27,10 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'corsheaders',
     'rest_framework',
+    'accounts',
     'cities',
     'itineraries',
-    'accounts',
+    'products',
 ]
 
 MIDDLEWARE = [
@@ -44,7 +45,7 @@ MIDDLEWARE = [
     'django.middleware.common.CommonMiddleware',
 ]
 
-ROOT_URLCONF = 'config.urls'
+ROOT_URLCONF = 'weekend_planner.urls'
 
 TEMPLATES = [
     {
@@ -64,7 +65,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'config.wsgi.application'
+WSGI_APPLICATION = 'weekend_planner.wsgi.application'
 
 if DEVELOPMENT:
     DATABASES = {

@@ -17,8 +17,8 @@ body, html {
         padding-left: 0;
     }
 
-    .container-wrapper{
-        padding-top:70px;
+    .container-wrapper {
+        padding-top: 70px;
     }
 
     .container-wrapper .jumbotron-white {
@@ -38,7 +38,26 @@ body, html {
         font-family: $font-title;
     }
 
-    .app-container{
-        min-height:90vh;
+    .app-container {
+        min-height: 90vh;
+    }
+
+    .btn.btn-secondary.main-button {
+        background-color: $primary-dark;
+        border-color: $primary-dark;
+
+        &:hover {
+            background-color: $primary-light;
+            border-color: $primary-light;
+        }
+    }
+
+    .border-title {
+        padding: 0.6em 2em;
+        margin-bottom: 1em;
+        background-color: $background-white;
+        border-bottom: $heavy-border;
+        border-top: $heavy-border;
+        color: $font-color-dark;
     }
 }

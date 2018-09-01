@@ -15,8 +15,19 @@ import {
     DropdownMenu,
     DropdownItem
 } from 'reactstrap';
+import { library } from '@fortawesome/fontawesome-svg-core/index';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {
+    faShoppingCart,
+    faUser,
+} from '@fortawesome/free-solid-svg-icons';
 
 import * as reducers from '../../reducers';
+
+library.add(
+    faShoppingCart,
+    faUser,
+);
 import './NavigationBarTop.scss';
 
 class NavigationBarTop extends React.Component {
@@ -33,6 +44,7 @@ class NavigationBarTop extends React.Component {
     render() {
         const {
             isAuthenticated,
+            itemsInCart,
             userId,
         } = this.props;
 
@@ -49,11 +61,46 @@ class NavigationBarTop extends React.Component {
                             <NavItem>
                                 <NavLink href="/create">Add an Itinerary</NavLink>
                             </NavItem>
+                            <NavItem>
+                                <NavLink href="/products/">Products</NavLink>
+                            </NavItem>
                             <UncontrolledDropdown nav inNavbar>
                                 <DropdownToggle nav caret>
-                                    Account
+                                    Account&nbsp;
+                                    <span
+                                        className="badge badge-light"
+                                        style={{ visibility: itemsInCart === 0 ? 'hidden' : 'visible' }}
+                                    >
+                                        {itemsInCart}
+                                    </span>
                                 </DropdownToggle>
                                 <DropdownMenu right>
+                                    {
+                                        isAuthenticated &&
+                                        (<Fragment>
+                                            <DropdownItem>
+                                                <FontAwesomeIcon icon="user" /> <Link to={`/${userId}/profile/`}>Profile</Link>
+                                            </DropdownItem>
+                                            <DropdownItem divider />
+                                        </Fragment>)
+                                    }
+                                    <DropdownItem>
+                                        <Link
+                                            to={
+                                                itemsInCart === 0 ?
+                                                    '/products/' :
+                                                    `/${userId}/sale/0`
+                                            }>
+                                            <FontAwesomeIcon icon="shopping-cart" /> Cart&nbsp;
+                                            <span
+                                                className="badge badge-light"
+                                                style={{ visibility: itemsInCart === 0 ? 'hidden' : 'visible' }}
+                                            >
+                                                {itemsInCart}
+                                            </span>
+                                        </Link>
+                                    </DropdownItem>
+                                    <DropdownItem divider />
                                     <DropdownItem>
                                         <Link to="/login/">
                                             {
@@ -63,43 +110,39 @@ class NavigationBarTop extends React.Component {
                                             }
                                         </Link>
                                     </DropdownItem>
-                                    {
-                                        isAuthenticated &&
-                                        (<Fragment>
-                                            <DropdownItem divider />
-                                            <DropdownItem>
-                                                <Link to={`/${userId}/profile/`}>Profile</Link>
-                                            </DropdownItem>
-                                        </Fragment>)
-                                    }
 
                                 </DropdownMenu>
                             </UncontrolledDropdown>
                         </Nav>
                     </Collapse>
                 </Navbar>
-            </div>
-        );
+            </div>);
     }
 }
 
 NavigationBarTop.defaultProps = {
     isAuthenticated: false,
+    itemsInCart: 0,
     userId: null,
 };
 
 NavigationBarTop.propTypes = {
     isAuthenticated: PropTypes.bool,
+    itemsInCart: PropTypes.number,
     userId: PropTypes.number,
 };
 
 const mapStateToProps = (state) => {
     const {
-        user
+        user,
+        cart,
     } = state;
+
+    const cartContent = cart.cart || [];
 
     return {
         isAuthenticated: reducers.isAuthenticated(state),
+        itemsInCart: cartContent.length,
         userId: user.userId,
     };
 };

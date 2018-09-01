@@ -1,5 +1,4 @@
 from django.urls import path
-from django.conf.urls import url
 from .views import (
     CityRetrieveView,
     CityListView,
@@ -12,4 +11,3 @@ urlpatterns = [
     path('create/', CityCreateView.as_view())
 ]
 
-# TODO: how does it work for cities with several words

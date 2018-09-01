@@ -13,13 +13,15 @@ import {
 import { getItineraryList } from '../../api';
 
 import {
-    Footer
+    Footer,
+    Four0FourPage,
 } from '../../components';
 
 import ExploreItineraries from '../ExploreItineraries/ExploreItineraries';
 import Home from '../Home/Home';
 import ItineraryDetails from '../ItineraryDetails/ItineraryDetails';
 import LoginPage from '../LoginPage/LoginPage';
+import ProductPage from '../ProductPage/ProductPage';
 import RegisterPage from '../RegisterPage/RegisterPage';
 import NavigationBarTop from '../NavigationBarTop/NavigationBarTop';
 import CreateItinerary from '../CreateItinerary/CreateItinerary';
@@ -68,10 +70,13 @@ class App extends React.Component {
                             <Route exact path="/login/" component={LoginPage} />
                             <Route exact path="/register/" component={RegisterPage} />
                             <Route exact path="/explore/" component={ExploreItineraries} />
+                            <Route exact path="/products/" component={ProductPage} />
                             <PrivateRoute path="/create/" component={CreateItinerary} />
-                            <Route path="/:userId/profile" component={ProfilePage} />
+                            <Route exact path="/:userId/profile" component={ProfilePage} />
                             <Route exact path="/explore/:slug" component={ItineraryDetails} />
-                            <Route path="/:slug" component={ItineraryDetails} />
+                            <Route exact path="/:slug" component={ItineraryDetails} />
+                            <Route exact path="/explore/:slug" component={ItineraryDetails} />
+                            <Route component={Four0FourPage} />
                         </Switch>
                     </div>
                     <Footer />

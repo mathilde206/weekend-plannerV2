@@ -16,6 +16,7 @@ import {
     registrationReducer,
 } from './userReducer';
 import userLikesReducer from './likesReducer';
+import { cartReducer } from './saleReducer';
 
 
 const rootReducer = combineReducers({
@@ -28,6 +29,7 @@ const rootReducer = combineReducers({
     itineraries: itinerariesListReducer,
     router: routerReducer,
     userLikes: userLikesReducer,
+    cart: cartReducer,
 });
 
 export default rootReducer;
