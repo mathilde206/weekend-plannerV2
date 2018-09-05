@@ -27,7 +27,7 @@ const CartActionButton = ({
         return (
             <Button
                 onClick={() => removeFromCart(pk)}
-                className="main-button"
+                color='danger'
                 disabled={!isAuthenticated}
             >
                 <FontAwesomeIcon icon="cart-arrow-down" /> Out

@@ -93,6 +93,7 @@ function loginAction(username, password) {
                 getUsername(access.user_id)
                     .then((username) => {
                         dispatch(success(username, access.token, auth));
+                        dispatch(setAuthedUserAction(access.user_id));
                         dispatch(alertSuccessAction('Successful Login'));
                         history.push('/');
                     });
@@ -101,7 +102,7 @@ function loginAction(username, password) {
                 dispatch(failure(error.toString()));
                 dispatch(alertErrorAction(error.toString()));
             }
-        );
+            );
     };
 }
 

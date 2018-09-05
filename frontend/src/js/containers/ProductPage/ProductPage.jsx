@@ -100,6 +100,16 @@ class ProductPage extends React.Component {
                         })
                     }
                 </CardColumns>
+                {
+                    cart.length > 0 &&
+                    <div className="product-headline">
+                        <Link to={`/${userId}/checkout/`}>
+                            <Button className="main-button">
+                                Checkout Now
+                            </Button>
+                        </Link>
+                    </div>
+                }
             </div>
         );
     }

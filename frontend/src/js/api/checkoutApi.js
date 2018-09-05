@@ -40,7 +40,7 @@ function saveOrder(access_token, stripe_token, formObj) {
         url: '/api/checkout/order/create/',
     };
     return axios(options)
-        .then(response => console.log(response) || response.data);
+        .then(response => response.data);
 }
 
 function saveProductItem(access_token, formObj) {
@@ -54,7 +54,7 @@ function saveProductItem(access_token, formObj) {
         url: '/api/checkout/orderitem/create/',
     };
     return axios(options)
-        .then(response => console.log(response) || response.data);
+        .then(response => response.data);
 }
 
 export {

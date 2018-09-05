@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { BrowserRouter, Switch, Route } from 'react-router-dom';
 
 import CheckoutConfirmCart from '../CheckoutConfirmCart/CheckoutConfirmCart';
 import UserAddressConf from '../UserAddressConf/UserAddressConf';
@@ -38,7 +37,6 @@ class CheckoutPage extends React.Component {
     handleBillingInfoSubmit = () => {
         const {
             accessToken,
-            dispatch,
             isAccessTokenExpired,
             refreshToken,
             userId,
@@ -166,9 +164,11 @@ class CheckoutPage extends React.Component {
             cart,
             isAccessTokenExpired,
             removeFromCart,
+            emptyCart,
             refreshToken,
             userId, url
         } = this.props;
+
 
         switch (step) {
         case 'confirmAddress':
@@ -193,12 +193,30 @@ class CheckoutPage extends React.Component {
                 <Payment
                     accessToken={accessToken}
                     cart={cart}
+                    emptyCart={emptyCart}
                     isAccessTokenExpired={isAccessTokenExpired}
                     refreshToken={refreshToken}
                     total={total}
+                    orders={orders}
+                    billing_address_line1={billing_address_line1}
+                    billing_address_line2={billing_address_line2}
+                    billing_city={billing_city}
+                    billing_country={billing_country}
+                    billing_phone_number={billing_phone_number}
+                    billing_postcode={billing_postcode}
+                    billing_state={billing_state}
+                    first_name={first_name}
+                    last_name={last_name}
+                    handleStepChange={this.handleStepChange}
                 />
             );
-
+        case 'orderFinalized':
+            return (
+                <div>
+                    <h2>Thank you for your order</h2>
+                    <p>We will get back to you very soon.</p>
+                </div>
+            );
         case 'confirmCart':
         default:
             return (

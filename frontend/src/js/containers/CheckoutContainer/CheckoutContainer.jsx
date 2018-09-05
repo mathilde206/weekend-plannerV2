@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
-import { removeFromCartAction } from '../../actions';
+import { removeFromCartAction, emptyCartAction } from '../../actions';
 import {
     accessToken,
     isAccessTokenExpired,
@@ -19,6 +19,7 @@ const CheckoutContainer = ({
     isAccessTokenExpired,
     refreshToken,
     removeFromCart,
+    emptyCart,
     userId,
 }) => (
     <div className="container product-page-wrapper">
@@ -33,6 +34,7 @@ const CheckoutContainer = ({
                     isAccessTokenExpired={isAccessTokenExpired}
                     refreshToken={refreshToken}
                     removeFromCart={removeFromCart}
+                    emptyCart={emptyCart}
                     userId={userId}
                 />
         }
@@ -56,12 +58,16 @@ CheckoutContainer.defaultProps = {
     isAuthenticated: false,
     cart: [],
     removeFromCart: () => null,
+    emptyCart:  () => null,
     userId: null,
 };
 
 const mapDispatchToProps = (dispatch) => ({
     removeFromCart: (productId) => {
         dispatch(removeFromCartAction(productId));
+    },
+    emptyCart: () => {
+        dispatch(emptyCartAction());
     },
 });
 

@@ -26,7 +26,6 @@ function cartReducer(state = {}, action) {
         };
     case EMPTY_CART:
         return {
-            ...state,
             cart: []
         };
     default:
