@@ -64,7 +64,7 @@ import {
     addToCartAction,
     removeFromCartAction,
     emptyCartAction,
-} from './saleAction';
+} from './checkoutAction';
 
 export {
     ALERT_CLEAR,

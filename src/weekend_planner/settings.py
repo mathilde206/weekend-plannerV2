@@ -31,6 +31,7 @@ INSTALLED_APPS = [
     'cities',
     'itineraries',
     'products',
+    'checkout'
 ]
 
 MIDDLEWARE = [
@@ -137,3 +138,6 @@ CORS_ALLOW_CREDENTIALS = True
 CORS_EXPOSE_HEADERS = (
     'Access-Control-Allow-Origin: *',
 )
+
+STRIPE_PUBLISHABLE = os.getenv('STRIPE_PUBLISHABLE')
+STRIPE_SECRET = os.getenv('STRIPE_SECRET')

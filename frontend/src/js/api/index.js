@@ -25,7 +25,10 @@ import {
 import {
     getProductList,
     getCartDetails,
-} from './saleApi';
+    getStripePublishableKey,
+    saveOrder,
+    saveProductItem,
+} from './checkoutApi';
 
 export {
     getItineraryList,
@@ -48,4 +51,7 @@ export {
     getCartDetails,
     getUserBillingInfo,
     updateBillingInfo,
+    getStripePublishableKey,
+    saveOrder,
+    saveProductItem
 };

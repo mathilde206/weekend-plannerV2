@@ -16,7 +16,7 @@ import {
     registrationReducer,
 } from './userReducer';
 import userLikesReducer from './likesReducer';
-import { cartReducer } from './saleReducer';
+import { cartReducer } from './checkoutReducer';
 
 
 const rootReducer = combineReducers({

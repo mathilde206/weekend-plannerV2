@@ -14,6 +14,7 @@ from accounts import urls as users_urls
 from itineraries import urls as itineraries_urls
 from cities import urls as cities_urls
 from products import urls as products_urls
+from checkout import urls as checkout_urls
 
 urlpatterns = [
                   path('api/', get_schema_view()),
@@ -32,6 +33,8 @@ urlpatterns = [
                         include((cities_urls, 'cities'), namespace='cities-api')),
                   path('api/products/',
                         include((products_urls, 'products'), namespace='products-api')),
+                  path('api/checkout/',
+                      include((checkout_urls, 'checkout'), namespace='checkout-api')),
                   path('admin/', admin.site.urls),
               ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

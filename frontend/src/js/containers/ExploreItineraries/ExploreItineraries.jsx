@@ -54,7 +54,6 @@ class ExploreItineraries extends React.Component {
 
         event.preventDefault();
         if (searchCity !== '') {
-            console.log('hello');
             query = query.concat(`city=${searchCity}`);
         }
         if (budget !== '') {
@@ -82,8 +81,6 @@ class ExploreItineraries extends React.Component {
             searchCity,
             numberOfDays,
         } = this.state;
-
-        console.log(this.state);
 
         const {
             itineraries,

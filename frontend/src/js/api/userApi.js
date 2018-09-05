@@ -34,7 +34,6 @@ function login(username, password) {
 function refreshAccessToken(token) {
     return axios.post('/api/auth/token/refresh/', { refresh: token })
         .then(({ data }) => {
-            console.log(data);
             return ({
                 access: {
                     token: data.access,

@@ -2,12 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 
-import SaleConfirmCart from '../SaleConfirmCart/SaleConfirmCart';
+import CheckoutConfirmCart from '../CheckoutConfirmCart/CheckoutConfirmCart';
 import UserAddressConf from '../UserAddressConf/UserAddressConf';
 import Payment from '../Payment/Payment';
 import { getCartDetails, getUserBillingInfo, refreshAccessToken, updateBillingInfo } from '../../api';
 
-class SalePage extends React.Component {
+class CheckoutPage extends React.Component {
     state = {
         billing_address_line1: '',
         billing_address_line2: '',
@@ -71,7 +71,7 @@ class SalePage extends React.Component {
             refreshAccessToken(refreshToken)
                 .then(response => {
                     updateBillingInfo(userId, response.access.token, formObj)
-                        .then((response) => {
+                        .then(() => {
                             this.setState({
                                 step: 'payment'
                             });
@@ -79,8 +79,10 @@ class SalePage extends React.Component {
                 });
         } else {
             updateBillingInfo(userId, accessToken, formObj)
-                .then((response) => {
-                    console.log(response);
+                .then(() => {
+                    this.setState({
+                        step: 'payment'
+                    });
                 });
         }
 
@@ -159,8 +161,14 @@ class SalePage extends React.Component {
             total,
             step,
         } = this.state;
-        const { removeFromCart, userId, url } = this.props;
-        console.log(this.state);
+        const {
+            accessToken,
+            cart,
+            isAccessTokenExpired,
+            removeFromCart,
+            refreshToken,
+            userId, url
+        } = this.props;
 
         switch (step) {
         case 'confirmAddress':
@@ -183,13 +191,18 @@ class SalePage extends React.Component {
         case 'payment':
             return (
                 <Payment
+                    accessToken={accessToken}
+                    cart={cart}
+                    isAccessTokenExpired={isAccessTokenExpired}
+                    refreshToken={refreshToken}
+                    total={total}
                 />
             );
 
         case 'confirmCart':
         default:
             return (
-                <SaleConfirmCart
+                <CheckoutConfirmCart
                     orders={orders}
                     total={total}
                     removeFromCart={removeFromCart}
@@ -202,4 +215,4 @@ class SalePage extends React.Component {
     }
 }
 
-export default SalePage;
+export default CheckoutPage;

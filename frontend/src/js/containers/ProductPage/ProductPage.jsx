@@ -61,14 +61,14 @@ class ProductPage extends React.Component {
                 {
                     !isAuthenticated &&
                     <div className="product-headline">
-                        <span className="disabled-sale"> You must <Link to="/login">Login</Link> to buy travel packages.</span>
+                        <span className="disabled-checkout"> You must <Link to="/login">Login</Link> to buy travel packages.</span>
                     </div>
                 }
 
                 {
                     cart.length > 0 &&
                     <div className="product-headline">
-                        <Link to={`/${userId}/sale/`}>
+                        <Link to={`/${userId}/checkout/`}>
                             <Button className="main-button">
                                 Checkout Now
                             </Button>

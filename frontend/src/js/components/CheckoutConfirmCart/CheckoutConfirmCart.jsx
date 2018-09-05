@@ -15,15 +15,15 @@ library.add(
     faBan,
 );
 
-import './SaleConfirmCart.scss';
+import './CheckoutConfirmCart.scss';
 
-const SaleConfirmCart = ({
-                             onStepChange,
-                             orders,
-                             removeFromCart,
-                             total,
-                         }) => (
-    <div className="sale-confirm-wrapper">
+const CheckoutConfirmCart = ({
+    onStepChange,
+    orders,
+    removeFromCart,
+    total,
+}) => (
+    <div className="checkout-confirm-wrapper">
         <p>
             Please confirm your order.
         </p>
@@ -62,4 +62,4 @@ const SaleConfirmCart = ({
     </div>
 );
 
-export default SaleConfirmCart;
+export default CheckoutConfirmCart;

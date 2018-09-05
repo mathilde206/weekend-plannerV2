@@ -10,9 +10,9 @@ import {
     isAuthenticated,
     refreshToken
 } from '../../reducers';
-import { SalePage } from '../../components';
+import { CheckoutPage } from '../../components';
 
-const SaleContainer = ({
+const CheckoutContainer = ({
     accessToken,
     cart,
     dispatch,
@@ -26,7 +26,7 @@ const SaleContainer = ({
         {
             cart.length === 0 ?
                 <p>Your cart is empty, visit our <Link to="/products">Products Page</Link>.</p> :
-                <SalePage
+                <CheckoutPage
                     accessToken={accessToken}
                     cart={cart}
                     dispatch={dispatch}
@@ -40,7 +40,7 @@ const SaleContainer = ({
     </div>
 );
 
-SaleContainer.propTypes = {
+CheckoutContainer.propTypes = {
     accessToken: PropTypes.string.isRequired,
     cart: PropTypes.arrayOf(PropTypes.number),
     isAccessTokenExpired: PropTypes.bool.isRequired,
@@ -51,7 +51,7 @@ SaleContainer.propTypes = {
     refreshToken: PropTypes.string.isRequired,
 };
 
-SaleContainer.defaultProps = {
+CheckoutContainer.defaultProps = {
     accessToken: null,
     isAuthenticated: false,
     cart: [],
@@ -81,4 +81,4 @@ const mapStateToProps = (state) => {
     });
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(SaleContainer);
+export default connect(mapStateToProps, mapDispatchToProps)(CheckoutContainer);
