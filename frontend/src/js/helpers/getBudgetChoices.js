@@ -3,7 +3,7 @@ function getBudgetChoices(budgetChoice) {
         $: 'Cheap',
         $$: 'Affordable',
         $$$: 'Expensive',
-        $$$$: 'Very Expensive',
+        $$$$: 'Very_Expensive',
     }
 }
 

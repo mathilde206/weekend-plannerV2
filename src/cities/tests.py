@@ -1,5 +1,5 @@
 from django.test import TestCase
-from .models import City
+from cities.models import City
 
 
 class CityTest(TestCase):

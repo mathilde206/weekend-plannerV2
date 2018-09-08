@@ -15,7 +15,7 @@ else:
 ALLOWED_HOSTS = [
     'localhost',
     '127.0.0.1',
-    'https://europe-weekend-planner.herokuapp.com/',
+    '.herokuapp.com',
 ]
 
 INSTALLED_APPS = [
@@ -26,12 +26,13 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'corsheaders',
+    'storages',
     'rest_framework',
     'accounts',
     'cities',
     'itineraries',
     'products',
-    'checkout'
+    'checkout',
 ]
 
 MIDDLEWARE = [
@@ -116,16 +117,15 @@ AWS_S3_CUSTOM_DOMAIN = '{bucket}.s3.amazonaws.com'.format(bucket=AWS_STORAGE_BUC
 
 STATICFILES_LOCATION = 'static'
 STATICFILES_STORAGE = 'custom_storages.StaticStorage'
-STATIC_URL = '/static/'
+STATIC_URL = 'https://%s/%s/' % (AWS_S3_CUSTOM_DOMAIN, STATICFILES_LOCATION)
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'staticfiles/')
+    os.path.join(BASE_DIR, 'static/')
 ]
-STATIC_ROOT = os.path.join(os.path.dirname(BASE_DIR), 'static-cdn-local')
 
 MEDIAFILES_LOCATION = 'media'
-MEDIAFILES_STORAGE = 'custom_storages.MediaStorage'
-MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR), 'media')
+DEFAULT_FILE_STORAGE = 'custom_storages.MediaStorage'
+MEDIA_URL = 'https://%s/%s/' % (AWS_S3_CUSTOM_DOMAIN, MEDIAFILES_LOCATION)
+MEDIA_ROOT = '/media/'
 
 REST_FRAMEWORK = {
     'DEFAULT_RENDERER_CLASSES': (

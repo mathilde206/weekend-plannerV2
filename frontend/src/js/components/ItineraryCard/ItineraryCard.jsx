@@ -44,7 +44,7 @@ const ItineraryCard = ({
             <CardImg
                 alt="Card image cap"
                 top
-                src={image ? image : '/static/images/genericCard.jpg'}
+                src={image ? image : 'https://weekend-planner.s3.amazonaws.com/static/images/genericCard.jpg'}
                 className="card-image"
             />
             <CardBody>
@@ -62,7 +62,7 @@ const ItineraryCard = ({
 };
 
 ItineraryCard.defaultProps = {
-    image: '/static/images/genericCard.jpg',
+    image: 'https://weekend-planner.s3.amazonaws.com/static/images/genericCard.jpg',
     likes: 0,
     description: '',
     views: 0,

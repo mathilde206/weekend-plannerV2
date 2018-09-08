@@ -7,7 +7,6 @@ from cities.models import City
 from accounts.models import Account
 
 
-# TODO: Once I add the city field, need to update the location to --> <city>/filename
 def upload_location(instance, filename):
     return "%s/%s" % (instance.city, filename)
 

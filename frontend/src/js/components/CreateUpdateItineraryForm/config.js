@@ -39,7 +39,7 @@ export function getFieldsforStep(step) {
                 name: 'budget',
                 label: 'Budget *',
                 type: 'select',
-                options: [ 'Cheap', 'Affordable', 'Expensive', 'Very Expensive' ]
+                options: [ 'Cheap', 'Affordable', 'Expensive', 'Very_Expensive' ]
             }
         ]);
     case 3:

@@ -56,7 +56,7 @@ const ItinerariesSearchForm = ({
                     <option>Cheap</option>
                     <option>Affordable</option>
                     <option>Expensive</option>
-                    <option>Very Expensive</option>
+                    <option>Very_Expensive</option>
                 </Input>
             </FormGroup>
             <FormGroup className="mb-2 mr-sm-2 mb-sm-0">

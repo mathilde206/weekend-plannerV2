@@ -45,7 +45,7 @@ const ProductCard = ({
         <CardImg
             alt="Card image cap"
             top
-            src={image ? image : '/static/images/genericCard.jpg'}
+            src={image ? image : 'https://weekend-planner.s3.amazonaws.com/static/images/genericCard.jpg'}
         />
         <CardBody>
             <CardTitle>{name}</CardTitle>
