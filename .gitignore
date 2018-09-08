@@ -14,3 +14,4 @@ src/accounts/__pycache__/admin.cpython-36.pyc
 src/accounts/__pycache__/models.cpython-36.pyc
 src/accounts/migrations/__pycache__/
 media/
+!/src/__init__.py
