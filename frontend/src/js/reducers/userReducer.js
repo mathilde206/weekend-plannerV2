@@ -57,7 +57,7 @@ function setAuthCredentialsReducer(state = initialAuthCredentials, action) {
         return {
             access: null,
             refresh: null,
-            errors: action.auth.errors
+            error: action.error,
         };
     case LOGOUT:
         return {};

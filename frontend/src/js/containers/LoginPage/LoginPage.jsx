@@ -1,5 +1,5 @@
 import React from 'react';
-import Link from 'react-router-dom';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import LoginForm from '../../components/LoginForm/LoginForm';
@@ -16,7 +16,7 @@ class Login extends React.Component {
         submitted: false,
     };
 
-    componentWillMount() {
+    componentDidMount() {
         this.props.dispatch(logoutAction());
     }
 
@@ -44,11 +44,14 @@ class Login extends React.Component {
     };
 
     render() {
+        const {error} = this.props;
+
         return (
             <div className="login-page container-wrapper">
                 <LoginForm
                     handleChange={this.handleChange}
                     handleSubmit={this.handleSubmit}
+                    serverError={error}
                     errors={this.state.errors}
                     loggingIn={this.props.loggingIn}
                 />
@@ -57,12 +60,25 @@ class Login extends React.Component {
     }
 }
 
-const mapStateToProps = (state) => {
-    const { loggingIn } = state.user;
+Login.propTypes = {
+    error: PropTypes.string,
+    loggingIn: PropTypes.bool,
+};
+
+Login.defaultProps = {
+    error: '',
+    loggingIn: false,
+};
+
+const mapStateToProps = ({ auth, user }) => {
+    const { loggingIn } = user;
+    const { error } = auth;
     return {
+        error,
         loggingIn
     };
 };
 
 const LoginPage = connect(mapStateToProps)(Login);
+
 export default LoginPage;
