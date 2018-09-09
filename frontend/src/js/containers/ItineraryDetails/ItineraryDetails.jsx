@@ -1,13 +1,19 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import Redirect from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import {
+    accessToken,
+    isAccessTokenExpired,
     isAuthenticated,
+    refreshToken,
 } from '../../reducers';
 import {
     getItineraryDetails,
     increaseViewsCounter,
+    deleteItinerary,
+    refreshAccessToken,
 } from '../../api';
 
 import {
@@ -16,6 +22,8 @@ import {
 } from '../../components';
 
 import './ItineraryDetails.scss';
+import { history } from '../../helpers';
+
 
 class ItineraryDetails extends React.Component {
     state = {
@@ -69,6 +77,33 @@ class ItineraryDetails extends React.Component {
             });
     };
 
+    handleDelete = (event) => {
+        const {
+            accessToken,
+            isAccessTokenExpired,
+            refreshToken,
+        } = this.props;
+
+        const slug = this.props.match.params.slug;
+
+        event.preventDefault();
+
+        if (isAccessTokenExpired) {
+            refreshAccessToken(refreshToken)
+                .then(response => {
+                    deleteItinerary(slug, response.access.token)
+                        .then(() => {
+                            history.push('/');
+                        });
+                });
+        } else {
+            deleteItinerary(slug, accessToken)
+                .then(() => {
+                    history.push('/');
+                });
+        }
+    };
+
     render() {
         const {
             budget,
@@ -117,6 +152,7 @@ class ItineraryDetails extends React.Component {
                     title={title}
                     user={user}
                     views={views}
+                    onDelete={this.handleDelete}
                 />
                 <DayTabs
                     day1_morning={day1_morning}
@@ -139,12 +175,18 @@ class ItineraryDetails extends React.Component {
 }
 
 ItineraryDetails.defaultProps = {
+    accessToken: '',
+    isAccessTokenExpired: false,
     isAuthenticated: false,
-    userLikes: []
+    refreshToken: '',
+    userLikes: [],
 };
 
 ItineraryDetails.propTypes = {
+    accessToken: PropTypes.string,
+    isAccessTokenExpired: PropTypes.bool,
     isAuthenticated: PropTypes.bool,
+    refreshToken: PropTypes.string,
     userLikes: PropTypes.arrayOf(PropTypes.number),
 };
 
@@ -154,8 +196,11 @@ const mapStateToProps = (state) => {
     } = state;
 
     return ({
+        accessToken: accessToken(state),
+        isAccessTokenExpired: isAccessTokenExpired(state),
         isAuthenticated: isAuthenticated(state),
         userLikes: userLikes.itinerary_likes,
+        refreshToken: refreshToken(state),
     });
 };
 

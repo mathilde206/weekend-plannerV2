@@ -45,6 +45,7 @@ const ItineraryDetailsHeader = ({
     title,
     user,
     views,
+    onDelete,
 }) => (
     <Fragment>
         {
@@ -92,6 +93,7 @@ const ItineraryDetailsHeader = ({
                         pk={pk}
                         user={user}
                         slug={slug}
+                        onDelete={onDelete}
                     />
                 </Jumbotron>
             </Col>
@@ -112,6 +114,7 @@ ItineraryDetailsHeader.propTypes = {
     slug: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,
     views: PropTypes.number.isRequired,
+    onDelete: PropTypes.func.isRequired,
 };
 
 export default ItineraryDetailsHeader;

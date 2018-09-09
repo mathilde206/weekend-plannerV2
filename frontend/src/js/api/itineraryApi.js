@@ -74,6 +74,20 @@ function addLike(slug, likeObj, token) {
 
 }
 
+
+function deleteItinerary(slug, token) {
+    const options = {
+        method: 'DELETE',
+        headers: {
+            'Authorization': 'Bearer ' + token,
+            'content-type': 'multipart/form-data'
+        },
+        url: `/api/itineraries/${slug}/delete`,
+    };
+    return axios(options)
+        .then(response => response.data);
+}
+
 export {
     getItineraryList,
     getFilteredItineraryList,
@@ -83,4 +97,5 @@ export {
     createItinerary,
     increaseViewsCounter,
     addLike,
+    deleteItinerary,
 };

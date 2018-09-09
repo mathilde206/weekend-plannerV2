@@ -81,6 +81,7 @@ class ItineraryDetailsActions extends React.Component {
             user,
             userId,
             userLikes,
+            onDelete,
         } = this.props;
 
         const isOwner = isAuthenticated && loggedInUser === user.username;
@@ -118,7 +119,10 @@ class ItineraryDetailsActions extends React.Component {
                 }
                 {
                     isOwner &&
-                    <Button color="danger">
+                    <Button
+                        color="danger"
+                        onClick={onDelete}
+                    >
                         <FontAwesomeIcon icon="trash" />
                         &nbsp;Delete
                     </Button>
@@ -135,6 +139,7 @@ ItineraryDetailsActions.propTypes = {
     isAuthenticated: PropTypes.bool,
     loggedInUser: PropTypes.string,
     onLike: PropTypes.func.isRequired,
+    onDelete: PropTypes.func.isRequired,
     pk: PropTypes.number.isRequired,
     user: PropTypes.objectOf(PropTypes.string),
     userId: PropTypes.number,

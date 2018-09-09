@@ -58,7 +58,6 @@ class ItineraryCreateView(CreateAPIView):
 class ItineraryDelete(DestroyAPIView):
     lookup_field = 'slug'
     queryset = Itinerary.objects.all()
-    serializer_class = ItineraryDetailSerializer
     permission_classes = [IsOwnerOrReadOnly]
 
 
@@ -163,6 +162,7 @@ class ItineraryUpdateLikes(GenericAPIView):
             "userLikes": userLikes,
         }
         return Response(data)
+
 
 # TODO: Add a Recommendation list for posts from a user and posts about a city (use filter on
 # queryset instead of all)
