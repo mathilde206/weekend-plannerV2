@@ -31,11 +31,6 @@ export function getFieldsforStep(step) {
                 type: 'text'
             },
             {
-                name: 'shortDescription',
-                label: 'Short Description *',
-                type: 'textarea'
-            },
-            {
                 name: 'budget',
                 label: 'Budget *',
                 type: 'select',

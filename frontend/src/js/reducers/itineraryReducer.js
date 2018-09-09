@@ -3,6 +3,7 @@ import {
     CITY_CREATE,
     FORM_SUBMITTED,
     ITINERARY_CREATED,
+    ITINERARY_UPDATED,
     REQUEST_ITINERARIES_LIST,
     RECEIVE_ITINERARIES_LIST,
     RESET_FORM,
@@ -35,6 +36,11 @@ function createUpdateItineraryReducer(state = { currentStep: 0 }, action) {
         return {
             ...state,
             itinerarySlug: action.data.slug
+        };
+    case ITINERARY_UPDATED:
+        return {
+            ...state,
+            updated: action.updated,
         };
     case RESET_FORM:
         return {

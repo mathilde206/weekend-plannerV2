@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import {
@@ -78,10 +79,11 @@ class ItineraryDetailsActions extends React.Component {
             isAuthenticated,
             loggedInUser,
             pk,
+            onDelete,
+            slug,
             user,
             userId,
             userLikes,
-            onDelete,
         } = this.props;
 
         const isOwner = isAuthenticated && loggedInUser === user.username;
@@ -112,10 +114,12 @@ class ItineraryDetailsActions extends React.Component {
 
                 {
                     isOwner &&
-                    <Button color="primary">
-                        <FontAwesomeIcon icon="pencil-alt" />
-                        &nbsp;Edit
-                    </Button>
+                    <Link to={`${slug}/update`}>
+                        <Button color="primary">
+                            <FontAwesomeIcon icon="pencil-alt" />
+                            &nbsp;Edit
+                        </Button>
+                    </Link>
                 }
                 {
                     isOwner &&
@@ -141,7 +145,7 @@ ItineraryDetailsActions.propTypes = {
     onLike: PropTypes.func.isRequired,
     onDelete: PropTypes.func.isRequired,
     pk: PropTypes.number.isRequired,
-    user: PropTypes.objectOf(PropTypes.string),
+    user: PropTypes.objectOf(PropTypes.oneOfType([ PropTypes.string, PropTypes.number ])).isRequired,
     userId: PropTypes.number,
     userLikes: PropTypes.arrayOf(PropTypes.number),
     refreshToken: PropTypes.string,

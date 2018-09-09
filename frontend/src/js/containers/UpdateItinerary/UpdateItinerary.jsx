@@ -1,16 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import {Redirect} from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 
 import {
     initializeCreateAction,
-    createItineraryAction,
+    updateItineraryAction,
     setCityAction,
     resetForm,
 } from '../../actions';
 
 import {
+    getItineraryDetails,
     refreshAccessToken,
 } from '../../api/';
 
@@ -32,7 +33,7 @@ import {
     validateDayInput,
 } from '../../helpers';
 
-class CreateItinerary extends React.Component {
+class UpdateItinerary extends React.Component {
     state = {
         step: 0,
         number_of_days: 1,
@@ -55,9 +56,8 @@ class CreateItinerary extends React.Component {
         day3_lunch: '',
         day3_afternoon: '',
         day3_diner: '',
-        image: '',
         errors: {},
-        slug:'',
+        slug: '',
     };
 
     handleInputChange = (event) => {
@@ -92,38 +92,35 @@ class CreateItinerary extends React.Component {
 
     handleReset = (event) => {
         const {
-            reset
+            match,
+            reset,
         } = this.props;
 
         event.preventDefault();
 
         reset();
-        this.setState({
-            step: 0,
-            number_of_days: 1,
-            city: '',
-            cityPk: null,
-            country: '',
-            language: '',
-            currency: '',
-            title: '',
-            shortDescription: '',
-            budget: 'Cheap',
-            day1_morning: '',
-            day1_lunch: '',
-            day1_afternoon: '',
-            day1_diner: '',
-            day2_morning: '',
-            day2_lunch: '',
-            day2_afternoon: '',
-            day2_diner: '',
-            day3_morning: '',
-            day3_lunch: '',
-            day3_afternoon: '',
-            day3_diner: '',
-            image: '',
-            errors: {},
-        });
+        getItineraryDetails(this.props.match.params.slug)
+            .then(response => {
+                this.setState({
+                    isLoading: false,
+                    number_of_days: response.number_of_days,
+                    city: response.city.name,
+                    title: response.title,
+                    budget: response.budget,
+                    day1_morning: response.day1_morning,
+                    day1_lunch: response.day1_lunch,
+                    day1_afternoon: response.day1_afternoon,
+                    day1_diner: response.day1_diner,
+                    day2_morning: response.day2_morning,
+                    day2_lunch: response.day2_lunch,
+                    day2_afternoon: response.day2_afternoon,
+                    day2_diner: response.day2_diner,
+                    day3_morning: response.day3_morning,
+                    day3_lunch: response.day3_lunch,
+                    day3_afternoon: response.day3_afternoon,
+                    day3_diner: response.day3_diner,
+                });
+            });
     };
 
     handleClickBack = () => {
@@ -146,6 +143,7 @@ class CreateItinerary extends React.Component {
             currency,
             number_of_days,
             title,
+            short_description,
             budget,
             day1_morning,
             day1_lunch,
@@ -167,12 +165,15 @@ class CreateItinerary extends React.Component {
             accessToken,
             formData,
             isAccessTokenExpired,
+            match,
             onInitializeForm,
             refreshToken,
             setCity,
             steps,
             submitForm,
         } = this.props;
+
+        const slug = match.params.slug;
 
         event.preventDefault();
 
@@ -211,7 +212,7 @@ class CreateItinerary extends React.Component {
             break;
         case 2:
             let errorsStep2 = validateStep2Input(title);
-            if (errorsStep2.title) {
+            if (errorsStep2.title || errorsStep2.short_description) {
                 this.setState({
                     errors: errorsStep2
                 });
@@ -268,10 +269,10 @@ class CreateItinerary extends React.Component {
             if (isAccessTokenExpired) {
                 refreshAccessToken(refreshToken)
                     .then(response => {
-                        submitForm(formObj, response.access.token);
+                        submitForm(formObj, response.access.token, slug);
                     });
             } else {
-                submitForm(formObj, accessToken);
+                submitForm(formObj, accessToken, slug);
             }
             break;
         case 0:
@@ -294,6 +295,32 @@ class CreateItinerary extends React.Component {
         }
     };
 
+    componentDidMount() {
+        getItineraryDetails(this.props.match.params.slug)
+            .then(response => {
+                console.log(response);
+                this.setState({
+                    isLoading: false,
+                    number_of_days: response.number_of_days,
+                    city: response.city.name,
+                    title: response.title,
+                    budget: response.budget,
+                    day1_morning: response.day1_morning,
+                    day1_lunch: response.day1_lunch,
+                    day1_afternoon: response.day1_afternoon,
+                    day1_diner: response.day1_diner,
+                    day2_morning: response.day2_morning,
+                    day2_lunch: response.day2_lunch,
+                    day2_afternoon: response.day2_afternoon,
+                    day2_diner: response.day2_diner,
+                    day3_morning: response.day3_morning,
+                    day3_lunch: response.day3_lunch,
+                    day3_afternoon: response.day3_afternoon,
+                    day3_diner: response.day3_diner,
+                });
+            });
+    };
+
     componentWillUnmount() {
         const {
             reset
@@ -304,13 +331,15 @@ class CreateItinerary extends React.Component {
 
     render() {
         const {
-            itinerarySlug,
+            match,
+            updated,
         } = this.props;
 
-        if(itinerarySlug) {
-            return (<Redirect to={`/${itinerarySlug}`}/>);
-        }
+        const slug = match.params.slug;
 
+        if (updated) {
+            return (<Redirect to={`/${slug}`} />);
+        }
         return (
             <div className="container-wrapper">
                 <CreateUpdateItineraryForm
@@ -322,14 +351,14 @@ class CreateItinerary extends React.Component {
                     handleSubmit={this.handleSubmit}
                     previouslyCreatedCities={this.props.previouslyCreatedCities}
                     step={this.state.step}
-                    type="create"
+                    type="update"
                     values={this.state}
                 />
             </div>);
     }
 }
 
-CreateItinerary.propTypes = {
+UpdateItinerary.propTypes = {
     accessToken: PropTypes.string,
     formData: PropTypes.object,
     isAccessTokenExpired: PropTypes.bool,
@@ -342,7 +371,7 @@ CreateItinerary.propTypes = {
     submitForm: PropTypes.func.isRequired,
 };
 
-CreateItinerary.defaultProps = {
+UpdateItinerary.defaultProps = {
     accessToken: '',
     formData: {},
     isAccessTokenExpired: true,
@@ -355,7 +384,7 @@ const mapDispatchToProps = (dispatch) => {
     return {
         onInitializeForm: (city, number_of_days) => dispatch(initializeCreateAction(city, number_of_days)),
         setCity: (cityObj, token) => dispatch(setCityAction(cityObj, token)),
-        submitForm: (formObj, token) => dispatch(createItineraryAction(formObj, token)),
+        submitForm: (formObj, token, slug) => dispatch(updateItineraryAction(formObj, token, slug)),
         reset: () => dispatch(resetForm())
     };
 };
@@ -370,4 +399,4 @@ const mapStateToProps = (state) => {
     };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(CreateItinerary);
+export default connect(mapStateToProps, mapDispatchToProps)(UpdateItinerary);

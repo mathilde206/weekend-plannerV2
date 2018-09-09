@@ -28,7 +28,7 @@ const CreateUpdateItineraryForm = ({
             {
                 type === 'create'
                     ? <h1>Create a New Itinerary</h1>
-                    : <h1>Update a New Itinerary</h1>
+                    : <h1>Update an Itinerary</h1>
             }
 
             {

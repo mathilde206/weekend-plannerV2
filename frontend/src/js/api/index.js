@@ -8,6 +8,7 @@ import {
     increaseViewsCounter,
     addLike,
     deleteItinerary,
+    updateItinerary,
 } from './itineraryApi';
 
 import {
@@ -55,5 +56,6 @@ export {
     getStripePublishableKey,
     saveOrder,
     saveProductItem,
-    deleteItinerary
+    deleteItinerary,
+    updateItinerary,
 };

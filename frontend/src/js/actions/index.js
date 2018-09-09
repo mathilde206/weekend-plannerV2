@@ -12,6 +12,7 @@ import {
     CITY_CREATE,
     FORM_SUBMITTED,
     ITINERARY_CREATED,
+    ITINERARY_UPDATED,
     RECEIVE_ITINERARIES_LIST,
     REQUEST_ITINERARIES_LIST,
     RESET_FORM,
@@ -21,6 +22,7 @@ import {
     receiveItinerariesList,
     requestItinerariesList,
     resetForm,
+    updateItineraryAction,
 } from './itineraryActions';
 
 import {
@@ -74,6 +76,7 @@ export {
     CITY_CREATE,
     FORM_SUBMITTED,
     ITINERARY_CREATED,
+    ITINERARY_UPDATED,
     DELETE_REQUEST,
     DELETE_SUCCESS,
     DELETE_FAILURE,
@@ -117,4 +120,5 @@ export {
     addToCartAction,
     removeFromCartAction,
     emptyCartAction,
+    updateItineraryAction,
 };

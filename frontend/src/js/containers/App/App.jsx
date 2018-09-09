@@ -28,6 +28,7 @@ import CreateItinerary from '../CreateItinerary/CreateItinerary';
 import PrivateRoute from '../PrivateRoute/PrivateRoute';
 import ProfilePage from '../ProfilePage/ProfilePage';
 import CheckoutContainer from '../CheckoutContainer/CheckoutContainer';
+import UpdateItinerary from '../UpdateItinerary/UpdateItinerary';
 
 import './App.scss';
 
@@ -77,7 +78,7 @@ class App extends React.Component {
                             <Route exact path="/:userId/profile" component={ProfilePage} />
                             <Route exact path="/explore/:slug" component={ItineraryDetails} />
                             <Route exact path="/:slug" component={ItineraryDetails} />
-                            <Route exact path="/explore/:slug" component={ItineraryDetails} />
+                            <Route exact path="/:slug/update" component={UpdateItinerary} />
                             <Route component={Four0FourPage} />
                         </Switch>
                     </div>

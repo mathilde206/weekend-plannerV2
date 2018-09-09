@@ -56,6 +56,7 @@ class ItineraryDetailSerializer(ModelSerializer):
 
     def get_city(self, obj):
         return {
+            'pk': obj.city.pk,
             'name': obj.city.name,
             'country': obj.city.country,
             'currency': obj.city.currency,

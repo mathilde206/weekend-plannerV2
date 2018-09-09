@@ -13,10 +13,9 @@ const validateStep1Input = (city, country, language, currency) => {
     };
 };
 
-const validateStep2Input = (title, shortDescription) => {
+const validateStep2Input = (title) => {
     return {
         title: validateValue(title, 'required'),
-        shortDescription: validateValue(shortDescription, 'required'),
     };
 };
 
@@ -46,7 +45,6 @@ const createFormObj = (state) => {
     formObj.append('city', state.cityPk);
     formObj.append('number_of_days', String(state.number_of_days));
     formObj.append('title', state.title);
-    formObj.append('shortDescription', state.shortDescription);
     formObj.append('budget', state.budget);
     formObj.append('day1_morning', state.day1_morning);
     formObj.append('day1_lunch', state.day1_lunch);

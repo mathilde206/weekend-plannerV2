@@ -54,6 +54,20 @@ function createItinerary(itineraryObj, token) {
         .then(response => response.data);
 }
 
+function updateItinerary(itineraryObj, token, slug) {
+    const options = {
+        method: 'PUT',
+        headers: {
+            'Authorization': 'Bearer ' + token,
+            'content-type': 'multipart/form-data'
+        },
+        data: itineraryObj,
+        url: `/api/itineraries/${slug}/update`,
+    };
+    return axios(options)
+        .then(response => response.data);
+}
+
 function increaseViewsCounter(slug) {
     return axios.put(
         `/api/itineraries/${slug}/views`)
@@ -98,4 +112,5 @@ export {
     increaseViewsCounter,
     addLike,
     deleteItinerary,
+    updateItinerary
 };

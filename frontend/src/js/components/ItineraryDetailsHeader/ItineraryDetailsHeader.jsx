@@ -102,7 +102,7 @@ const ItineraryDetailsHeader = ({
 );
 
 ItineraryDetailsHeader.propTypes = {
-    city: PropTypes.objectOf(PropTypes.string).isRequired,
+    city: PropTypes.objectOf(PropTypes.oneOfType([ PropTypes.string, PropTypes.number ])).isRequired,
     created_date: PropTypes.string.isRequired,
     budget: PropTypes.string.isRequired,
     isAuthenticated: PropTypes.bool.isRequired,
@@ -110,7 +110,7 @@ ItineraryDetailsHeader.propTypes = {
     likes: PropTypes.number.isRequired,
     number_of_days: PropTypes.number.isRequired,
     pk: PropTypes.number.isRequired,
-    user: PropTypes.objectOf(PropTypes.string).isRequired,
+    user: PropTypes.objectOf(PropTypes.oneOfType([ PropTypes.string, PropTypes.number ])).isRequired,
     slug: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,
     views: PropTypes.number.isRequired,

@@ -14,7 +14,6 @@ const CreateUpdateFormStep = ({ errors, handleInputChange, handleSubmit, stepFie
                     {errors.non_field_errors}
                 </Alert> : ''
         }
-
         {
             stepFields.map(item =>
                 <InputField
@@ -43,6 +42,3 @@ CreateUpdateFormStep.propTypes = {
 
 
 export default CreateUpdateFormStep;
-
-//TODO: Add Possibility to reset
-//TODO: add validation

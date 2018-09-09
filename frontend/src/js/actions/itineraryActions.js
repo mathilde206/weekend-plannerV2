@@ -2,12 +2,14 @@ import {
     createItinerary,
     createCity,
     getCity,
+    updateItinerary,
 } from '../api';
 
 const INITIALIZE_FORM = 'INITIALIZE_FORM';
 const CITY_CREATE = 'CITY_CREATE';
 const FORM_SUBMITTED = 'FORM_SUBMITTED';
 const ITINERARY_CREATED = 'ITINERARY_CREATED';
+const ITINERARY_UPDATED = 'ITINERARY_UPDATED';
 const REQUEST_ITINERARIES_LIST = 'REQUEST_ITINERARIES_LIST';
 const RECEIVE_ITINERARIES_LIST = 'RECEIVE_ITINERARIES_LIST';
 const RESET_FORM = 'RESET_FORM';
@@ -95,6 +97,20 @@ function resetForm() {
     };
 }
 
+function updateItineraryAction(formObj, token, slug) {
+    return (dispatch) => {
+        dispatch(submitItinerary());
+        return updateItinerary(formObj, token, slug)
+            .then(response => {
+                dispatch({
+                    type: ITINERARY_UPDATED,
+                    updated: true,
+                    data: response,
+                });
+            });
+    };
+}
+
 export {
     INITIALIZE_FORM,
     CITY_CREATE,
@@ -102,6 +118,7 @@ export {
     ITINERARY_CREATED,
     RECEIVE_ITINERARIES_LIST,
     REQUEST_ITINERARIES_LIST,
+    ITINERARY_UPDATED,
     RESET_FORM,
     initializeCreateAction,
     setCityAction,
@@ -109,4 +126,5 @@ export {
     requestItinerariesList,
     receiveItinerariesList,
     resetForm,
+    updateItineraryAction,
 };
