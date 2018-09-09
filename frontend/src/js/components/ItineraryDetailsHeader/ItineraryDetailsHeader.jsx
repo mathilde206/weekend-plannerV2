@@ -1,5 +1,6 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 
 import {
     Col,
@@ -38,6 +39,7 @@ const ItineraryDetailsHeader = ({
     image,
     likes,
     number_of_days,
+    onLike,
     pk,
     slug,
     title,
@@ -81,14 +83,15 @@ const ItineraryDetailsHeader = ({
                     </Row>
                     <hr className="my-2" />
                     <p className="text-muted">
-                        Created by {user.username} on {created_date}
+                        Created by <Link to={`/${user.pk}/profile/`}>{user.username}</Link> on {created_date}
                         - <FontAwesomeIcon icon="star" /> {likes} likes
                         - <FontAwesomeIcon icon="eye" /> {views} views
                     </p>
                     <ItineraryDetailsActions
+                        onLike={onLike}
+                        pk={pk}
                         user={user}
                         slug={slug}
-                        pk={pk}
                     />
                 </Jumbotron>
             </Col>

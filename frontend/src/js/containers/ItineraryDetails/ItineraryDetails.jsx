@@ -57,9 +57,17 @@ class ItineraryDetails extends React.Component {
                 });
             });
 
-        increaseViewsCounter(this.props.match.params.slug)
-            .then(response => console.log(response));
+        increaseViewsCounter(this.props.match.params.slug);
     }
+
+    handleLike = () => {
+        getItineraryDetails(this.props.match.params.slug)
+            .then(response => {
+                this.setState({
+                    ...response
+                });
+            });
+    };
 
     render() {
         const {
@@ -104,6 +112,7 @@ class ItineraryDetails extends React.Component {
                     image={image}
                     likes={likes}
                     number_of_days={number_of_days}
+                    onLike={this.handleLike}
                     slug={slug}
                     title={title}
                     user={user}

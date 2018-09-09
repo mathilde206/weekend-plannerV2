@@ -42,7 +42,7 @@ const ItineraryCard = ({
             className="itinerary-card"
         >
             <CardImg
-                alt="Card image cap"
+                alt={`Image for ${city}`}
                 top
                 src={image ? image : 'https://weekend-planner.s3.amazonaws.com/static/images/genericCard.jpg'}
                 className="card-image"
@@ -51,8 +51,8 @@ const ItineraryCard = ({
                 <CardTitle>{title}</CardTitle>
                 <CardSubtitle>
                     <FontAwesomeIcon icon="map-marker-alt" /> {city}
-                    &nbsp;<FontAwesomeIcon icon="eye" /> {views}
-                    &nbsp;<FontAwesomeIcon icon="star" /> {likes}
+                    &nbsp;<FontAwesomeIcon icon="eye" /> {views || '0'}
+                    &nbsp;<FontAwesomeIcon icon="star" /> {likes || '0'}
                 </CardSubtitle>
                 <CardText>{description}</CardText>
                 <Link to={slug}><Button className="main-button">More</Button></Link>

@@ -45,6 +45,7 @@ class ItineraryDetailsActions extends React.Component {
             accessToken,
             isAccessTokenExpired,
             refreshToken,
+            onLike,
             userId,
             slug,
             dispatch,
@@ -60,12 +61,15 @@ class ItineraryDetailsActions extends React.Component {
                     addLike(slug, likeObj, response.access.token)
                         .then((response) => {
                             dispatch(receiveUserItineraryLikes(response.userLikes));
+                            onLike();
                         });
                 });
-        //    TODO: get the number of likes in a separate call to be able to update it here...
         } else {
             addLike(slug, likeObj, accessToken)
-                .then((response) => console.log(response));
+                .then((response) => {
+                    dispatch(receiveUserItineraryLikes(response.userLikes));
+                    onLike();
+                });
         }
     };
 
@@ -130,6 +134,7 @@ ItineraryDetailsActions.propTypes = {
     isAccessTokenExpired: PropTypes.bool,
     isAuthenticated: PropTypes.bool,
     loggedInUser: PropTypes.string,
+    onLike: PropTypes.func.isRequired,
     pk: PropTypes.number.isRequired,
     user: PropTypes.objectOf(PropTypes.string),
     userId: PropTypes.number,
