@@ -78,19 +78,22 @@ class NavigationBarTop extends React.Component {
                                     {
                                         isAuthenticated &&
                                         (<Fragment>
-                                            <DropdownItem>
-                                                <FontAwesomeIcon icon="user" /> <Link to={`/${userId}/profile/`}>Profile</Link>
-                                            </DropdownItem>
+                                            <Link to={`/${userId}/profile/`}>
+                                                <DropdownItem>
+                                                    <FontAwesomeIcon icon="user" /> Profile
+                                                </DropdownItem>
+                                            </Link>
                                             <DropdownItem divider />
                                         </Fragment>)
                                     }
-                                    <DropdownItem>
-                                        <Link
-                                            to={
-                                                itemsInCart === 0 ?
-                                                    '/products/' :
-                                                    `/${userId}/checkout/`
-                                            }>
+
+                                    <Link
+                                        to={
+                                            itemsInCart === 0 ?
+                                                '/products/' :
+                                                `/${userId}/checkout/`
+                                        }>
+                                        <DropdownItem>
                                             <FontAwesomeIcon icon="shopping-cart" /> Cart&nbsp;
                                             <span
                                                 className="badge badge-light"
@@ -98,25 +101,29 @@ class NavigationBarTop extends React.Component {
                                             >
                                                 {itemsInCart}
                                             </span>
-                                        </Link>
-                                    </DropdownItem>
+                                        </DropdownItem>
+                                    </Link>
+
                                     <DropdownItem divider />
-                                    <DropdownItem>
-                                        <Link to="/login/">
+                                    <Link to="/login/">
+                                        <DropdownItem>
+
                                             {
                                                 isAuthenticated ?
                                                     'Logout' :
                                                     'Login'
                                             }
-                                        </Link>
-                                    </DropdownItem>
+
+                                        </DropdownItem>
+                                    </Link>
 
                                 </DropdownMenu>
                             </UncontrolledDropdown>
                         </Nav>
                     </Collapse>
                 </Navbar>
-            </div>);
+            </div>)
+            ;
     }
 }
 
