@@ -64,61 +64,60 @@ class NavigationBarTop extends React.Component {
                             <NavItem>
                                 <NavLink href="/products/">Products</NavLink>
                             </NavItem>
-                            <UncontrolledDropdown nav inNavbar>
-                                <DropdownToggle nav caret>
-                                    Account&nbsp;
-                                    <span
-                                        className="badge badge-light"
-                                        style={{ visibility: itemsInCart === 0 ? 'hidden' : 'visible' }}
-                                    >
-                                        {itemsInCart}
-                                    </span>
-                                </DropdownToggle>
-                                <DropdownMenu right>
-                                    {
-                                        isAuthenticated &&
-                                        (<Fragment>
-                                            <Link to={`/${userId}/profile/`}>
-                                                <DropdownItem>
-                                                    <FontAwesomeIcon icon="user" /> Profile
-                                                </DropdownItem>
-                                            </Link>
-                                            <DropdownItem divider />
-                                        </Fragment>)
-                                    }
+                            {
+                                isAuthenticated ?
+                                    (
+                                        <UncontrolledDropdown nav inNavbar>
+                                            <DropdownToggle nav caret>
+                                                Account&nbsp;
+                                                <span
+                                                    className="badge badge-light"
+                                                    style={{ visibility: itemsInCart === 0 ? 'hidden' : 'visible' }}
+                                                >
+                                                    {itemsInCart}
+                                                </span>
+                                            </DropdownToggle>
+                                            <DropdownMenu right>
 
-                                    <Link
-                                        to={
-                                            itemsInCart === 0 ?
-                                                '/products/' :
-                                                `/${userId}/checkout/`
-                                        }>
-                                        <DropdownItem>
-                                            <FontAwesomeIcon icon="shopping-cart" /> Cart&nbsp;
-                                            <span
-                                                className="badge badge-light"
-                                                style={{ visibility: itemsInCart === 0 ? 'hidden' : 'visible' }}
-                                            >
-                                                {itemsInCart}
-                                            </span>
-                                        </DropdownItem>
-                                    </Link>
+                                                <Link to={`/${userId}/profile/`}>
+                                                    <DropdownItem>
+                                                        <FontAwesomeIcon icon="user" /> Profile
+                                                    </DropdownItem>
+                                                </Link>
+                                                <DropdownItem divider />
+                                                <Link
+                                                    to={
+                                                        itemsInCart === 0 ?
+                                                            '/products/' :
+                                                            `/${userId}/checkout/`
+                                                    }>
+                                                    <DropdownItem>
+                                                        <FontAwesomeIcon icon="shopping-cart" /> Cart&nbsp;
+                                                        <span
+                                                            className="badge badge-light"
+                                                            style={{ visibility: itemsInCart === 0 ? 'hidden' : 'visible' }}
+                                                        >
+                                                            {itemsInCart}
+                                                        </span>
+                                                    </DropdownItem>
+                                                </Link>
 
-                                    <DropdownItem divider />
-                                    <Link to="/login/">
-                                        <DropdownItem>
+                                                <DropdownItem divider />
+                                                <Link to="/login/">
+                                                    <DropdownItem>
+                                                        Logout
+                                                    </DropdownItem>
+                                                </Link>
 
-                                            {
-                                                isAuthenticated ?
-                                                    'Logout' :
-                                                    'Login'
-                                            }
+                                            </DropdownMenu>
+                                        </UncontrolledDropdown>
+                                    ) :
+                                    <NavItem>
+                                        <NavLink href="/login/">Login</NavLink>
+                                    </NavItem>
 
-                                        </DropdownItem>
-                                    </Link>
+                            }
 
-                                </DropdownMenu>
-                            </UncontrolledDropdown>
                         </Nav>
                     </Collapse>
                 </Navbar>
