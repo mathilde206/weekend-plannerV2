@@ -5,7 +5,6 @@ import { connect } from 'react-redux';
 
 import { history } from '../../helpers/';
 import {
-    alertClearAction,
     setAuthedUserAction,
     requestItinerariesList,
     receiveItinerariesList,
@@ -33,15 +32,6 @@ import UpdateItinerary from '../UpdateItinerary/UpdateItinerary';
 import './App.scss';
 
 class App extends React.Component {
-    constructor(props) {
-        super(props);
-
-        history.listen((location, action) => {
-            // clear alert on location change
-            this.props.alertClearAction();
-        });
-    }
-
     componentWillMount() {
         if (localStorage.getItem('persist:auth')
             && JSON.parse(JSON.parse(localStorage.getItem('persist:auth')).auth).access
@@ -60,8 +50,6 @@ class App extends React.Component {
     }
 
     render() {
-        const { alert } = this.props;
-
         return (
             <Router history={history}>
                 <div className="container-fluid">
@@ -90,16 +78,9 @@ class App extends React.Component {
 }
 
 const mapDispatchToProps = (dispatch) => ({
-    alertClearAction: () => dispatch(alertClearAction),
     requestItinerariesList: () => dispatch(requestItinerariesList()),
     receiveItinerariesList: (itinerariesList) => dispatch(receiveItinerariesList(itinerariesList)),
     setAuthedUserAction: (id) => dispatch(setAuthedUserAction(id)),
 });
 
-const mapStateToProps = ({ alert }) => (
-    {
-        alert
-    }
-);
-
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default connect(null, mapDispatchToProps)(App);

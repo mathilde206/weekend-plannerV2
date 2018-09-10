@@ -9,11 +9,6 @@ import {
     getUserLikes,
     updateUserProfile,
 } from '../api/';
-import {
-    alertSuccessAction,
-    alertClearAction,
-    alertErrorAction,
-} from '../actions/alertsActions';
 
 import {
     receiveUserItineraryLikes,
@@ -94,7 +89,6 @@ function loginAction(username, password) {
                     .then((username) => {
                         dispatch(success(username, access.token, auth));
                         dispatch(setAuthedUserAction(access.user_id));
-                        dispatch(alertSuccessAction('Successful Login'));
                         history.push('/');
                     });
 
@@ -162,11 +156,9 @@ function registerAction(user) {
                 user => {
                     dispatch(success());
                     history.push('/login');
-                    dispatch(alertSuccessAction('Registration successful, you can now Login'));
                 },
                 error => {
                     dispatch(failure(error.toString()));
-                    dispatch(alertErrorAction(error.toString()));
                 }
             );
     };

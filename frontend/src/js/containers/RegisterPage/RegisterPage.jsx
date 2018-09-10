@@ -1,11 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import { registerAction } from '../../actions';
-import {RegisterForm} from '../../components';
+import { RegisterForm } from '../../components';
 
 class Register extends React.Component {
     state = {
@@ -24,17 +24,17 @@ class Register extends React.Component {
         const { user } = this.state;
 
         this.setState({
-            user:{
+            user: {
                 ...user,
                 [ name ]: value,
             }
         });
-    }
+    };
 
     handleSubmit = (event) => {
         event.preventDefault();
 
-        this.setState({ submitted:true});
+        this.setState({ submitted: true });
         const { user } = this.state;
         const { dispatch } = this.props;
 
@@ -50,6 +50,13 @@ class Register extends React.Component {
     };
 
     render() {
+        const {
+            registered
+        } = this.props;
+
+        if ( registered ) {
+            return <Redirect to="/login" />;
+        }
         return (
             <div className="login-page container-wrapper">
                 <RegisterForm
@@ -63,10 +70,24 @@ class Register extends React.Component {
     }
 }
 
+Register.propTypes = {
+    registered: PropTypes.bool,
+    registering: PropTypes.bool,
+};
+
+Register.defaultProps = {
+    registered: false,
+    registering: false,
+};
+
 function mapStateToProps(state) {
-    const { registering } = state.registration;
-    return {
+    const {
+        registered,
         registering
+    } = state.registration;
+    return {
+        registered,
+        registering,
     };
 }
 

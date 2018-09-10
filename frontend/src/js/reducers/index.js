@@ -3,7 +3,6 @@ import { routerReducer } from 'react-router-redux';
 import { loadingBarReducer } from 'react-redux-loading';
 
 import { createUpdateItineraryReducer, itinerariesListReducer } from './itineraryReducer';
-import { alertReducer } from './alertsReducer';
 import {
     getAccessToken,
     getRefreshToken,
@@ -24,7 +23,6 @@ const rootReducer = combineReducers({
     auth: setAuthCredentialsReducer,
     registration: registrationReducer,
     loadingBar: loadingBarReducer,
-    alerts: alertReducer,
     itineraryForm: createUpdateItineraryReducer,
     itineraries: itinerariesListReducer,
     router: routerReducer,

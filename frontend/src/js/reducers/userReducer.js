@@ -71,7 +71,9 @@ function registrationReducer(state = {}, action) {
     case REGISTER_REQUEST:
         return { registering: true };
     case REGISTER_SUCCESS:
-        return {};
+        return {
+            registered: true
+        };
     case REGISTER_FAILURE:
         return {};
     default:

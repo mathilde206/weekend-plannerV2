@@ -1,13 +1,4 @@
 import {
-    ALERT_CLEAR,
-    ALERT_ERROR,
-    ALERT_SUCCESS,
-    alertClearAction,
-    alertErrorAction,
-    alertSuccessAction,
-} from './alertsActions';
-
-import {
     INITIALIZE_FORM,
     CITY_CREATE,
     FORM_SUBMITTED,
@@ -69,9 +60,6 @@ import {
 } from './checkoutAction';
 
 export {
-    ALERT_CLEAR,
-    ALERT_ERROR,
-    ALERT_SUCCESS,
     INITIALIZE_FORM,
     CITY_CREATE,
     FORM_SUBMITTED,
@@ -101,9 +89,6 @@ export {
     ADD_TO_CART,
     REMOVE_FROM_CART,
     EMPTY_CART,
-    alertClearAction,
-    alertErrorAction,
-    alertSuccessAction,
     initializeCreateAction,
     setCityAction,
     createItineraryAction,
