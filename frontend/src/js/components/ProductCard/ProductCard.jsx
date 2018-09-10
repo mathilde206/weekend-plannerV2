@@ -13,6 +13,8 @@ import {
 import ProductItem from '../ProductItem/ProductItem';
 import './ProductCard.scss';
 
+const { staticUrl } = window;
+
 library.add(
     faDollarSign,
     faCartPlus,
@@ -45,7 +47,7 @@ const ProductCard = ({
         <CardImg
             alt="Card image cap"
             top
-            src={image ? image : 'https://weekend-planner.s3.amazonaws.com/static/images/genericCard.jpg'}
+            src={image ? image : `${staticUrl}images/genericCard.jpg`}
         />
         <CardBody>
             <CardTitle>{name}</CardTitle>

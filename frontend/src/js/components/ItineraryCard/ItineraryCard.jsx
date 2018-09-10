@@ -13,6 +13,9 @@ import {
 
 import './ItineraryCard.scss';
 
+const { staticUrl } = window;
+console.log(staticUrl)
+
 import { library } from '@fortawesome/fontawesome-svg-core/index';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
@@ -44,7 +47,7 @@ const ItineraryCard = ({
             <CardImg
                 alt={`Image for ${city}`}
                 top
-                src={image ? image : 'https://weekend-planner.s3.amazonaws.com/static/images/genericCard.jpg'}
+                src={image ? image : `${staticUrl}images/genericCard.jpg`}
                 className="card-image"
             />
             <CardBody>
@@ -62,7 +65,7 @@ const ItineraryCard = ({
 };
 
 ItineraryCard.defaultProps = {
-    image: 'https://weekend-planner.s3.amazonaws.com/static/images/genericCard.jpg',
+    image: `${staticUrl}images/genericCard.jpg`,
     likes: 0,
     description: '',
     views: 0,
