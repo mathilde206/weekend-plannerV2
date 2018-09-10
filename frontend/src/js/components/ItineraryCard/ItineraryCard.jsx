@@ -14,7 +14,6 @@ import {
 import './ItineraryCard.scss';
 
 const { staticUrl } = window;
-console.log(staticUrl)
 
 import { library } from '@fortawesome/fontawesome-svg-core/index';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
