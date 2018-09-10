@@ -3,7 +3,7 @@ from rest_framework.serializers import (
     ValidationError,
 )
 
-from .models import City
+from cities.models import City
 
 
 class CitySerializer(ModelSerializer):

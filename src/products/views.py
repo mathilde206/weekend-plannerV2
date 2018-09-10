@@ -11,8 +11,8 @@ from rest_framework.permissions import (
     AllowAny,
 )
 
-from .serializers import ProductSerializer
-from .models import Product
+from products.serializers import ProductSerializer
+from products.models import Product
 
 
 class ProductList(ListAPIView):

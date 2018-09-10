@@ -13,8 +13,8 @@ from rest_framework.permissions import (
     AllowAny,
 )
 
-from .models import City
-from .serializers import CitySerializer
+from cities.models import City
+from cities.serializers import CitySerializer
 
 
 class CityRetrieveView(RetrieveAPIView):

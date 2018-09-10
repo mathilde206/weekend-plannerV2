@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import (
+from checkout.views import (
     stripe_token_view,
     OrderCreateView,
     OrderItemCreateView,

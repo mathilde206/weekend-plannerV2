@@ -2,7 +2,7 @@ from rest_framework.serializers import (
     ModelSerializer,
 )
 
-from .models import (Order, OrderItem)
+from checkout.models import (Order, OrderItem)
 
 
 class OrderSerializer(ModelSerializer):

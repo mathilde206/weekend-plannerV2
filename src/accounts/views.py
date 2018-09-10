@@ -1,6 +1,6 @@
 from django.contrib.auth import get_user_model
 
-from .permissions import IsOwnerOrReadOnly
+from accounts.permissions import IsOwnerOrReadOnly
 
 from rest_framework.generics import (
     CreateAPIView,
@@ -23,7 +23,7 @@ from rest_framework.permissions import (
 User = get_user_model()
 from accounts.models import Account
 
-from .serializers import (
+from accounts.serializers import (
     AccountDetailSerializer,
     UserDetailSerializer,
     UserCreateSerializer,

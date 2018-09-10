@@ -5,8 +5,8 @@ from django.conf import settings
 from rest_framework.generics import CreateAPIView
 from rest_framework.permissions import IsAuthenticated
 
-from .models import (Order, OrderItem)
-from .serializers import (OrderSerializer, OrderItemSerializer)
+from checkout.models import (Order, OrderItem)
+from checkout.serializers import (OrderSerializer, OrderItemSerializer)
 
 
 def stripe_token_view(request):

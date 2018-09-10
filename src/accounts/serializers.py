@@ -9,7 +9,7 @@ from rest_framework.serializers import (
     SerializerMethodField,
 )
 
-from .models import Account
+from accounts.models import Account
 
 User = get_user_model()
 
