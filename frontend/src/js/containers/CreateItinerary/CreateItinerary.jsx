@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import {Redirect} from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 
 import {
     initializeCreateAction,
@@ -9,10 +9,6 @@ import {
     setCityAction,
     resetForm,
 } from '../../actions';
-
-import {
-    refreshAccessToken,
-} from '../../api/';
 
 import {
     accessToken,
@@ -57,7 +53,7 @@ class CreateItinerary extends React.Component {
         day3_diner: '',
         image: '',
         errors: {},
-        slug:'',
+        slug: '',
     };
 
     handleInputChange = (event) => {
@@ -164,14 +160,10 @@ class CreateItinerary extends React.Component {
         } = this.state;
 
         const {
-            accessToken,
+            dispatch,
             formData,
-            isAccessTokenExpired,
             onInitializeForm,
-            refreshToken,
-            setCity,
             steps,
-            submitForm,
         } = this.props;
 
         event.preventDefault();
@@ -193,14 +185,7 @@ class CreateItinerary extends React.Component {
                 };
 
                 if (!cityPk) {
-                    if (isAccessTokenExpired) {
-                        refreshAccessToken(refreshToken)
-                            .then(response => {
-                                setCity(cityObj, response.access.token);
-                            });
-                    } else {
-                        setCity(cityObj, accessToken);
-                    }
+                    dispatch(setCityAction(cityObj));
                 }
 
                 this.setState({
@@ -265,14 +250,7 @@ class CreateItinerary extends React.Component {
             break;
         case 6:
             let formObj = createFormObj(this.state);
-            if (isAccessTokenExpired) {
-                refreshAccessToken(refreshToken)
-                    .then(response => {
-                        submitForm(formObj, response.access.token);
-                    });
-            } else {
-                submitForm(formObj, accessToken);
-            }
+            dispatch(createItineraryAction(formObj));
             break;
         case 0:
         default:
@@ -283,7 +261,7 @@ class CreateItinerary extends React.Component {
                     errors: errorsStep0,
                 });
             } else {
-                onInitializeForm(city, number_of_days);
+                dispatch(initializeCreateAction(city, number_of_days));
                 this.setState({
                     errors: {},
                     step: 1,
@@ -296,10 +274,10 @@ class CreateItinerary extends React.Component {
 
     componentWillUnmount() {
         const {
-            reset
+            dispatch
         } = this.props;
 
-        reset();
+        dispatch(resetForm());
     };
 
     render() {
@@ -307,8 +285,8 @@ class CreateItinerary extends React.Component {
             itinerarySlug,
         } = this.props;
 
-        if(itinerarySlug) {
-            return (<Redirect to={`/${itinerarySlug}`}/>);
+        if (itinerarySlug) {
+            return (<Redirect to={`/${itinerarySlug}`} />);
         }
 
         return (
@@ -330,34 +308,15 @@ class CreateItinerary extends React.Component {
 }
 
 CreateItinerary.propTypes = {
-    accessToken: PropTypes.string,
+    dispatch: PropTypes.func,
     formData: PropTypes.object,
-    isAccessTokenExpired: PropTypes.bool,
-    onInitializeForm: PropTypes.func.isRequired,
-    previouslyCreatedCities: PropTypes.arrayOf(PropTypes.object),
-    refreshToken: PropTypes.string,
-    reset: PropTypes.func.isRequired,
-    setCity: PropTypes.func.isRequired,
     steps: PropTypes.arrayOf(PropTypes.number),
-    submitForm: PropTypes.func.isRequired,
 };
 
 CreateItinerary.defaultProps = {
-    accessToken: '',
+    dispatch: () => null,
     formData: {},
-    isAccessTokenExpired: true,
-    previouslyCreatedCities: [],
-    refreshToken: '',
     steps: [],
-};
-
-const mapDispatchToProps = (dispatch) => {
-    return {
-        onInitializeForm: (city, number_of_days) => dispatch(initializeCreateAction(city, number_of_days)),
-        setCity: (cityObj, token) => dispatch(setCityAction(cityObj, token)),
-        submitForm: (formObj, token) => dispatch(createItineraryAction(formObj, token)),
-        reset: () => dispatch(resetForm())
-    };
 };
 
 const mapStateToProps = (state) => {
@@ -370,4 +329,4 @@ const mapStateToProps = (state) => {
     };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(CreateItinerary);
+export default connect(mapStateToProps)(CreateItinerary);

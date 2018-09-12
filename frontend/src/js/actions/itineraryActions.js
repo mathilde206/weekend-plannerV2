@@ -2,14 +2,27 @@ import {
     createItinerary,
     createCity,
     getCity,
+    refreshAccessToken,
     updateItinerary,
 } from '../api';
 
+import {
+    accessToken,
+    isAccessTokenExpired,
+    refreshToken,
+} from '../reducers';
+
 const INITIALIZE_FORM = 'INITIALIZE_FORM';
+
 const CITY_CREATE = 'CITY_CREATE';
+const CITY_CREATE_FAILURE = 'CITY_CREATE_FAILURE';
+const CITY_CREATE_REQUEST = 'CITY_CREATE_REQUEST';
+
 const FORM_SUBMITTED = 'FORM_SUBMITTED';
 const ITINERARY_CREATED = 'ITINERARY_CREATED';
 const ITINERARY_UPDATED = 'ITINERARY_UPDATED';
+const ITINERARY_CREATION_FAILURE = 'ITINERARY_CREATION_FAILURE';
+
 const REQUEST_ITINERARIES_LIST = 'REQUEST_ITINERARIES_LIST';
 const RECEIVE_ITINERARIES_LIST = 'RECEIVE_ITINERARIES_LIST';
 const RESET_FORM = 'RESET_FORM';
@@ -24,34 +37,79 @@ function getSteps(number_of_days) {
     return [ 1, 2, 3, 4, 5, 6 ];
 }
 
+function initializeAction(city, number_of_days, steps, previouslyCreatedCities) {
+    return {
+        type: INITIALIZE_FORM,
+        formData: {
+            city,
+            number_of_days,
+        },
+        steps,
+        previouslyCreatedCities,
+    };
+}
+
 function initializeCreateAction(city, number_of_days) {
     const steps = getSteps(number_of_days);
 
-    return (dispatch) => {
+    return function initializeCreateAction(dispatch) {
         return getCity(city)
-            .then(cities => {
-                dispatch({
-                    type: INITIALIZE_FORM,
-                    formData: {
-                        city,
-                        number_of_days,
-                    },
-                    steps,
-                    previouslyCreatedCities: cities,
-                });
+            .then(previouslyCreatedCities => {
+                dispatch(initializeAction(city, number_of_days, steps, previouslyCreatedCities));
             });
     };
 }
 
-function setCityAction(cityObj, token) {
-    return (dispatch) => {
-        return createCity(cityObj, token)
-            .then(data => {
-                dispatch({
-                    type: CITY_CREATE,
-                    data
+function cityCreateRequest() {
+    return {
+        type: CITY_CREATE_REQUEST,
+        isLoading: true,
+    };
+}
+
+function cityCreateFailure(error) {
+    return {
+        type: CITY_CREATE_FAILURE,
+        isLoading: false,
+        error,
+    };
+}
+
+function cityCreateSuccess(data) {
+    return {
+        type: CITY_CREATE,
+        data
+    };
+}
+
+function setCityAction(cityObj) {
+    return function setCityActionThunk(dispatch, getState) {
+        const state = getState();
+        const refresh = refreshToken(state);
+        const access = accessToken(state);
+
+        dispatch(cityCreateRequest);
+
+        if (isAccessTokenExpired(state)) {
+            refreshAccessToken(refresh)
+                .then(({ access }) => {
+                    createCity(cityObj, access.token)
+                        .then(data => {
+                            dispatch(cityCreateSuccess(data));
+                        })
+                        .catch(error => {
+                            dispatch(cityCreateFailure(error));
+                        });
                 });
-            });
+        } else {
+            createCity(cityObj, access)
+                .then(data => {
+                    dispatch(cityCreateSuccess(data));
+                })
+                .catch(error => {
+                    dispatch(cityCreateFailure(error));
+                });
+        }
     };
 }
 
@@ -61,16 +119,50 @@ function submitItinerary() {
     };
 }
 
-function createItineraryAction(formObj, token) {
-    return (dispatch) => {
+function itineraryCreatedSuccess(data) {
+    return {
+        type: ITINERARY_CREATED,
+        data,
+        isLoading: false,
+    };
+}
+
+function itineraryCreationFailure(error) {
+    return {
+        type: ITINERARY_CREATION_FAILURE,
+        error,
+        isLoading: false,
+    };
+}
+
+function createItineraryAction(formObj) {
+    return function createItineraryActionThunk(dispatch, getState) {
+        const state = getState();
+        const refresh = refreshToken(state);
+        const access = accessToken(state);
+
         dispatch(submitItinerary());
-        return createItinerary(formObj, token)
-            .then(response => {
-                dispatch({
-                    type: ITINERARY_CREATED,
-                    data: response,
+
+        if (isAccessTokenExpired(state)) {
+            refreshAccessToken(refresh)
+                .then(({ access }) => {
+                    createItinerary(formObj, access.token)
+                        .then(data => {
+                            dispatch(itineraryCreatedSuccess(data));
+                        })
+                        .catch(error => {
+                            dispatch(itineraryCreationFailure(error));
+                        });
                 });
-            });
+        } else {
+            createItinerary(formObj, access)
+                .then(data => {
+                    dispatch(itineraryCreatedSuccess(data));
+                })
+                .catch(error => {
+                    dispatch(itineraryCreationFailure(error));
+                });
+        }
     };
 }
 
