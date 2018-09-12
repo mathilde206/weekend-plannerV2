@@ -12,7 +12,6 @@ import {
 
 import {
     getItineraryDetails,
-    refreshAccessToken,
 } from '../../api/';
 
 import {
@@ -93,12 +92,12 @@ class UpdateItinerary extends React.Component {
     handleReset = (event) => {
         const {
             match,
-            reset,
+            dispatch,
         } = this.props;
 
         event.preventDefault();
 
-        reset();
+        dispatch(resetForm());
         getItineraryDetails(this.props.match.params.slug)
             .then(response => {
                 this.setState({
@@ -143,7 +142,6 @@ class UpdateItinerary extends React.Component {
             currency,
             number_of_days,
             title,
-            short_description,
             budget,
             day1_morning,
             day1_lunch,
@@ -162,6 +160,7 @@ class UpdateItinerary extends React.Component {
         } = this.state;
 
         const {
+            dispatch,
             accessToken,
             formData,
             isAccessTokenExpired,
@@ -170,7 +169,6 @@ class UpdateItinerary extends React.Component {
             refreshToken,
             setCity,
             steps,
-            submitForm,
         } = this.props;
 
         const slug = match.params.slug;
@@ -194,14 +192,7 @@ class UpdateItinerary extends React.Component {
                 };
 
                 if (!cityPk) {
-                    if (isAccessTokenExpired) {
-                        refreshAccessToken(refreshToken)
-                            .then(response => {
-                                setCity(cityObj, response.access.token);
-                            });
-                    } else {
-                        setCity(cityObj, accessToken);
-                    }
+                    dispatch(setCityAction(cityObj));
                 }
 
                 this.setState({
@@ -212,7 +203,7 @@ class UpdateItinerary extends React.Component {
             break;
         case 2:
             let errorsStep2 = validateStep2Input(title);
-            if (errorsStep2.title || errorsStep2.short_description) {
+            if (errorsStep2.title) {
                 this.setState({
                     errors: errorsStep2
                 });
@@ -266,14 +257,10 @@ class UpdateItinerary extends React.Component {
             break;
         case 6:
             let formObj = createFormObj(this.state);
-            if (isAccessTokenExpired) {
-                refreshAccessToken(refreshToken)
-                    .then(response => {
-                        submitForm(formObj, response.access.token, slug);
-                    });
-            } else {
-                submitForm(formObj, accessToken, slug);
-            }
+            dispatch(updateItineraryAction(formObj, slug));
+            this.setState({
+
+            })
             break;
         case 0:
         default:
@@ -284,12 +271,11 @@ class UpdateItinerary extends React.Component {
                     errors: errorsStep0,
                 });
             } else {
-                onInitializeForm(city, number_of_days);
+                dispatch(initializeCreateAction(city, number_of_days));
                 this.setState({
                     errors: {},
                     step: 1,
                 });
-
             }
             break;
         }
@@ -323,10 +309,10 @@ class UpdateItinerary extends React.Component {
 
     componentWillUnmount() {
         const {
-            reset
+            dispatch
         } = this.props;
 
-        reset();
+        dispatch(resetForm());
     };
 
     render() {
@@ -359,44 +345,22 @@ class UpdateItinerary extends React.Component {
 }
 
 UpdateItinerary.propTypes = {
-    accessToken: PropTypes.string,
     formData: PropTypes.object,
-    isAccessTokenExpired: PropTypes.bool,
-    onInitializeForm: PropTypes.func.isRequired,
     previouslyCreatedCities: PropTypes.arrayOf(PropTypes.object),
-    refreshToken: PropTypes.string,
-    reset: PropTypes.func.isRequired,
-    setCity: PropTypes.func.isRequired,
     steps: PropTypes.arrayOf(PropTypes.number),
-    submitForm: PropTypes.func.isRequired,
 };
 
 UpdateItinerary.defaultProps = {
-    accessToken: '',
     formData: {},
-    isAccessTokenExpired: true,
     previouslyCreatedCities: [],
-    refreshToken: '',
     steps: [],
-};
-
-const mapDispatchToProps = (dispatch) => {
-    return {
-        onInitializeForm: (city, number_of_days) => dispatch(initializeCreateAction(city, number_of_days)),
-        setCity: (cityObj, token) => dispatch(setCityAction(cityObj, token)),
-        submitForm: (formObj, token, slug) => dispatch(updateItineraryAction(formObj, token, slug)),
-        reset: () => dispatch(resetForm())
-    };
 };
 
 const mapStateToProps = (state) => {
     const { itineraryForm } = state;
     return {
         ...itineraryForm,
-        refreshToken: refreshToken(state),
-        accessToken: accessToken(state),
-        isAccessTokenExpired: isAccessTokenExpired(state),
     };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(UpdateItinerary);
+export default connect(mapStateToProps)(UpdateItinerary);

@@ -1,17 +1,15 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Route, Switch, Router } from 'react-router-dom';
 import { connect } from 'react-redux';
-// import { ConnectedRouter } from 'react-router-redux';
+import ReactLoading from 'react-loading';
 
 import { history } from '../../helpers/';
 import {
-    setAlreadyLoggedInUser,
-    requestItinerariesList,
-    receiveItinerariesList,
+    fetchItineraries,
     fetchUserData,
     successLogin,
 } from '../../actions';
-import { getItineraryList } from '../../api';
 
 import {
     Footer,
@@ -34,7 +32,18 @@ import UpdateItinerary from '../UpdateItinerary/UpdateItinerary';
 import './App.scss';
 
 class App extends React.Component {
-    componentWillMount() {
+    state = {
+        isLoading: true,
+    };
+
+    static getDerivedStateFromProps(nextProps, prevState) {
+        if (typeof nextProps.isLoading !== undefined && nextProps.isLoading !== prevState.isLoading) {
+            return { isLoading: nextProps.isLoading };
+        }
+        else return null;
+    }
+
+    componentDidMount() {
         const {
             dispatch
         } = this.props;
@@ -47,16 +56,17 @@ class App extends React.Component {
             dispatch(fetchUserData(id));
             dispatch(successLogin(auth));
         }
-
-        this.props.requestItinerariesList();
-        getItineraryList()
-            .then((data) => {
-                this.props.receiveItinerariesList(data);
-            });
-
+        dispatch(fetchItineraries(1));
     }
 
     render() {
+
+        const { isLoading } = this.state;
+
+        if(isLoading) {
+            return <ReactLoading type='bubbles' color='#000c4f' />;
+        }
+
         return (
             <Router history={history}>
                 <div className="container-fluid">
@@ -84,10 +94,12 @@ class App extends React.Component {
     }
 }
 
-const mapDispatchToProps = (dispatch) => ({
-    requestItinerariesList: () => dispatch(requestItinerariesList()),
-    receiveItinerariesList: (itinerariesList) => dispatch(receiveItinerariesList(itinerariesList)),
-    dispatch,
+App.propTypes = {
+    isLoading: PropTypes.bool,
+};
+
+const mapStateToProps = ({ itineraries }) => ({
+    isLoading: itineraries.isLoading,
 });
 
-export default connect(null, mapDispatchToProps)(App);
+export default connect(mapStateToProps)(App);

@@ -73,7 +73,6 @@ function errorUserData(error) {
 }
 
 function fetchUserData(id) {
-    console.log(id);
     return function fetchUserThunk(dispatch) {
         dispatch(requestUserData());
 

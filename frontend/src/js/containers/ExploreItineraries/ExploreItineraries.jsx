@@ -2,11 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import {
-    receiveItinerariesList,
-    requestItinerariesList
-} from '../../actions';
-import { getFilteredItineraryList } from '../../api';
+import { fetchFilteredItineraries } from '../../actions';
 
 import {
     ItinerariesList,
@@ -45,10 +41,7 @@ class ExploreItineraries extends React.Component {
             numberOfDays,
         } = this.state;
 
-        const {
-            requestItinerariesList,
-            receiveItinerariesList
-        } = this.props;
+        const { onFetchItineraries } = this.props;
 
         let query = '';
 
@@ -66,11 +59,7 @@ class ExploreItineraries extends React.Component {
         }
 
         if (searchCity || budget || numberOfDays) {
-            requestItinerariesList();
-            getFilteredItineraryList(1, query)
-                .then((response) => {
-                    receiveItinerariesList(response);
-                });
+            onFetchItineraries(1, query);
         }
 
     };
@@ -84,8 +73,7 @@ class ExploreItineraries extends React.Component {
 
         const {
             itineraries,
-            requestItinerariesList,
-            receiveItinerariesList,
+            onFetchItineraries
         } = this.props;
 
         const {
@@ -114,8 +102,7 @@ class ExploreItineraries extends React.Component {
                 <ItinerariesList
                     count={count}
                     itineraries={itinerariesList}
-                    requestItinerariesList={requestItinerariesList}
-                    receiveItinerariesList={receiveItinerariesList}
+                    onFetchItineraries={onFetchItineraries}
                     navigation={navigation}
                     total_pages={total_pages}
                 />
@@ -135,23 +122,16 @@ ExploreItineraries.propTypes = {
         }),
         total_pages: PropTypes.number,
     }),
-    requestItinerariesList: PropTypes.func,
-    receiveItinerariesList: PropTypes.func,
+    onFetchItineraries: PropTypes.func,
 };
 
 ExploreItineraries.defaultProps = {
     itineraries: {},
-    requestItinerariesList: () => null,
-    receiveItinerariesList: () => null,
+    onFetchItineraries: () => null,
 };
 
 const mapDispatchToProps = (dispatch) => ({
-    requestItinerariesList: () => {
-        dispatch(requestItinerariesList());
-    },
-    receiveItinerariesList: (itinerariesData) => {
-        dispatch(receiveItinerariesList(itinerariesData));
-    },
+    onFetchItineraries: (page, query) => dispatch(fetchFilteredItineraries(page, query))
 });
 
 const mapStateToProps = (state) => {

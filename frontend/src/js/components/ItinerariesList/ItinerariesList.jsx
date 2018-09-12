@@ -16,17 +16,12 @@ const ItinerariesList = ({
     count,
     itineraries,
     navigation,
-    requestItinerariesList,
-    receiveItinerariesList,
+    onFetchItineraries,
     total_pages,
 }) => {
 
     const handlePageClick = (page) => {
-        requestItinerariesList();
-        getItineraryList(page)
-            .then((data) => {
-                receiveItinerariesList(data);
-            });
+        onFetchItineraries(page);
     };
 
     return (
@@ -65,8 +60,7 @@ ItinerariesList.propTypes = {
         next: PropTypes.number,
         previous: PropTypes.number,
     }),
-    requestItinerariesList: PropTypes.func.isRequired,
-    receiveItinerariesList: PropTypes.func.isRequired,
+    onFetchItineraries: PropTypes.func.isRequired,
     total_pages: PropTypes.number.isRequired,
 };
 

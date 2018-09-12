@@ -88,12 +88,12 @@ class CreateItinerary extends React.Component {
 
     handleReset = (event) => {
         const {
-            reset
+            dispatch
         } = this.props;
 
         event.preventDefault();
 
-        reset();
+        dispatch(resetForm());
         this.setState({
             step: 0,
             number_of_days: 1,
@@ -103,7 +103,6 @@ class CreateItinerary extends React.Component {
             language: '',
             currency: '',
             title: '',
-            shortDescription: '',
             budget: 'Cheap',
             day1_morning: '',
             day1_lunch: '',

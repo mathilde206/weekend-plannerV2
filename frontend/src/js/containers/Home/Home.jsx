@@ -1,12 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import ReactLoading from 'react-loading';
 
 import * as reducers from '../../reducers';
 
 import {
-    requestItinerariesList,
-    receiveItinerariesList,
+    fetchItineraries
 } from '../../actions';
 
 import {
@@ -19,34 +19,38 @@ import './Home.scss';
 const Home = ({
     isAuthenticated,
     itineraries,
-    requestItinerariesList,
-    receiveItinerariesList,
-    user
+    onFetchItineraries,
+    user,
 }) => (
     <div className="container-fluid home-wrapper">
         <div className="home-container">
             <HomeJumbotron
                 isAuthenticated={isAuthenticated}
                 user={user}
-                requestItinerariesList={requestItinerariesList}
-                receiveItinerariesList={receiveItinerariesList}
+                onFetchItineraries={onFetchItineraries}
+                withQuery={itineraries.withQuery}
             />
         </div>
         <div className="list-container">
             <h2 className="border-title">Where will you go next weekend...</h2>
             {
-                itineraries.isLoading ?
-                    <h3>Loading...</h3> :
-                    <div className="container">
-                        <ItinerariesList
-                            count={itineraries.count}
-                            itineraries={itineraries.itinerariesList}
-                            navigation={itineraries.navigation}
-                            requestItinerariesList={requestItinerariesList}
-                            receiveItinerariesList={receiveItinerariesList}
-                            total_pages={itineraries.total_pages}
-                        />
-                    </div>
+                itineraries.itinerariesList ?
+                    (
+                        <div className="container">
+                            <ItinerariesList
+                                count={itineraries.count}
+                                itineraries={itineraries.itinerariesList}
+                                navigation={itineraries.navigation}
+                                onFetchItineraries={onFetchItineraries}
+                                total_pages={itineraries.total_pages}
+                            />
+                        </div>
+                    ) :
+                    (
+                        <div className="container">
+                            <ReactLoading type="bubbles" color="#000c4f" />
+                        </div>
+                    )
             }
         </div>
     </div>
@@ -55,6 +59,7 @@ const Home = ({
 Home.defaultProps = {
     isAuthenticated: false,
     itineraries: {},
+    onFetchItineraries: () => null,
     user: '',
 };
 
@@ -70,17 +75,9 @@ Home.propTypes = {
         }),
         total_pages: PropTypes.number,
     }),
+    onFetchItineraries: PropTypes.func,
     user: PropTypes.string,
 };
-
-const mapDispatchToProps = (dispatch) => ({
-    requestItinerariesList: () => {
-        dispatch(requestItinerariesList());
-    },
-    receiveItinerariesList: (itinerariesData) => {
-        dispatch(receiveItinerariesList(itinerariesData));
-    },
-});
 
 const mapStateToProps = (state) => {
     const { user } = state.user;
@@ -90,5 +87,10 @@ const mapStateToProps = (state) => {
         itineraries: state.itineraries,
     };
 };
+
+const mapDispatchToProps = (dispatch) => ({
+    onFetchItineraries: (page, query) => dispatch(fetchItineraries(page, query))
+});
+
 
 export default connect(mapStateToProps, mapDispatchToProps)(Home);

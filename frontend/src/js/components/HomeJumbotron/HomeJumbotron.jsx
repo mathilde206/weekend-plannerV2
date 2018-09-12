@@ -3,15 +3,11 @@ import PropTypes from 'prop-types';
 import { Link, Redirect } from 'react-router-dom';
 import { Jumbotron, Button, Form, FormGroup, Input } from 'reactstrap';
 
-import { getItineraryList } from '../../api';
-
-
 import './HomeJumbotron.scss';
 
 class HomeJumbotron extends React.Component {
     state = {
         searchQuery: '',
-        submitted: false,
     };
 
     handleSearchChange = ({ target }) => {
@@ -26,26 +22,13 @@ class HomeJumbotron extends React.Component {
 
     handleSubmit = (event) => {
         event.preventDefault();
-        const {
-            searchQuery,
-        } = this.state;
+        const { searchQuery } = this.state;
+        const { onFetchItineraries } = this.props;
 
         const query = `search=${searchQuery}`;
 
-        const {
-            requestItinerariesList,
-            receiveItinerariesList,
-        } = this.props;
-
         if (searchQuery) {
-            requestItinerariesList();
-            getItineraryList(1, query)
-                .then((response) => {
-                    receiveItinerariesList(response);
-                    this.setState({
-                        submitted: true,
-                    });
-                });
+            onFetchItineraries(1, query);
         }
     };
 
@@ -53,13 +36,10 @@ class HomeJumbotron extends React.Component {
         const {
             isAuthenticated,
             user,
+            withQuery,
         } = this.props;
 
-        const {
-            submitted,
-        } = this.state;
-
-        if (submitted) {
+        if (withQuery) {
             return (
                 <Redirect to="/explore/" />
             );

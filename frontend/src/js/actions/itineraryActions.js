@@ -2,6 +2,8 @@ import {
     createItinerary,
     createCity,
     getCity,
+    getItineraryList,
+    getFilteredItineraryList,
     refreshAccessToken,
     updateItinerary,
 } from '../api';
@@ -20,14 +22,27 @@ const CITY_CREATE_REQUEST = 'CITY_CREATE_REQUEST';
 
 const FORM_SUBMITTED = 'FORM_SUBMITTED';
 const ITINERARY_CREATED = 'ITINERARY_CREATED';
-const ITINERARY_UPDATED = 'ITINERARY_UPDATED';
+
 const ITINERARY_CREATION_FAILURE = 'ITINERARY_CREATION_FAILURE';
 
 const REQUEST_ITINERARIES_LIST = 'REQUEST_ITINERARIES_LIST';
 const RECEIVE_ITINERARIES_LIST = 'RECEIVE_ITINERARIES_LIST';
+const ITINERARIES_LIST_FAILURE = 'ITINERARIES_LIST_FAILURE';
+
 const RESET_FORM = 'RESET_FORM';
 
+const REQUEST_ITINERARY_UPDATE = 'REQUEST_ITINERARY_UPDATE';
+const ITINERARY_UPDATED = 'ITINERARY_UPDATED';
+const ITINERARY_UPDATED_FAILURE = 'ITINERARY_UPDATED_FAILURE';
+
+function resetForm() {
+    return {
+        type: RESET_FORM,
+    };
+}
+
 function getSteps(number_of_days) {
+    // Helper function to get the number of steps when the form is initialized.
     if (number_of_days === 1) {
         return [ 1, 2, 3, 6 ];
     }
@@ -67,18 +82,17 @@ function cityCreateRequest() {
     };
 }
 
-function cityCreateFailure(error) {
+function cityCreateFailure(cityError) {
     return {
         type: CITY_CREATE_FAILURE,
-        isLoading: false,
-        error,
+        cityError,
     };
 }
 
-function cityCreateSuccess(data) {
+function cityCreateSuccess(cityData) {
     return {
         type: CITY_CREATE,
-        data
+        cityData
     };
 }
 
@@ -123,7 +137,6 @@ function itineraryCreatedSuccess(data) {
     return {
         type: ITINERARY_CREATED,
         data,
-        isLoading: false,
     };
 }
 
@@ -131,7 +144,6 @@ function itineraryCreationFailure(error) {
     return {
         type: ITINERARY_CREATION_FAILURE,
         error,
-        isLoading: false,
     };
 }
 
@@ -173,50 +185,122 @@ function requestItinerariesList() {
     };
 }
 
-function receiveItinerariesList(data) {
+function itinerariesListFailure(error, query) {
+    return {
+        type: ITINERARIES_LIST_FAILURE,
+        isLoading: false,
+        error,
+        withQuery: Boolean(query)
+    };
+}
+
+function receiveItinerariesList(data, query='') {
     return {
         type: RECEIVE_ITINERARIES_LIST,
         itinerariesList: data.results,
         count: data.count,
         navigation: data.navigation,
         total_pages: data.total_pages,
+        withQuery: Boolean(query)
     };
 }
 
-function resetForm() {
+function fetchItineraries(page=1, query = '') {
+    return function fetchItinerariesThunk(dispatch) {
+        dispatch(requestItinerariesList());
+
+        getItineraryList(page, query)
+            .then((response) => {
+                dispatch(receiveItinerariesList(response, query));
+            })
+            .catch(error => dispatch(itinerariesListFailure(error, query)));
+    };
+}
+
+function fetchFilteredItineraries(page=1, query = '') {
+    return function fetchFilteredItinerariesThunk(dispatch) {
+        dispatch(requestItinerariesList());
+
+        getFilteredItineraryList(1, query)
+            .then((response) => {
+                dispatch(receiveItinerariesList(response, query));
+            })
+            .catch(error => dispatch(itinerariesListFailure(error, query)));
+    };
+}
+
+function requestItineraryUpdate() {
     return {
-        type: RESET_FORM,
+        type: REQUEST_ITINERARY_UPDATE,
     };
 }
 
-function updateItineraryAction(formObj, token, slug) {
-    return (dispatch) => {
-        dispatch(submitItinerary());
-        return updateItinerary(formObj, token, slug)
-            .then(response => {
-                dispatch({
-                    type: ITINERARY_UPDATED,
-                    updated: true,
-                    data: response,
+function itineraryUpdated(data) {
+    return {
+        type: ITINERARY_UPDATED,
+        updated: true,
+        data,
+    };
+}
+
+function itineraryUpdateFailure(error) {
+    return {
+        type: ITINERARY_UPDATED_FAILURE,
+        error,
+    };
+}
+
+function updateItineraryAction(formObj, slug) {
+    return function updateItineraryActionThunk(dispatch, getState) {
+        const state = getState();
+        const refresh = refreshToken(state);
+        const access = accessToken(state);
+
+        dispatch(requestItineraryUpdate());
+
+        if (isAccessTokenExpired(state)) {
+            refreshAccessToken(refresh)
+                .then(({ access }) => {
+                    updateItinerary(formObj, access.token, slug)
+                        .then(data => {
+                            dispatch(itineraryUpdated(data));
+                        })
+                        .catch(error => {
+                            dispatch(itineraryUpdateFailure(error));
+                        });
                 });
-            });
+        } else {
+            updateItinerary(formObj, access, slug)
+                .then(data => {
+                    dispatch(itineraryUpdated(data));
+                })
+                .catch(error => {
+                    dispatch(itineraryUpdateFailure(error));
+                });
+        }
     };
 }
 
 export {
-    INITIALIZE_FORM,
     CITY_CREATE,
+    CITY_CREATE_FAILURE,
+    CITY_CREATE_REQUEST,
     FORM_SUBMITTED,
+    INITIALIZE_FORM,
     ITINERARY_CREATED,
+    ITINERARY_CREATION_FAILURE,
+    ITINERARIES_LIST_FAILURE,
+    ITINERARY_UPDATED,
+    ITINERARY_UPDATED_FAILURE,
     RECEIVE_ITINERARIES_LIST,
     REQUEST_ITINERARIES_LIST,
-    ITINERARY_UPDATED,
+    REQUEST_ITINERARY_UPDATE,
     RESET_FORM,
-    initializeCreateAction,
-    setCityAction,
     createItineraryAction,
-    requestItinerariesList,
-    receiveItinerariesList,
+    fetchItineraries,
+    fetchFilteredItineraries,
+    initializeCreateAction,
     resetForm,
+    setCityAction,
     updateItineraryAction,
 };

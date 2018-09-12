@@ -1,46 +1,96 @@
 import {
-    INITIALIZE_FORM,
     CITY_CREATE,
+    CITY_CREATE_FAILURE,
+    CITY_CREATE_REQUEST,
     FORM_SUBMITTED,
+    INITIALIZE_FORM,
     ITINERARY_CREATED,
+    ITINERARY_CREATION_FAILURE,
+    ITINERARIES_LIST_FAILURE,
     ITINERARY_UPDATED,
+    ITINERARY_UPDATED_FAILURE,
+    REQUEST_ITINERARY_UPDATE,
     REQUEST_ITINERARIES_LIST,
     RECEIVE_ITINERARIES_LIST,
     RESET_FORM,
 } from '../actions';
 
 function createUpdateItineraryReducer(state = { currentStep: 0 }, action) {
-    switch (action.type) {
+    const {
+        cityError,
+        cityData,
+        data,
+        error,
+        formData,
+        isLoading,
+        previouslyCreatedCities,
+        steps,
+        type,
+        updated,
+    } = action;
+
+    switch (type) {
     case INITIALIZE_FORM:
         return {
             ...state,
-            formData: { ...action.formData },
-            steps: action.steps,
-            previouslyCreatedCities: action.previouslyCreatedCities,
+            formData: { ...formData },
+            steps: steps,
+            previouslyCreatedCities: previouslyCreatedCities,
+        };
+    case CITY_CREATE_REQUEST:
+        return {
+            cityIsLoading: true,
         };
     case CITY_CREATE:
         return {
             ...state,
             formData: {
                 ...state.formData,
-                ...action.data,
-                cityPk: action.data.pk
+                ...cityData,
+                cityPk: cityData.pk
             },
+            cityIsLoading: false,
+        };
+    case CITY_CREATE_FAILURE:
+        return {
+            ...state,
+            cityError,
         };
     case FORM_SUBMITTED:
         return {
             ...state,
-            formSubmitted: true,
+            isLoading: true,
         };
     case ITINERARY_CREATED:
         return {
             ...state,
-            itinerarySlug: action.data.slug
+            itinerarySlug: data.slug,
+            isLoading: false,
+            submitted: true,
+        };
+    case ITINERARY_CREATION_FAILURE:
+        return {
+            ...state,
+            error,
+            isLoading: false,
+            submitted: false,
+        };
+    case ITINERARY_UPDATED_FAILURE:
+        return {
+            ...state,
+            isLoading: false,
+            error,
+        };
+    case REQUEST_ITINERARY_UPDATE:
+        return {
+            ...state,
+            isLoading: true,
         };
     case ITINERARY_UPDATED:
         return {
             ...state,
-            updated: action.updated,
+            updated: updated,
+            isLoading: false,
         };
     case RESET_FORM:
         return {
@@ -52,7 +102,17 @@ function createUpdateItineraryReducer(state = { currentStep: 0 }, action) {
 }
 
 function itinerariesListReducer(state = {}, action) {
-    switch (action.type) {
+    const {
+        count,
+        isLoading,
+        itinerariesList,
+        navigation,
+        total_pages,
+        type,
+        withQuery,
+    } = action;
+
+    switch (type) {
     case REQUEST_ITINERARIES_LIST:
         return {
             ...state,
@@ -61,13 +121,21 @@ function itinerariesListReducer(state = {}, action) {
     case RECEIVE_ITINERARIES_LIST: {
         return {
             ...state,
-            isLoading: action.isLoading,
-            itinerariesList: action.itinerariesList,
-            count: action.count,
-            navigation: action.navigation,
-            total_pages: action.total_pages,
+            isLoading: false,
+            itinerariesList: itinerariesList,
+            count: count,
+            navigation: navigation,
+            total_pages: total_pages,
+            withQuery,
         };
     }
+    case ITINERARIES_LIST_FAILURE:
+        return {
+            ...state,
+            error,
+            isLoading: false,
+            withQuery,
+        };
     default:
         return state;
     }
