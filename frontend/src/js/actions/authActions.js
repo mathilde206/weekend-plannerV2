@@ -1,4 +1,9 @@
+import {
+    receiveUserItineraryLikes,
+} from '../actions/likesActions';
+
 import axios from 'axios/index';
+
 import {
     getUsername,
     login,
@@ -10,9 +15,6 @@ import {
     updateUserProfile,
 } from '../api/';
 
-import {
-    receiveUserItineraryLikes,
-} from '../actions/likesActions';
 
 import { history } from '../helpers';
 
@@ -46,59 +48,125 @@ const PROFILE_UPDATED = 'PROFILE_UPDATED';
 axios.defaults.xsrfHeaderName = 'X-CSRFTOKEN';
 axios.defaults.xsrfCookieName = 'csrftoken';
 
-function setAuthedUserAction(id) {
-    return dispatch => {
+function requestUserData() {
+    return {
+        type: GET_USER_REQUEST,
+        isFetching: true,
+    };
+}
+
+function retreiveUserData(user, id) {
+    return {
+        type: GET_USER_SUCCESS,
+        isFetching: false,
+        user,
+        id,
+    };
+}
+
+function errorUserData(error) {
+    return {
+        type: GET_USER_SUCCESS,
+        isFetching: false,
+        error: error,
+    };
+}
+
+function fetchUserData(id) {
+    console.log(id);
+    return function fetchUserThunk(dispatch) {
+        dispatch(requestUserData());
+
         getUsername(id)
             .then((user) => {
-                dispatch({
-                    type: USER_RETRIEVED,
-                    user,
-                    id,
-                });
+                console.log(user);
+                dispatch(retreiveUserData(user, id));
+            })
+            .catch((error) => {
+                dispatch(errorUserData(error));
             });
-        getUserLikes(id)
-            .then(response => {
-                dispatch(receiveUserItineraryLikes(response.likes));
-            });
+    };
+}
+
+
+function requestLogin() {
+    return {
+        type: LOGIN_REQUEST,
+        isLoggingIn: true,
+    };
+}
+
+function failureLogin(error) {
+    return {
+        type: LOGIN_REQUEST,
+        error,
+        isLoggingIn: false,
+    };
+}
+
+function successLogin({access, refresh}) {
+    return {
+        type: LOGIN_SUCCESS,
+        access,
+        refresh,
     };
 }
 
 function loginAction(username, password) {
-    function request(user) {
-        return { type: LOGIN_REQUEST, user };
-    }
-
-    function success(user, token, auth) {
-        return { type: LOGIN_SUCCESS, user, token, auth };
-    }
-
-    function failure(error) {
-        return { type: LOGIN_FAILURE, error };
-    }
-
-    return dispatch => {
-        dispatch(request({ username }));
+    return function loginThunk(dispatch) {
+        dispatch(requestLogin());
 
         login(username, password)
-            .then(auth => {
-                const {
-                    access
-                } = auth;
-
-                getUsername(access.user_id)
-                    .then((username) => {
-                        dispatch(success(username, access.token, auth));
-                        dispatch(setAuthedUserAction(access.user_id));
-                        history.push('/');
-                    });
-
-            }).catch(error => {
-                dispatch(failure(error.toString()));
-                dispatch(alertErrorAction(error.toString()));
-            }
-            );
+            .then((auth) => {
+                const { access } = auth;
+                const {user_id} = access;
+                dispatch(successLogin(auth));
+                dispatch(fetchUserData(user_id));
+            })
+            .catch(errors => dispatch(failureLogin(errors)));
     };
 }
+
+// function loginAction3(username, password) {
+//     function request(user) {
+//         return { type: LOGIN_REQUEST, user };
+//     }
+//
+//     function success(user, token, auth) {
+//         return { type: LOGIN_SUCCESS,
+//             user,
+//             token,
+//             auth };
+//     }
+//
+//     function failure(error) {
+//         return { type: LOGIN_FAILURE, error };
+//     }
+//
+//     return dispatch => {
+//         dispatch(request({ username }));
+//
+//         login(username, password)
+//             .then(auth => {
+//                 console.log(auth);
+//                 const {
+//                     access
+//                 } = auth;
+//
+//                 getUsername(access.user_id)
+//                     .then((username) => {
+//                         dispatch(success(username, access, auth));
+//                         dispatch(setAuthedUserAction(access.user_id));
+//                         history.push('/');
+//                     });
+//
+//             }).catch(error => {
+//                 dispatch(failure(error.toString()));
+//                 dispatch(alertErrorAction(error.toString()));
+//             }
+//             );
+//     };
+// }
 
 function refreshAccessAction(token) {
     function request(user, token) {
@@ -211,8 +279,7 @@ export {
     logoutAction,
     refreshAccessAction,
     registerAction,
-    setAuthedUserAction,
     deleteAction,
+    fetchUserData,
+    successLogin,
 };
-
-//TODO: Add api to update user info and show user info

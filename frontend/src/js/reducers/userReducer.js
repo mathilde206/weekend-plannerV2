@@ -1,63 +1,33 @@
 import {
-    LOGIN_REQUEST,
-    LOGIN_SUCCESS,
-    LOGIN_FAILURE,
+    GET_USER_REQUEST,
+    GET_USER_SUCCESS,
+    GET_USER_FAILURE,
     LOGOUT,
-    REGISTER_REQUEST,
-    REGISTER_SUCCESS,
-    REGISTER_FAILURE,
-    TOKEN_RECEIVED,
-    TOKEN_FAILURE,
-    USER_RETRIEVED,
 } from '../actions';
 
-function setAuthUserReducer(state = {}, action) {
-    switch (action.type) {
-    case LOGIN_REQUEST:
-        return {
-            loggingIn: true,
-            user: action.user,
-        };
-    case LOGIN_SUCCESS:
-    case TOKEN_RECEIVED:
-    case USER_RETRIEVED:
-        return {
-            loggedIn: true,
-            user: action.user,
-            userId: action.id
-        };
-    case LOGIN_FAILURE:
-        return {};
-    case LOGOUT:
-        return {};
-    default:
-        return state;
-    }
-}
+function userReducer(state = {}, action) {
+    const {
+        id,
+        isFetching,
+        type,
+        user,
+    } = action;
 
-const initialAuthCredentials = {
-    access: null,
-    refresh: null,
-    errors: {}
-};
-
-function setAuthCredentialsReducer(state = initialAuthCredentials, action) {
-    switch (action.type) {
-    case LOGIN_SUCCESS:
+    switch (type) {
+    case GET_USER_REQUEST:
         return {
-            ...action.auth
+            isFetching
         };
-    case TOKEN_RECEIVED:
+    case GET_USER_SUCCESS:
         return {
-            ...state,
-            access: { ...action.auth.access }
+            isFetching,
+            user,
+            id,
         };
-    case LOGIN_FAILURE:
-    case TOKEN_FAILURE:
+    case GET_USER_FAILURE:
         return {
-            access: null,
-            refresh: null,
-            error: action.error,
+            isFetching,
+            error,
         };
     case LOGOUT:
         return {};
@@ -66,63 +36,4 @@ function setAuthCredentialsReducer(state = initialAuthCredentials, action) {
     }
 }
 
-function registrationReducer(state = {}, action) {
-    switch (action.type) {
-    case REGISTER_REQUEST:
-        return { registering: true };
-    case REGISTER_SUCCESS:
-        return {
-            registered: true
-        };
-    case REGISTER_FAILURE:
-        return {};
-    default:
-        return state;
-    }
-}
-
-function getAccessToken(state) {
-    if (state.access) {
-        return state.access.token;
-    }
-}
-
-function getRefreshToken(state) {
-    if (state.refresh) {
-        return state.refresh.token;
-    }
-}
-
-function getIsAccessTokenExpired(state) {
-    if (state.access && state.access.exp) {
-        return 1000 * state.access.exp - (new Date()).getTime() < 5000;
-    }
-    return true;
-}
-
-function getIsRefreshTokenExpired(state) {
-    if (state.refresh && state.refresh.exp) {
-        return 1000 * state.refresh.exp - (new Date()).getTime() < 5000;
-    }
-    return true;
-}
-
-function getIsAuthenticated(state) {
-    return !getIsRefreshTokenExpired(state);
-}
-
-function getUserErrors(state) {
-    return state.errors;
-}
-
-export {
-    getAccessToken,
-    getRefreshToken,
-    getIsAccessTokenExpired,
-    getIsRefreshTokenExpired,
-    getIsAuthenticated,
-    getUserErrors,
-    setAuthUserReducer,
-    setAuthCredentialsReducer,
-    registrationReducer,
-};
+export default userReducer;

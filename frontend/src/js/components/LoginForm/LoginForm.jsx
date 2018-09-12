@@ -5,17 +5,16 @@ import { Link } from 'react-router-dom';
 import InputField from '../InputField/InputField';
 
 const LoginForm = ({
-    errors,
+    error,
     handleChange,
     handleSubmit,
-    loggingIn,
-    serverError
+    isLoggingIn,
 }) => (
     <Jumbotron className="container jumbotron-white">
         <Form onSubmit={handleSubmit}>
             <h1>Login</h1>
             {
-                serverError &&
+                error &&
                 <Alert color="danger">
                     We couldn't log you in. Are you sure you are a registered user ?
                     <Link to="/resetPassword" className="btn btn-link">Password Forgotten ?</Link>
@@ -25,13 +24,11 @@ const LoginForm = ({
             <InputField
                 name="username"
                 label="Username"
-                error={errors.username}
                 onChange={handleChange}
             />
             <InputField
                 name="password"
                 label="Password"
-                error={errors.password}
                 type="password"
                 onChange={handleChange}
             />
@@ -39,7 +36,7 @@ const LoginForm = ({
                 Log In
             </Button>
             {
-                loggingIn &&
+                isLoggingIn &&
                 <p>Loading...</p>
             }
         </Form>
@@ -48,16 +45,14 @@ const LoginForm = ({
     </Jumbotron>);
 
 LoginForm.propTypes = {
-    errors: PropTypes.object,
+    error: PropTypes.string,
     handleChange: PropTypes.func.isRequired,
     handleSubmit: PropTypes.func.isRequired,
-    loggingIn: PropTypes.bool.isRequired,
-    serverError: PropTypes.string,
+    isLoggingIn: PropTypes.bool.isRequired,
 };
 
 LoginForm.defaultProps = {
-    errors: {},
-    serverError: '',
+    error: '',
 };
 
 export default LoginForm;

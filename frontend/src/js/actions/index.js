@@ -18,7 +18,11 @@ import {
 
 import {
     RECEIVE_USER_LIKES,
-    receiveUserItineraryLikes,
+    LIKE_ITINERARY_FAILURE,
+    LIKE_ITINERARY_REQUEST,
+    LIKE_ITINERARY_SUCCESS,
+    fetchUserItineraryLikes,
+    likeItinerary,
 } from './likesActions';
 
 import {
@@ -45,10 +49,11 @@ import {
     logoutAction,
     refreshAccessAction,
     registerAction,
-    setAuthedUserAction,
     deleteAction,
+    fetchUserData,
     updateProfileAction,
-} from './userActions';
+    successLogin,
+} from './authActions';
 
 import {
     ADD_TO_CART,
@@ -96,14 +101,16 @@ export {
     logoutAction,
     refreshAccessAction,
     registerAction,
-    setAuthedUserAction,
     deleteAction,
     receiveItinerariesList,
-    receiveUserItineraryLikes,
+    fetchUserItineraryLikes,
     requestItinerariesList,
     resetForm,
     addToCartAction,
     removeFromCartAction,
     emptyCartAction,
     updateItineraryAction,
+    successLogin,
+    fetchUserData,
+    likeItinerary,
 };

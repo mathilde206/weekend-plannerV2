@@ -17,15 +17,12 @@ import { App } from './containers';
 
 const loggerMiddleware = createLogger();
 const history = createHistory();
-const persistedFilter = createFilter(
-    'auth', [ 'access', 'refresh' ]
-);
+
 const reducer = persistReducer(
     {
-        key: 'auth',
+        key: 'store',
         storage,
-        whitelist: [ 'auth' ],
-        transforms: [ persistedFilter ]
+        whitelist: [ 'auth', 'cart' ],
     },
     rootReducer
 );
@@ -41,7 +38,7 @@ const store = createStore(
 
 let persistor = persistStore(store);
 
-//TODO Add a loading component here
+
 ReactDOM.render((
     <Provider store={store}>
         <PersistGate loading={null} persistor={persistor}>

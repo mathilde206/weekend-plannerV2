@@ -121,8 +121,7 @@ class NavigationBarTop extends React.Component {
                         </Nav>
                     </Collapse>
                 </Navbar>
-            </div>)
-            ;
+            </div>);
     }
 }
 

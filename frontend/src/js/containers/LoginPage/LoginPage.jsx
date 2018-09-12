@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import LoginForm from '../../components/LoginForm/LoginForm';
@@ -12,7 +13,6 @@ class Login extends React.Component {
     state = {
         username: '',
         password: '',
-        errors: [],
         submitted: false,
     };
 
@@ -44,16 +44,24 @@ class Login extends React.Component {
     };
 
     render() {
-        const {error} = this.props;
+        const {
+            submitted
+        } = this.state;
+        const {
+            error,
+            isLoggingIn
+        } = this.props;
 
+        if (submitted) {
+            return <Redirect to="/" />;
+        }
         return (
             <div className="login-page container-wrapper">
                 <LoginForm
                     handleChange={this.handleChange}
                     handleSubmit={this.handleSubmit}
                     serverError={error}
-                    errors={this.state.errors}
-                    loggingIn={this.props.loggingIn}
+                    isLoggingIn={isLoggingIn}
                 />
             </div>
         );
@@ -62,20 +70,19 @@ class Login extends React.Component {
 
 Login.propTypes = {
     error: PropTypes.string,
-    loggingIn: PropTypes.bool,
+    isLoggingIn: PropTypes.bool,
 };
 
 Login.defaultProps = {
     error: '',
-    loggingIn: false,
+    isLoggingIn: false,
 };
 
-const mapStateToProps = ({ auth, user }) => {
-    const { loggingIn } = user;
-    const { error } = auth;
+const mapStateToProps = ({ auth }) => {
+    const { isLoggingIn, error } = auth;
     return {
         error,
-        loggingIn
+        isLoggingIn
     };
 };
 

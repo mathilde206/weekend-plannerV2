@@ -3,26 +3,10 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
-import {
-    receiveUserItineraryLikes
-} from '../../actions';
+import { likeItinerary } from '../../actions';
+import { isAuthenticated } from '../../reducers';
 
-import {
-    addLike,
-    refreshAccessToken,
-    getUserLikes
-} from '../../api';
-
-import {
-    accessToken,
-    isAccessTokenExpired,
-    isAuthenticated,
-    refreshToken
-} from '../../reducers';
-
-import {
-    Button,
-} from 'reactstrap';
+import { Button } from 'reactstrap';
 
 import { library } from '@fortawesome/fontawesome-svg-core/index';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -43,35 +27,13 @@ library.add(
 class ItineraryDetailsActions extends React.Component {
     handleLikeClick = (event) => {
         const {
-            accessToken,
-            isAccessTokenExpired,
-            refreshToken,
             onLike,
-            userId,
             slug,
             dispatch,
         } = this.props;
         event.preventDefault();
 
-        let likeObj = new FormData();
-        likeObj.append('likes', userId);
-
-        if (isAccessTokenExpired) {
-            refreshAccessToken(refreshToken)
-                .then(response => {
-                    addLike(slug, likeObj, response.access.token)
-                        .then((response) => {
-                            dispatch(receiveUserItineraryLikes(response.userLikes));
-                            onLike();
-                        });
-                });
-        } else {
-            addLike(slug, likeObj, accessToken)
-                .then((response) => {
-                    dispatch(receiveUserItineraryLikes(response.userLikes));
-                    onLike();
-                });
-        }
+        dispatch(likeItinerary(slug));
     };
 
     render() {
@@ -82,7 +44,6 @@ class ItineraryDetailsActions extends React.Component {
             onDelete,
             slug,
             user,
-            userId,
             userLikes,
         } = this.props;
 
@@ -138,8 +99,6 @@ class ItineraryDetailsActions extends React.Component {
 }
 
 ItineraryDetailsActions.propTypes = {
-    accessToken: PropTypes.string,
-    isAccessTokenExpired: PropTypes.bool,
     isAuthenticated: PropTypes.bool,
     loggedInUser: PropTypes.string,
     onLike: PropTypes.func.isRequired,
@@ -148,19 +107,14 @@ ItineraryDetailsActions.propTypes = {
     user: PropTypes.objectOf(PropTypes.oneOfType([ PropTypes.string, PropTypes.number ])).isRequired,
     userId: PropTypes.number,
     userLikes: PropTypes.arrayOf(PropTypes.number),
-    refreshToken: PropTypes.string,
     slug: PropTypes.string.isRequired,
 };
 
 ItineraryDetailsActions.defaultProps = {
-    accessToken: '',
-    isAccessTokenExpired: true,
-    isAuthenticated: false,
     loggedInUser: '',
     user: {},
     userId: 0,
     userLikes: [],
-    refreshToken: '',
 };
 
 const mapStateToProps = (state) => {
@@ -170,13 +124,10 @@ const mapStateToProps = (state) => {
     } = state;
 
     return ({
-        accessToken: accessToken(state),
-        isAccessTokenExpired: isAccessTokenExpired(state),
         isAuthenticated: isAuthenticated(state),
         loggedInUser: user.user,
         userId: user.userId,
         userLikes: userLikes.itinerary_likes,
-        refreshToken: refreshToken(state),
     });
 };
 

@@ -22,7 +22,6 @@ function emptyCartAction() {
     };
 }
 
-
 export {
     ADD_TO_CART,
     REMOVE_FROM_CART,

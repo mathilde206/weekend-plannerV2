@@ -74,7 +74,7 @@ function increaseViewsCounter(slug) {
         .then(response => response.data);
 }
 
-function addLike(slug, likeObj, token) {
+function addLike(slug, token) {
     const options = {
         method: 'GET',
         headers: {

@@ -5,3 +5,5 @@ checkout/migrations
 itineraries/migrations
 staticfiles
 cities/migrations
+.coverage
+htmlcov

@@ -5,9 +5,11 @@ import { connect } from 'react-redux';
 
 import { history } from '../../helpers/';
 import {
-    setAuthedUserAction,
+    setAlreadyLoggedInUser,
     requestItinerariesList,
     receiveItinerariesList,
+    fetchUserData,
+    successLogin,
 } from '../../actions';
 import { getItineraryList } from '../../api';
 
@@ -33,12 +35,17 @@ import './App.scss';
 
 class App extends React.Component {
     componentWillMount() {
-        if (localStorage.getItem('persist:auth')
-            && JSON.parse(JSON.parse(localStorage.getItem('persist:auth')).auth).access
+        const {
+            dispatch
+        } = this.props;
+
+        if (localStorage.getItem('persist:store')
+            && JSON.parse(localStorage.getItem('persist:store')).auth
         ) {
-            const auth = JSON.parse(localStorage.getItem('persist:auth'));
-            const id = JSON.parse(auth.auth).access.user_id;
-            this.props.setAuthedUserAction(id);
+            const auth = JSON.parse(JSON.parse(localStorage.getItem('persist:store')).auth);
+            const id = auth.access.user_id;
+            dispatch(fetchUserData(id));
+            dispatch(successLogin(auth));
         }
 
         this.props.requestItinerariesList();
@@ -80,7 +87,8 @@ class App extends React.Component {
 const mapDispatchToProps = (dispatch) => ({
     requestItinerariesList: () => dispatch(requestItinerariesList()),
     receiveItinerariesList: (itinerariesList) => dispatch(receiveItinerariesList(itinerariesList)),
-    setAuthedUserAction: (id) => dispatch(setAuthedUserAction(id)),
+    dispatch,
 });
 
 export default connect(null, mapDispatchToProps)(App);
+map
