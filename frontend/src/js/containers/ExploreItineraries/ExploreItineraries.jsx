@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import ReactLoading from 'react-loading';
 
 import { fetchFilteredItineraries } from '../../actions';
 
@@ -26,12 +27,14 @@ class ExploreItineraries extends React.Component {
 
     handleReset = (event) => {
         event.preventDefault();
+        const { onFetchItineraries } = this.props;
 
         this.setState({
             searchCity: '',
             budget: '',
             numberOfDays: '',
         });
+        onFetchItineraries(1, '');
     };
 
     handleSubmit = (event) => {
@@ -84,8 +87,29 @@ class ExploreItineraries extends React.Component {
             total_pages
         } = itineraries;
 
-        if (isLoading || !count) {
-            return (<h1>Loading...</h1>);
+        if (isLoading) {
+            return (
+                <div className="container">
+                    <ReactLoading type="bubbles" color="#000c4f" />
+                </div>
+            );
+        }
+
+        if (!count) {
+            return (
+                <div className="container explore-wrapper">
+                    <h1 className="margin-top">Explore Itineraries</h1>
+                    <ItinerariesSearchForm
+                        budget={budget}
+                        onFieldChange={this.handleFieldChange}
+                        onReset={this.handleReset}
+                        onSubmit={this.handleSubmit}
+                        searchCity={searchCity}
+                        numberOfDays={numberOfDays}
+                    />
+                    <h1>Sorry, no itinerary fit your criteria.</h1>
+                </div>
+            );
         }
 
         return (
