@@ -19,5 +19,4 @@ urlpatterns = [
     path('<int:user>/billing/', AccountRetrieveBillingInfo.as_view(), name='billing'),
     path('<int:user>/billing/edit/', AccountBillingInfoUpdateAPIView.as_view(),
         name='update_billing')
-    # path(r'^login/$', UserLoginApiView.as_view(), name='login'),
 ]

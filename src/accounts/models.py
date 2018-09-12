@@ -5,6 +5,9 @@ from django.dispatch import receiver
 
 
 class Account(models.Model):
+    """
+    This model is an extension of the user profile for the profile page and the billing.
+    """
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     first_name = models.CharField(max_length=120, blank=True)
     last_name = models.CharField(max_length=120, blank=True)
@@ -21,15 +24,21 @@ class Account(models.Model):
     billing_phone_number = models.CharField(max_length=120, blank=True)
 
     def __str__(self):
-        return self.user
+        return self.user.username
 
 
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):
+    """
+    This function will create a new account attached to a user everytime a user registers.
+    """
     if created:
         Account.objects.create(user=instance)
 
 
 @receiver(post_save, sender=User)
 def save_user_profile(sender, instance, **kwargs):
+    """
+    This function will save the new account attached to a user when the registration is complete..
+    """
     instance.account.save()

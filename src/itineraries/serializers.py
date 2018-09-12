@@ -6,7 +6,7 @@ from rest_framework.serializers import (
 
 from accounts.serializers import UserDetailSerializer
 
-from .models import Itinerary
+from itineraries.models import Itinerary
 
 
 class ItineraryCreateUpdateSerializer(ModelSerializer):

@@ -1,14 +1,9 @@
-from django.db.models import Q
 from django.contrib.auth import get_user_model
-
 from rest_framework.serializers import (
-    CharField,
     EmailField,
     ModelSerializer,
     ValidationError,
-    SerializerMethodField,
 )
-
 from accounts.models import Account
 
 User = get_user_model()

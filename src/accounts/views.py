@@ -1,28 +1,12 @@
 from django.contrib.auth import get_user_model
-
 from accounts.permissions import IsOwnerOrReadOnly
-
 from rest_framework.generics import (
     CreateAPIView,
-    DestroyAPIView,
-    ListAPIView,
     RetrieveAPIView,
     RetrieveUpdateAPIView,
 )
-
-from rest_framework.permissions import (
-    AllowAny,
-    IsAuthenticated,
-    IsAdminUser,
-)
-
-#
-# from recommendations.pagination import RecommendationPageNumberPagination
-# from recommendations.permissions import IsOwnerOrReadOnly
-
-User = get_user_model()
+from rest_framework.permissions import AllowAny
 from accounts.models import Account
-
 from accounts.serializers import (
     AccountDetailSerializer,
     UserDetailSerializer,
@@ -31,14 +15,22 @@ from accounts.serializers import (
     BillingInfoSerializer,
 )
 
+User = get_user_model()
+
 
 class UserRetrieveAPIView(RetrieveAPIView):
+    """
+    Retrieves one user.
+    """
     serializer_class = UserDetailSerializer
     permission_classes = [AllowAny]
     queryset = User.objects.all()
 
 
 class AccountRetrieveAPIView(RetrieveAPIView):
+    """
+    Retrieves the public details for a user.
+    """
     lookup_field = 'user'
     serializer_class = AccountDetailSerializer
     permission_classes = [AllowAny]
@@ -46,12 +38,18 @@ class AccountRetrieveAPIView(RetrieveAPIView):
 
 
 class UserCreateApiView(CreateAPIView):
+    """
+    Creates a new User.
+    """
     serializer_class = UserCreateSerializer
     permission_classes = [AllowAny]
     queryset = User.objects.all()
 
 
 class UserLikesRetrieve(RetrieveAPIView):
+    """
+    Gets the "likes" of a user.
+    """
     lookup_field = 'user'
     serializer_class = UserLikesSerializer
     permission_classes = [AllowAny]
@@ -59,6 +57,9 @@ class UserLikesRetrieve(RetrieveAPIView):
 
 
 class AccountUpdateAPIView(RetrieveUpdateAPIView):
+    """
+    Allows a user to update his account information.
+    """
     lookup_field = 'user'
     queryset = Account.objects.all()
     serializer_class = AccountDetailSerializer
@@ -74,20 +75,10 @@ class AccountRetrieveBillingInfo(RetrieveAPIView):
 
 
 class AccountBillingInfoUpdateAPIView(RetrieveUpdateAPIView):
+    """
+    Allows a user to update their billing information during the checkout process.
+    """
     lookup_field = 'user'
     queryset = Account.objects.all()
     serializer_class = BillingInfoSerializer
     permission_classes = [IsOwnerOrReadOnly]
-
-#
-# class UserLoginApiView(APIView):
-#     permission_classes = [AllowAny]
-#     serializer_class = UserLoginSerializer
-#
-#     def post(self, request, *args, **kwargs):
-#         data = request.data
-#         serializer = UserLoginSerializer(data=data)
-#         if serializer.is_valid(raise_exception=True):
-#             new_data = serializer.data
-#             return Response(new_data, HTTP_200_OK)
-#         return Response(serializer.errors, HTTP_400_BAD_REQUEST)
