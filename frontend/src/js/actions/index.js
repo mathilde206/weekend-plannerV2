@@ -64,9 +64,11 @@ import {
     ADD_TO_CART,
     REMOVE_FROM_CART,
     EMPTY_CART,
+    HYDRATE_CART,
     addToCartAction,
     removeFromCartAction,
     emptyCartAction,
+    getCart,
 } from './checkoutAction';
 
 export {
@@ -107,6 +109,7 @@ export {
     ADD_TO_CART,
     REMOVE_FROM_CART,
     EMPTY_CART,
+    HYDRATE_CART,
     addToCartAction,
     createItineraryAction,
     deleteAction,
@@ -126,4 +129,5 @@ export {
     setCityAction,
     successLogin,
     updateItineraryAction,
+    getCart,
 };

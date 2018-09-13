@@ -8,6 +8,7 @@ import { history } from '../../helpers/';
 import {
     fetchItineraries,
     fetchUserData,
+    getCart,
     successLogin,
 } from '../../actions';
 
@@ -56,6 +57,14 @@ class App extends React.Component {
             dispatch(fetchUserData(id));
             dispatch(successLogin(auth));
         }
+
+        if (localStorage.getItem('persist:store') &&
+            JSON.parse(localStorage.getItem('persist:store')).cart
+        ) {
+            const cart = JSON.parse(JSON.parse(localStorage.getItem('persist:store')).cart);
+            console.log(cart);
+            dispatch(getCart(cart));
+        }
         dispatch(fetchItineraries(1));
     }
 
@@ -63,8 +72,8 @@ class App extends React.Component {
 
         const { isLoading } = this.state;
 
-        if(isLoading) {
-            return <ReactLoading type='bubbles' color='#000c4f' />;
+        if (isLoading) {
+            return <ReactLoading type="bubbles" color="#000c4f" />;
         }
 
         return (

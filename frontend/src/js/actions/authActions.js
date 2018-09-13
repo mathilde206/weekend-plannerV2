@@ -15,7 +15,6 @@ import {
     updateUserProfile,
 } from '../api/';
 
-
 import { history } from '../helpers';
 
 const DELETE_REQUEST = 'USERS_DELETE_REQUEST';
@@ -87,7 +86,6 @@ function fetchUserData(id) {
     };
 }
 
-
 function requestLogin() {
     return {
         type: LOGIN_REQUEST,
@@ -103,7 +101,7 @@ function failureLogin(error) {
     };
 }
 
-function successLogin({access, refresh}) {
+function successLogin({ access, refresh }) {
     return {
         type: LOGIN_SUCCESS,
         access,
@@ -118,7 +116,7 @@ function loginAction(username, password) {
         login(username, password)
             .then((auth) => {
                 const { access } = auth;
-                const {user_id} = access;
+                const { user_id } = access;
                 dispatch(successLogin(auth));
                 dispatch(fetchUserData(user_id));
             })
@@ -126,73 +124,33 @@ function loginAction(username, password) {
     };
 }
 
-// function loginAction3(username, password) {
-//     function request(user) {
-//         return { type: LOGIN_REQUEST, user };
-//     }
-//
-//     function success(user, token, auth) {
-//         return { type: LOGIN_SUCCESS,
-//             user,
-//             token,
-//             auth };
-//     }
-//
-//     function failure(error) {
-//         return { type: LOGIN_FAILURE, error };
-//     }
-//
-//     return dispatch => {
-//         dispatch(request({ username }));
-//
-//         login(username, password)
-//             .then(auth => {
-//                 console.log(auth);
-//                 const {
-//                     access
-//                 } = auth;
-//
-//                 getUsername(access.user_id)
-//                     .then((username) => {
-//                         dispatch(success(username, access, auth));
-//                         dispatch(setAuthedUserAction(access.user_id));
-//                         history.push('/');
-//                     });
-//
-//             }).catch(error => {
-//                 dispatch(failure(error.toString()));
-//                 dispatch(alertErrorAction(error.toString()));
-//             }
-//             );
-//     };
-// }
+function requestAccessToken() {
+    return {
+        type: TOKEN_REQUEST,
+    };
+}
 
-function refreshAccessAction(token) {
-    function request(user, token) {
-        return { type: TOKEN_REQUEST, token };
-    }
+function accessTokenReceived(token) {
+    return {
+        type: TOKEN_RECEIVED,
+        token: token.access,
+    };
+}
 
-    function success(token) {
-        return {
-            type: TOKEN_RECEIVED,
-            token: token.access,
-        };
-    }
+function accessTokenError(token) {
+    return { type: TOKEN_FAILURE, error };
+}
 
-    function failure(error) {
-        return { type: TOKEN_FAILURE, error };
-    }
+function refreshAccessAction(refreshToken) {
+    return function refreshAccessActionThunk(dispatch) {
+        dispatch(requestAccessToken(refreshToken));
 
-    return dispatch => {
-        dispatch(request(token));
-
-        refreshAccessToken(token)
-            .then((data) => {
-                dispatch(success(data.token));
+        refreshAccessToken(refreshToken)
+            .then(({accessToken}) => {
+                dispatch(accessTokenReceived(accessToken));
             })
             .catch(error => {
-                dispatch(failure(error.toString()));
-                dispatch(alertErrorAction(error.toString()));
+                dispatch(accessTokenError(error.toString()));
             });
     };
 }

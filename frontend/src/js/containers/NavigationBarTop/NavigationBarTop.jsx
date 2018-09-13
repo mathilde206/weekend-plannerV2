@@ -148,7 +148,7 @@ const mapStateToProps = (state) => {
     return {
         isAuthenticated: reducers.isAuthenticated(state),
         itemsInCart: cartContent.length,
-        userId: user.userId,
+        userId: user.id,
     };
 };
 

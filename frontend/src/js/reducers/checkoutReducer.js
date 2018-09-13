@@ -2,11 +2,13 @@ import {
     ADD_TO_CART,
     REMOVE_FROM_CART,
     EMPTY_CART,
+    HYDRATE_CART,
 } from '../actions';
 
 function cartReducer(state = {}, action) {
     const {
         type,
+        cart,
         productId,
     } = action;
 
@@ -27,6 +29,10 @@ function cartReducer(state = {}, action) {
     case EMPTY_CART:
         return {
             cart: []
+        };
+    case HYDRATE_CART:
+        return {
+            cart,
         };
     default:
         return state;
