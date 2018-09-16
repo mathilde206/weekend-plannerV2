@@ -116,7 +116,7 @@ class ProductPage extends React.Component {
 }
 
 ProductPage.propTypes = {
-    cart: PropTypes.arrayOf(PropTypes.number),
+    cart: PropTypes.arrayOf(PropTypes.object),
     isAuthenticated: PropTypes.bool,
     userId: PropTypes.number,
     addToCart: PropTypes.func,
@@ -132,7 +132,7 @@ ProductPage.defaultProps = {
 };
 
 const mapDispatchToProps = (dispatch) => ({
-    addToCart: (productId, cart) => {
+    addToCart: (productId) => {
         dispatch(addToCartAction(productId));
     },
     removeFromCart: (productId) => {
@@ -149,7 +149,7 @@ const mapStateToProps = (state) => {
     return ({
         cart: cart.cart,
         isAuthenticated: isAuthenticated(state),
-        userId: user.userId,
+        userId: user.id,
     });
 };
 

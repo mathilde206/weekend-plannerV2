@@ -143,7 +143,7 @@ class ItineraryUpdateLikes(GenericAPIView):
         obj = get_object_or_404(Itinerary, slug=slug)
         user = self.request.user
         userId = User.objects.filter(username=user)[0].id
-        account = Account.objects.filter(user=userId)[0]
+        account = Account.objects.filter(user=i)[0]
 
         if account in obj.likes.all():
             obj.likes.remove(account)

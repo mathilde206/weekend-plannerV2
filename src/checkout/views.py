@@ -1,6 +1,12 @@
-from django.shortcuts import render
+from django.contrib.auth import get_user_model
 from django.http import JsonResponse
 from django.conf import settings
+import stripe
+
+from rest_framework.response import Response
+from rest_framework import status
+
+User = get_user_model()
 
 from rest_framework.generics import (
     CreateAPIView,
@@ -34,11 +40,31 @@ class OrderCreateView(CreateAPIView):
     serializer_class = OrderSerializer
     permission_classes = [IsAuthenticated]
 
-    def perform_create(self, serializer):
-        """
-        With this function, we attach the buyer's name and the products to the order
-        """
-        serializer.save(buyer=self.request.user)
+    def create(self, request, *args, **kwargs):
+        stripe.api_key = settings.STRIPE_SECRET
+        serializer = OrderSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        headers = self.get_success_headers(serializer.validated_data)
+
+        try:
+            charge = stripe.Charge.create(
+                amount=int(request.data["total"])*100,
+                currency="eur",
+                source=request.data['charge_id'],
+                description='userID'
+            )
+
+            if charge.paid:
+                serializer.save(buyer=self.request.user)
+                return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
+            else:
+                error = {"error": "We were unable to take a payment with that card!"}
+                return Response(error, status=status.HTTP_402_PAYMENT_REQUIRED,
+                    headers=headers)
+
+        except stripe.error.CardError as e:
+            error = {"error": "Your card was declined!"}
+            return Response(error, status=status.HTTP_402_PAYMENT_REQUIRED, headers=headers)
 
 
 class OrderItemCreateView(CreateAPIView):
@@ -54,6 +80,7 @@ class UserOrderView(ListAPIView):
     """
     This view returns all the orders for the currently authenticated user.
     """
+
     def get_queryset(self):
         buyer = self.request.user
         return Order.objects.filter(buyer=buyer)

@@ -29,6 +29,7 @@ import PrivateRoute from '../PrivateRoute/PrivateRoute';
 import ProfilePage from '../ProfilePage/ProfilePage';
 import CheckoutContainer from '../CheckoutContainer/CheckoutContainer';
 import UpdateItinerary from '../UpdateItinerary/UpdateItinerary';
+import Orders from '../Orders/Orders';
 
 import './App.scss';
 
@@ -51,6 +52,7 @@ class App extends React.Component {
 
         if (localStorage.getItem('persist:store')
             && JSON.parse(localStorage.getItem('persist:store')).auth
+            && JSON.parse(JSON.parse(localStorage.getItem('persist:store')).auth).access
         ) {
             const auth = JSON.parse(JSON.parse(localStorage.getItem('persist:store')).auth);
             const id = auth.access.user_id;
@@ -59,11 +61,12 @@ class App extends React.Component {
         }
 
         if (localStorage.getItem('persist:store') &&
-            JSON.parse(localStorage.getItem('persist:store')).cart
+            JSON.parse(localStorage.getItem('persist:store')).cart &&
+            JSON.parse(JSON.parse(localStorage.getItem('persist:store')).cart)
         ) {
             const cart = JSON.parse(JSON.parse(localStorage.getItem('persist:store')).cart);
             console.log(cart);
-            dispatch(getCart(cart));
+            dispatch(getCart(cart.cart, cart.total));
         }
         dispatch(fetchItineraries(1));
     }
@@ -87,6 +90,7 @@ class App extends React.Component {
                             <Route exact path="/register/" component={RegisterPage} />
                             <Route exact path="/explore/" component={ExploreItineraries} />
                             <Route exact path="/products/" component={ProductPage} />
+                            <Route exact path="/orders/" component={Orders} />
                             <PrivateRoute path="/:userId/checkout/" component={CheckoutContainer} />
                             <PrivateRoute path="/create/" component={CreateItinerary} />
                             <Route exact path="/:userId/profile" component={ProfilePage} />

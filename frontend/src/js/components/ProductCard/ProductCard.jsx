@@ -55,7 +55,7 @@ const ProductCard = ({
             <ListGroup>
                 {
                     productList.map(({ pk, name, price }) => {
-                        const productInCart = cart.indexOf(pk) > -1;
+                        const productInCart = cart.filter(item => item.pk === pk).length >0;
                         return (
                             <ListGroupItem key={pk}>
                                 <ProductItem

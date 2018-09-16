@@ -8,7 +8,8 @@ User = get_user_model()
 class Order(models.Model):
     buyer = models.ForeignKey(User, null=False, on_delete=models.CASCADE)
     creation_date = models.DateTimeField(auto_now_add=True)
-    stripe_token = models.CharField(blank=True, max_length=120)
+    charge_id = models.CharField(blank=True, max_length=500)
+    total = models.DecimalField(max_digits=10, decimal_places=2, blank=True)
 
 
 class OrderItem(models.Model):

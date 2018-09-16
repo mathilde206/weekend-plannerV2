@@ -3,63 +3,79 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
-import { removeFromCartAction, emptyCartAction } from '../../actions';
 import {
-    accessToken,
-    isAccessTokenExpired,
-    isAuthenticated,
-    refreshToken
-} from '../../reducers';
+    removeFromCartAction,
+    emptyCartAction,
+    updateBillingInfoAction,
+    makePayment,
+    fetchStripePublishableKey,
+} from '../../actions';
+
 import { CheckoutPage } from '../../components';
 
-const CheckoutContainer = ({
-    accessToken,
-    cart,
-    dispatch,
-    isAccessTokenExpired,
-    refreshToken,
-    removeFromCart,
-    emptyCart,
-    userId,
-}) => (
-    <div className="container product-page-wrapper">
-        <h1 className="border-title">Checkout</h1>
-        {
-            cart.length === 0 ?
-                <p>Your cart is empty, visit our <Link to="/products">Products Page</Link>.</p> :
-                <CheckoutPage
-                    accessToken={accessToken}
-                    cart={cart}
-                    dispatch={dispatch}
-                    isAccessTokenExpired={isAccessTokenExpired}
-                    refreshToken={refreshToken}
-                    removeFromCart={removeFromCart}
-                    emptyCart={emptyCart}
-                    userId={userId}
-                />
-        }
+class CheckoutContainer extends React.Component {
+    render() {
+        const {
+            cart,
+            removeFromCart,
+            total,
+            emptyCart,
+            userId,
+            updateBillingInfo,
+            userBillingUpdate,
+            makePayment,
+            stripe,
+        } = this.props;
+        return (
+            <div className="container product-page-wrapper">
+                <h1 className="border-title">Checkout</h1>
+                {
+                    cart.length === 0 ?
+                        <p>Your cart is empty, visit our <Link to="/products">Products Page</Link>.</p> :
+                        <CheckoutPage
+                            cart={cart}
+                            removeFromCart={removeFromCart}
+                            total={total}
+                            emptyCart={emptyCart}
+                            userId={userId}
+                            updateBillingInfo={updateBillingInfo}
+                            userBillingUpdate={userBillingUpdate}
+                            makePayment={makePayment}
+                            stripe={stripe}
+                        />
+                }
+            </div>
+        );
+    }
 
-    </div>
-);
+    componentDidMount() {
+        const { fetchStripeKey } = this.props;
+        fetchStripeKey();
+    }
+}
 
 CheckoutContainer.propTypes = {
-    accessToken: PropTypes.string.isRequired,
-    cart: PropTypes.arrayOf(PropTypes.number),
-    isAccessTokenExpired: PropTypes.bool.isRequired,
-    isAuthenticated: PropTypes.bool,
+    cart: PropTypes.arrayOf(PropTypes.object),
     orders: PropTypes.arrayOf(PropTypes.object),
     removeFromCart: PropTypes.func,
+    total: PropTypes.number,
     userId: PropTypes.number,
-    refreshToken: PropTypes.string.isRequired,
+    updateBillingInfo: PropTypes.func,
+    makePayment: PropTypes.func,
+    stripe: PropTypes.object,
+    fetchStripeKey: PropTypes.func,
 };
 
 CheckoutContainer.defaultProps = {
-    accessToken: null,
-    isAuthenticated: false,
     cart: [],
+    total: 0,
     removeFromCart: () => null,
-    emptyCart:  () => null,
+    emptyCart: () => null,
     userId: null,
+    updateBillingInfo: () => null,
+    makePayment: () => null,
+    stripe: {},
+    fetchStripeKey: () => null,
 };
 
 const mapDispatchToProps = (dispatch) => ({
@@ -69,21 +85,31 @@ const mapDispatchToProps = (dispatch) => ({
     emptyCart: () => {
         dispatch(emptyCartAction());
     },
+    updateBillingInfo: (userId, formObj) => {
+        dispatch(updateBillingInfoAction(userId, formObj));
+    },
+    makePayment: (formObj, cart) => {
+        dispatch(makePayment(formObj, cart));
+    },
+    fetchStripeKey: () => {
+        dispatch(fetchStripePublishableKey());
+    }
 });
 
 const mapStateToProps = (state) => {
     const {
         cart,
         user,
+        userBillingUpdate,
+        stripe,
     } = state;
 
     return ({
-        accessToken: accessToken(state),
         cart: cart.cart,
-        isAccessTokenExpired: isAccessTokenExpired(state),
-        isAuthenticated: isAuthenticated(state),
-        userId: user.userId,
-        refreshToken: refreshToken(state),
+        total: cart.total,
+        userId: user.id,
+        userBillingUpdate,
+        stripe,
     });
 };
 

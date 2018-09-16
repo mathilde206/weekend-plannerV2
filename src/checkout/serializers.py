@@ -15,7 +15,8 @@ class OrderSerializer(ModelSerializer):
             'pk',
             'buyer',
             'creation_date',
-            'stripe_token',
+            'charge_id',
+            'total',
         ]
         read_only_fields = [
             'pk',

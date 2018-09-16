@@ -2,7 +2,11 @@ import { combineReducers } from 'redux';
 import { routerReducer } from 'react-router-redux';
 
 import { createUpdateItineraryReducer, itinerariesListReducer } from './itineraryReducer';
-import userReducer from './userReducer';
+import {
+    userReducer,
+    userOrders,
+    userBillingUpdate
+} from './userReducer';
 
 import {
     authReducer,
@@ -15,7 +19,8 @@ import {
 } from './authReducer';
 
 import userLikesReducer from './likesReducer';
-import { cartReducer } from './checkoutReducer';
+import { cartReducer, paymentReducer } from './checkoutReducer';
+import stripe from './stripe';
 
 const rootReducer = combineReducers({
     user: userReducer,
@@ -26,6 +31,10 @@ const rootReducer = combineReducers({
     router: routerReducer,
     userLikes: userLikesReducer,
     cart: cartReducer,
+    userOrders,
+    userBillingUpdate,
+    payment: paymentReducer,
+    stripe,
 });
 
 export default rootReducer;
