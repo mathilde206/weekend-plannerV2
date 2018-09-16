@@ -1,66 +1,4 @@
 import {
-    CITY_CREATE,
-    CITY_CREATE_FAILURE,
-    CITY_CREATE_REQUEST,
-    FORM_SUBMITTED,
-    INITIALIZE_FORM,
-    ITINERARY_CREATED,
-    ITINERARY_CREATION_FAILURE,
-    ITINERARIES_LIST_FAILURE,
-    ITINERARY_UPDATED,
-    ITINERARY_UPDATED_FAILURE,
-    RECEIVE_ITINERARIES_LIST,
-    REQUEST_ITINERARIES_LIST,
-    REQUEST_ITINERARY_UPDATE,
-    RESET_FORM,
-    createItineraryAction,
-    fetchItineraries,
-    fetchFilteredItineraries,
-    initializeCreateAction,
-    resetForm,
-    setCityAction,
-    updateItineraryAction,
-} from './itineraryActions';
-
-import {
-    ERROR_USER_LIKES,
-    RECEIVE_USER_LIKES,
-    REQUEST_USER_LIKES,
-    fetchUserItineraryLikes,
-    likeItinerary,
-} from './likesActions';
-
-import {
-    DELETE_REQUEST,
-    DELETE_SUCCESS,
-    DELETE_FAILURE,
-    GET_USER_REQUEST,
-    GET_USER_SUCCESS,
-    GET_USER_FAILURE,
-    LOGIN_REQUEST,
-    LOGIN_SUCCESS,
-    LOGIN_FAILURE,
-    LOGOUT,
-    USER_RETRIEVED,
-    TOKEN_REQUEST,
-    TOKEN_RECEIVED,
-    TOKEN_FAILURE,
-    REGISTER_REQUEST,
-    REGISTER_SUCCESS,
-    REGISTER_FAILURE,
-    PROFILE_UPDATE_SUBMITTED,
-    PROFILE_UPDATED,
-    loginAction,
-    logoutAction,
-    refreshAccessAction,
-    registerAction,
-    deleteAction,
-    fetchUserData,
-    updateProfileAction,
-    successLogin,
-} from './authActions';
-
-import {
     ADD_TO_CART,
     REMOVE_FROM_CART,
     EMPTY_CART,
@@ -69,12 +7,129 @@ import {
     removeFromCartAction,
     emptyCartAction,
     getCart,
-} from './checkoutAction';
+} from './cart';
+
+import {
+    CITY_CREATE_FAILURE,
+    CITY_CREATE_REQUEST,
+    CITY_CREATE,
+    setCityAction
+} from './cityCreate';
+
+import {
+    FORM_SUBMITTED,
+    INITIALIZE_FORM,
+    ITINERARY_CREATED,
+    ITINERARY_CREATION_FAILURE,
+    RESET_FORM,
+    createItineraryAction,
+    initializeCreateAction,
+    resetForm,
+} from './createItinerary';
+
+import {
+    ITINERARIES_LIST_FAILURE,
+    REQUEST_ITINERARIES_LIST,
+    RECEIVE_ITINERARIES_LIST,
+    fetchItineraries,
+    fetchFilteredItineraries
+} from './itinerariesList';
+
+import {
+    ERROR_USER_LIKES,
+    RECEIVE_USER_LIKES,
+    REQUEST_USER_LIKES,
+    fetchUserItineraryLikes,
+    likeItinerary,
+} from './likes';
+
+import {
+    LOGIN_REQUEST,
+    LOGIN_FAILURE,
+    LOGIN_SUCCESS,
+    loginAction,
+    successLogin
+} from './login';
+
+import {
+    LOGOUT,
+    logoutAction,
+} from './logout';
+
+import {
+    REGISTER_SUCCESS,
+    REGISTER_FAILURE,
+    REGISTER_REQUEST,
+    registerAction,
+} from './register';
+
+import {
+    REQUEST_STRIPE_PUB_KEY,
+    ERROR_STRIPE_PUB_KEY,
+    SUCCESS_STRIPE_PUB_KEY,
+    fetchStripePublishableKey,
+} from './stripe';
+
+import {
+    TOKEN_REQUEST,
+    TOKEN_RECEIVED,
+    TOKEN_FAILURE,
+    refreshAccessAction,
+} from './token';
+
+import {
+    ITINERARY_UPDATED_FAILURE,
+    ITINERARY_UPDATED,
+    REQUEST_ITINERARY_UPDATE,
+    updateItineraryAction
+} from './updateItinerary';
+
+import {
+    BILLING_UPDATE_SUCCESS,
+    BILLING_UPDATE_ERROR,
+    BILLING_UPDATE_REQUEST,
+    updateBillingInfoAction,
+} from './updateBillingInfo';
+
+import {
+    GET_USER_SUCCESS,
+    GET_USER_REQUEST,
+    GET_USER_FAILURE,
+    fetchUserData,
+} from './userData';
+
+import {
+    USER_ORDERS_SUCCESS,
+    USER_ORDERS_ERROR,
+    USER_ORDERS_REQUEST,
+    fetchUserOrders,
+} from './userOrders';
+
+import {
+    DELETE_REQUEST,
+    DELETE_SUCCESS,
+    DELETE_FAILURE,
+    deleteAction,
+} from './delete';
+
+import {
+    PAYMENT_SUCCESS,
+    ERROR_PAYMENT,
+    REQUEST_PAYMENT,
+    makePayment,
+} from './payment';
 
 export {
+    ADD_TO_CART,
+    BILLING_UPDATE_SUCCESS,
+    BILLING_UPDATE_ERROR,
+    BILLING_UPDATE_REQUEST,
     CITY_CREATE,
     CITY_CREATE_FAILURE,
     CITY_CREATE_REQUEST,
+    EMPTY_CART,
+    ERROR_PAYMENT,
+    ERROR_STRIPE_PUB_KEY,
     ERROR_USER_LIKES,
     FORM_SUBMITTED,
     INITIALIZE_FORM,
@@ -83,45 +138,53 @@ export {
     ITINERARIES_LIST_FAILURE,
     ITINERARY_UPDATED,
     ITINERARY_UPDATED_FAILURE,
-    REQUEST_ITINERARY_UPDATE,
     DELETE_REQUEST,
     DELETE_SUCCESS,
     DELETE_FAILURE,
     GET_USER_REQUEST,
     GET_USER_SUCCESS,
     GET_USER_FAILURE,
+    HYDRATE_CART,
     LOGIN_REQUEST,
     LOGIN_SUCCESS,
     LOGIN_FAILURE,
     LOGOUT,
-    USER_RETRIEVED,
-    TOKEN_REQUEST,
-    TOKEN_RECEIVED,
-    TOKEN_FAILURE,
+    PAYMENT_SUCCESS,
     REGISTER_REQUEST,
     REGISTER_SUCCESS,
     REGISTER_FAILURE,
     RECEIVE_ITINERARIES_LIST,
     RECEIVE_USER_LIKES,
+    REMOVE_FROM_CART,
     REQUEST_ITINERARIES_LIST,
+    REQUEST_ITINERARY_UPDATE,
+    REQUEST_PAYMENT,
+    REQUEST_STRIPE_PUB_KEY,
     REQUEST_USER_LIKES,
     RESET_FORM,
-    ADD_TO_CART,
-    REMOVE_FROM_CART,
-    EMPTY_CART,
-    HYDRATE_CART,
+    SUCCESS_STRIPE_PUB_KEY,
+    TOKEN_REQUEST,
+    TOKEN_RECEIVED,
+    TOKEN_FAILURE,
+    USER_ORDERS_SUCCESS,
+    USER_ORDERS_ERROR,
+    USER_ORDERS_REQUEST,
     addToCartAction,
     createItineraryAction,
     deleteAction,
     emptyCartAction,
-    fetchItineraries,
-    fetchUserData,
-    fetchUserItineraryLikes,
     fetchFilteredItineraries,
+    fetchItineraries,
+    fetchStripePublishableKey,
+    fetchUserData,
+    fetchUserOrders,
+    fetchUserItineraryLikes,
+    getCart,
     initializeCreateAction,
     likeItinerary,
     loginAction,
     logoutAction,
+    makePayment,
     refreshAccessAction,
     removeFromCartAction,
     registerAction,
@@ -129,5 +192,5 @@ export {
     setCityAction,
     successLogin,
     updateItineraryAction,
-    getCart,
+    updateBillingInfoAction,
 };

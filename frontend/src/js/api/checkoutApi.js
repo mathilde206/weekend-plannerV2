@@ -22,14 +22,14 @@ function getCartDetails(cart) {
 
 function getStripePublishableKey(token) {
     return axios.get('/api/checkout/token/', {
-        headers: {
-            'Authorization': 'Bearer ' + token
-        }
-    })
+            headers: {
+                'Authorization': 'Bearer ' + token
+            }
+        })
         .then(response => response.data);
 }
 
-function saveOrder(access_token, stripe_token, formObj) {
+function saveOrder(access_token, formObj) {
     const options = {
         method: 'POST',
         headers: {
@@ -59,6 +59,7 @@ function saveProductItem(access_token, formObj) {
 
 export {
     getProductList,
+    getProductDetail,
     getCartDetails,
     getStripePublishableKey,
     saveOrder,

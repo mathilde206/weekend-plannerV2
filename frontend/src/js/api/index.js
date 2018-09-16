@@ -22,6 +22,7 @@ import {
     updateUserProfile,
     getUserBillingInfo,
     updateBillingInfo,
+    getUserOrders,
 } from './userApi';
 
 import {
@@ -30,6 +31,7 @@ import {
     getStripePublishableKey,
     saveOrder,
     saveProductItem,
+    getProductDetail,
 } from './checkoutApi';
 
 export {
@@ -58,4 +60,6 @@ export {
     saveProductItem,
     deleteItinerary,
     updateItinerary,
+    getUserOrders,
+    getProductDetail
 };

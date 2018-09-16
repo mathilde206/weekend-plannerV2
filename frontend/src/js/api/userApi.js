@@ -106,17 +106,19 @@ function updateBillingInfo(userId, token, formObj) {
         .then(response => response.data);
 }
 
+function getUserOrders(token) {
+    const options = {
+        method: 'GET',
+        headers: {
+            'Authorization': 'Bearer ' + token,
+            'content-type': 'multipart/form-data'
+        },
+        url: '/api/checkout/user/orders',
+    };
+    return axios(options)
+        .then(response => response.data);
+}
 
-// function update(user) {
-//     const requestOptions = {
-//         method: 'PUT',
-//         headers: { ...authHeader(), 'Content-Type': 'application/json' },
-//         body: JSON.stringify(user)
-//     };
-//
-//     return fetch(`${config.apiUrl}/users/${user.id}`, requestOptions).then(handleResponse);;
-// }
-//
 // // prefixed function name with underscore because delete is a reserved word in javascript
 // function _delete(id) {
 //     const requestOptions = {
@@ -138,4 +140,5 @@ export {
     getUserLikes,
     getUserBillingInfo,
     updateBillingInfo,
+    getUserOrders
 };
