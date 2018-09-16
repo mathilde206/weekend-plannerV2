@@ -1,16 +1,45 @@
 import React, { Component } from 'react';
 import { Alert, Button, Jumbotron, Form } from 'reactstrap';
 import { Link } from 'react-router-dom';
+import ReactLoading from 'react-loading';
+
 import InputField from '../InputField/InputField';
 
-const RegisterForm = ({errors, handleChange, handleSubmit, registering}) => (
+const RegisterForm = ({
+    errors,
+    handleChange,
+    handleSubmit,
+    djangoErrors,
+    registering
+}) => (
     <Jumbotron className="container jumbotron-white">
         <Form onSubmit={handleSubmit}>
             <h1>Register</h1>
             {
-                errors.non_field_errors ?
+                (djangoErrors.username ||
+                    djangoErrors.email ||
+                    djangoErrors.email2 ||
+                    djangoErrors.password
+                ) ?
                     <Alert color="danger">
-                        {errors.non_field_errors}
+                        <ul>
+                            {
+                                djangoErrors.username &&
+                                <li className='errorli'>{djangoErrors.username[ 0 ]}</li>
+                            }
+                            {
+                                djangoErrors.email &&
+                                <li className='errorli'>{djangoErrors.email[ 0 ]}</li>
+                            }
+                            {
+                                djangoErrors.email2 &&
+                                <li className='errorli'>{djangoErrors.email2[ 0 ]}</li>
+                            }
+                            {
+                                djangoErrors.password &&
+                                <li className='errorli'>{djangoErrors.password[ 0 ]}</li>
+                            }
+                        </ul>
                     </Alert> : ''
             }
             <InputField
@@ -40,12 +69,23 @@ const RegisterForm = ({errors, handleChange, handleSubmit, registering}) => (
                 type="password"
                 onChange={handleChange}
             />
+            <InputField
+                name="password2"
+                label="Confirm password"
+                error={errors.password2}
+                type="password"
+                onChange={handleChange}
+            />
             <Button type="submit" color="primary" size="lg">
                 Register
             </Button>
             {
                 registering &&
-                    <p>Loading...</p>
+                (
+                    <div className="container">
+                        <ReactLoading type="balls" color="#000c4f" />
+                    </div>
+                )
             }
         </Form>
         <Link to="/login" className="btn btn-link">Login</Link>

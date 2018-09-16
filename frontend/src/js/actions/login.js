@@ -14,9 +14,11 @@ function requestLogin() {
 
 function failureLogin(error) {
     return {
-        type: LOGIN_REQUEST,
+        type: LOGIN_FAILURE,
         error,
         isLoggingIn: false,
+        access: null,
+        refresh: null,
     };
 }
 

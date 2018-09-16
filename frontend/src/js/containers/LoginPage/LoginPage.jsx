@@ -3,14 +3,18 @@ import PropTypes from 'prop-types';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 
-import LoginForm from '../../components/LoginForm/LoginForm';
+import { validateRequired } from '../../helpers';
 import {
     loginAction,
     logoutAction,
 } from '../../actions';
 
+import LoginForm from '../../components/LoginForm/LoginForm';
+
+
 class Login extends React.Component {
     state = {
+        errors: {},
         username: '',
         password: '',
         submitted: false,
@@ -33,35 +37,55 @@ class Login extends React.Component {
 
         event.preventDefault();
 
+        const isUsernameValid = validateRequired(username);
+        const isPasswordValid = validateRequired(password);
+
+        let errors = {};
+
+        if (!isPasswordValid) {
+            errors.password = 'Please enter your password';
+        }
+
+        if (!isUsernameValid) {
+            errors.username = 'Please enter your username';
+        }
+
         this.setState({
-            submitted: true,
+            errors,
         });
 
-        if (username && password) {
+        if (isPasswordValid && isUsernameValid) {
             dispatch(loginAction(username, password));
         }
 
     };
 
     render() {
+        const {errors} = this.state;
         const {
-            submitted
-        } = this.state;
-        const {
-            error,
-            isLoggingIn
+            djangoErrors,
+            isLoggingIn,
+            loggedIn,
         } = this.props;
 
-        if (submitted) {
+        let registration;
+        if(location.search === '?registration') {
+            registration = true;
+        }
+
+        if (loggedIn) {
             return <Redirect to="/" />;
         }
+
         return (
             <div className="login-page container-wrapper">
                 <LoginForm
                     handleChange={this.handleChange}
                     handleSubmit={this.handleSubmit}
-                    serverError={error}
+                    djangoErrors={djangoErrors}
+                    errors={errors}
                     isLoggingIn={isLoggingIn}
+                    fromRegistration={registration}
                 />
             </div>
         );
@@ -69,20 +93,25 @@ class Login extends React.Component {
 }
 
 Login.propTypes = {
-    error: PropTypes.string,
+    djangoErrors: PropTypes.object,
     isLoggingIn: PropTypes.bool,
 };
 
 Login.defaultProps = {
-    error: '',
+    djangoErrors: {},
     isLoggingIn: false,
 };
 
 const mapStateToProps = ({ auth }) => {
-    const { isLoggingIn, error } = auth;
-    return {
+    const {
         error,
-        isLoggingIn
+        isLoggingIn,
+        loggedIn,
+    } = auth;
+    return {
+        djangoErrors: error,
+        isLoggingIn,
+        loggedIn,
     };
 };
 

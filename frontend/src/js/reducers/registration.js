@@ -6,15 +6,32 @@ import {
 
 
 function registration(state = {}, action) {
-    switch (action.type) {
+    const {
+        type,
+        error,
+        registering,
+        registered,
+        user,
+    } = action;
+
+    switch (type) {
     case REGISTER_REQUEST:
-        return { registering: true };
+        return {
+            registering,
+            registered,
+        };
     case REGISTER_SUCCESS:
         return {
-            registered: true
+            registering,
+            registered,
+            user,
         };
     case REGISTER_FAILURE:
-        return {};
+        return {
+            registering,
+            registered,
+            error
+        };
     default:
         return state;
     }

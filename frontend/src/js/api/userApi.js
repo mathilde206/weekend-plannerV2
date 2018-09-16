@@ -23,12 +23,7 @@ function login(username, password) {
                 },
                 errors: {}
             };
-            // localStorage.setItem('auth', JSON.stringify(auth));
-        }).catch(response => ({
-            access: null,
-            refresh: null,
-            errors: { 'non_field_errors': response.statusText },
-        }));
+        })
 }
 
 function refreshAccessToken(token) {
@@ -46,7 +41,7 @@ function refreshAccessToken(token) {
 
 function logout() {
     // remove user from local storage to log user out
-    localStorage.removeItem('persist:auth');
+    localStorage.removeItem('persist:store');
 }
 
 

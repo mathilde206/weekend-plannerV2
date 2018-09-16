@@ -26,6 +26,7 @@ function auth(state = {}, action) {
         return {
             access,
             isLoggingIn: false,
+            loggedIn: true,
             refresh,
         };
     case LOGIN_FAILURE:

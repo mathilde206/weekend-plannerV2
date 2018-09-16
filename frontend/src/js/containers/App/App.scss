@@ -60,4 +60,9 @@ body, html {
         border-top: $heavy-border;
         color: $font-color-dark;
     }
+
+    ul li.errorli {
+        list-style-type: circle;
+        margin: 1em;
+    }
 }

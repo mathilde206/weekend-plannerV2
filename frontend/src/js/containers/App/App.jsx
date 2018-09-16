@@ -62,10 +62,10 @@ class App extends React.Component {
 
         if (localStorage.getItem('persist:store') &&
             JSON.parse(localStorage.getItem('persist:store')).cart &&
-            JSON.parse(JSON.parse(localStorage.getItem('persist:store')).cart)
+            JSON.parse(JSON.parse(localStorage.getItem('persist:store')).cart) &&
+            JSON.parse(JSON.parse(localStorage.getItem('persist:store')).cart).cart
         ) {
             const cart = JSON.parse(JSON.parse(localStorage.getItem('persist:store')).cart);
-            console.log(cart);
             dispatch(getCart(cart.cart, cart.total));
         }
         dispatch(fetchItineraries(1));

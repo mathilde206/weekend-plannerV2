@@ -12,4 +12,4 @@ function logoutAction() {
 export {
     LOGOUT,
     logoutAction,
-}
+};
