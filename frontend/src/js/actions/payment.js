@@ -15,6 +15,7 @@ function requestPayment() {
 function errorPayment(error) {
     return {
         type: ERROR_PAYMENT,
+        error,
     };
 }
 
@@ -34,10 +35,10 @@ function saveOrderItems(cart, orderPk, token, dispatch) {
         saveProductItem(token, formObj)
             .then(() => {
                 if (idx === cart.length - 1) {
-                    dispatch(emptyCartAction());
                     // Checking if the product was the last one saved and if so,
                     // dispatching payment
                     dispatch(successPayment(orderPk));
+                    dispatch(emptyCartAction());
                 }
             })
             .catch((error) => {
@@ -68,6 +69,7 @@ function makePayment(formObj, cart) {
         } else {
             saveOrder(access, formObj)
                 .then(({ pk }) => {
+                    console.log(pk)
                     saveOrderItems(cart, pk, access, dispatch);
                 })
                 .catch((error) => {

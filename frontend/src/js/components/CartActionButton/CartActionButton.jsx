@@ -11,6 +11,8 @@ import {
     faCartArrowDown,
 } from '@fortawesome/free-solid-svg-icons';
 
+import './CartActionButton.scss';
+
 library.add(
     faCartPlus,
     faCartArrowDown,
@@ -29,6 +31,7 @@ const CartActionButton = ({
                 onClick={() => removeFromCart(pk)}
                 color='danger'
                 disabled={!isAuthenticated}
+                className="cart-action-button"
             >
                 <FontAwesomeIcon icon="cart-arrow-down" /> Out
             </Button>
@@ -37,7 +40,7 @@ const CartActionButton = ({
     return (
         <Button
             onClick={() => addToCart(pk)}
-            className="main-button"
+            className="main-button cart-action-button"
             disabled={!isAuthenticated}
         >
             <FontAwesomeIcon icon="cart-plus" /> Add

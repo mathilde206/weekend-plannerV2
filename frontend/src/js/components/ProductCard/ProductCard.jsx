@@ -83,7 +83,7 @@ ProductCard.propTypes = {
     name: PropTypes.string.isRequired,
     removeFromCart: PropTypes.func.isRequired,
     isAuthenticated: PropTypes.bool.isRequired,
-    cart: PropTypes.arrayOf(PropTypes.number).isRequired,
+    cart: PropTypes.arrayOf(PropTypes.object).isRequired,
     productList: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 

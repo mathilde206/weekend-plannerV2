@@ -20,7 +20,9 @@ import ProductItem from './ProductItem/ProductItem';
 import ProfileInfoTile from './ProfileInfoTile/ProfileInfoTile';
 import ProfileInfoTileEdit from './ProfileInfoTileEdit/ProfileInfoTileEdit';
 import RegisterForm from './RegisterForm/RegisterForm';
-import CheckoutPage from './CheckoutPage/CheckoutPage';
+import CheckoutConfirmCart from './CheckoutConfirmCart/CheckoutConfirmCart';
+import BillingInfoForm from './BillingInfoForm/BillingInfoForm';
+import Payment from './Payment/Payment';
 
 export {
     CardDisplay,
@@ -44,5 +46,7 @@ export {
     ProfileInfoTile,
     ProfileInfoTileEdit,
     RegisterForm,
-    CheckoutPage,
+    CheckoutConfirmCart,
+    BillingInfoForm,
+    Payment,
 };

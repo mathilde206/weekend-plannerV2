@@ -1,8 +1,10 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import StripeCheckout from 'react-stripe-checkout';
+import ReactLoading from 'react-loading';
 
 import {
+    Alert,
     Button,
     Card,
     CardDeck,
@@ -53,6 +55,7 @@ class Payment extends React.Component {
             first_name,
             last_name,
             stripe,
+            payment,
         } = this.props;
 
         const {
@@ -64,6 +67,13 @@ class Payment extends React.Component {
             return (
                 <div className="payment-wrapper">
                     <h2 className="subheading">Verify your information and make the payment</h2>
+                    {
+                        payment.error ?
+                            <Alert color="danger">
+                                We couldn't process your order, please try again later.
+                            </Alert> : ''
+                    }
+
                     <CardDeck className="cards-wrapper">
                         <Card className="confirm-card">
                             <CardTitle>Personal Details</CardTitle>
@@ -104,8 +114,7 @@ class Payment extends React.Component {
                             Make the payment
                         </Button>
                     </StripeCheckout>
-                </div>
-            );
+                </div>);
         }
         else {
             return (
@@ -115,6 +124,38 @@ class Payment extends React.Component {
             );
         }
     }
+};
+
+Payment.propTypes = {
+    cart: PropTypes.arrayOf(PropTypes.object),
+    total: PropTypes.number,
+    billing_address_line1: PropTypes.string,
+    billing_address_line2: PropTypes.string,
+    billing_city: PropTypes.string,
+    billing_country: PropTypes.string,
+    billing_phone_number: PropTypes.string,
+    billing_postcode: PropTypes.string,
+    billing_state: PropTypes.string,
+    first_name: PropTypes.string,
+    last_name: PropTypes.string,
+    stripe: PropTypes.object,
+    payment: PropTypes.object
+};
+
+Payment.defaultProps = {
+    cart: [],
+    total: 0,
+    billing_address_line1: '',
+    billing_address_line2: '',
+    billing_city: '',
+    billing_country: '',
+    billing_phone_number: '',
+    billing_postcode: '',
+    billing_state: '',
+    first_name: '',
+    last_name: '',
+    stripe: {},
+    payment: {}
 };
 
 export default Payment;

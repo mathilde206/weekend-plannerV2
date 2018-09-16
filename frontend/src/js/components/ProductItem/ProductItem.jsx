@@ -28,13 +28,13 @@ const ProductItem = ({
     removeFromCart,
 }) => {
     return (<Row>
-        <Col xs="4" md="4" lg="4">
+        <Col xs="12" md="5">
             {name}
         </Col>
-        <Col xs="4" md="4" lg="4">
+        <Col xs="12" md="6">
             <FontAwesomeIcon icon="euro-sign"/> {price}
         </Col>
-        <Col xs="4" md={{size: 4, offset: 8}} lg="4">
+        <Col xs="12" md={{size: 4, offset: 8}}>
             <CartActionButton
                 addToCart={addToCart}
                 isAuthenticated={isAuthenticated}

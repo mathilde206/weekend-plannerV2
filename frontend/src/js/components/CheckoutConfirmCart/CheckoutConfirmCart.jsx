@@ -18,10 +18,10 @@ library.add(
 import './CheckoutConfirmCart.scss';
 
 const CheckoutConfirmCart = ({
-    onStepChange,
     cart,
     removeFromCart,
     total,
+    url,
 }) => (
     <div className="checkout-confirm-wrapper">
         <p>
@@ -53,12 +53,13 @@ const CheckoutConfirmCart = ({
             }
         </ListGroup>
         <h3 className="total">Total: <FontAwesomeIcon icon="euro-sign" /> {total}</h3>
-        <Button
-            onClick={() => onStepChange('confirmAddress')}
-            className="main-button"
-        >
-            Confirm
-        </Button>
+        <Link to={`${url}billing`}>
+            <Button
+                className="main-button"
+            >
+                Confirm
+            </Button>
+        </Link>
     </div>
 );
 
