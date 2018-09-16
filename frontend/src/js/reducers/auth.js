@@ -3,14 +3,11 @@ import {
     LOGIN_SUCCESS,
     LOGIN_FAILURE,
     LOGOUT,
-    REGISTER_FAILURE,
-    REGISTER_REQUEST,
-    REGISTER_SUCCESS,
     TOKEN_FAILURE,
     TOKEN_RECEIVED,
 } from '../actions';
 
-function authReducer(state = {}, action) {
+function auth(state = {}, action) {
     const {
         access,
         error,
@@ -47,21 +44,6 @@ function authReducer(state = {}, action) {
     }
 }
 
-function registrationReducer(state = {}, action) {
-    switch (action.type) {
-    case REGISTER_REQUEST:
-        return { registering: true };
-    case REGISTER_SUCCESS:
-        return {
-            registered: true
-        };
-    case REGISTER_FAILURE:
-        return {};
-    default:
-        return state;
-    }
-}
-
 function getAccessToken(state) {
     if (state.access) {
         return state.access.token;
@@ -93,11 +75,10 @@ function getIsAuthenticated(state) {
 }
 
 export {
-    authReducer,
+    auth,
     getAccessToken,
     getRefreshToken,
     getIsAccessTokenExpired,
     getIsRefreshTokenExpired,
     getIsAuthenticated,
-    registrationReducer,
 };

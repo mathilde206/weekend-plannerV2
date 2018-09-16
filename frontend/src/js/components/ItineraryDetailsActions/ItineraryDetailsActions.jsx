@@ -126,7 +126,7 @@ const mapStateToProps = (state) => {
     return ({
         isAuthenticated: isAuthenticated(state),
         loggedInUser: user.user,
-        userId: user.userId,
+        userId: user.id,
         userLikes: userLikes.itinerary_likes,
     });
 };

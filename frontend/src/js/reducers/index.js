@@ -1,40 +1,38 @@
 import { combineReducers } from 'redux';
 import { routerReducer } from 'react-router-redux';
 
-import { createUpdateItineraryReducer, itinerariesListReducer } from './itineraryReducer';
 import {
-    userReducer,
-    userOrders,
-    userBillingUpdate
-} from './userReducer';
-
-import {
-    authReducer,
+    auth,
     getAccessToken,
     getRefreshToken,
     getIsAccessTokenExpired,
     getIsRefreshTokenExpired,
     getIsAuthenticated,
-    registrationReducer,
-} from './authReducer';
-
-import userLikesReducer from './likesReducer';
-import { cartReducer, paymentReducer } from './checkoutReducer';
+} from './auth';
+import cart from './cart';
+import itineraries from './itineraries';
+import itineraryForm from './itineraryForm';
+import payment from './payment';
+import registration from './registration';
+import user from './user';
+import userLikes from './userLikes';
+import userOrders from './userOrders';
 import stripe from './stripe';
+import userBillingUpdate from './userBillingUpdate';
 
 const rootReducer = combineReducers({
-    user: userReducer,
-    auth: authReducer,
-    registration: registrationReducer,
-    itineraryForm: createUpdateItineraryReducer,
-    itineraries: itinerariesListReducer,
+    auth,
+    cart,
+    itineraries,
+    itineraryForm,
+    payment,
+    registration,
     router: routerReducer,
-    userLikes: userLikesReducer,
-    cart: cartReducer,
-    userOrders,
-    userBillingUpdate,
-    payment: paymentReducer,
     stripe,
+    user,
+    userBillingUpdate,
+    userLikes,
+    userOrders,
 });
 
 export default rootReducer;

@@ -6,23 +6,19 @@ import {
     INITIALIZE_FORM,
     ITINERARY_CREATED,
     ITINERARY_CREATION_FAILURE,
-    ITINERARIES_LIST_FAILURE,
     ITINERARY_UPDATED,
     ITINERARY_UPDATED_FAILURE,
     REQUEST_ITINERARY_UPDATE,
-    REQUEST_ITINERARIES_LIST,
-    RECEIVE_ITINERARIES_LIST,
     RESET_FORM,
 } from '../actions';
 
-function createUpdateItineraryReducer(state = { currentStep: 0 }, action) {
+function itineraryForm(state = { currentStep: 0 }, action) {
     const {
         cityError,
         cityData,
         data,
         error,
         formData,
-        isLoading,
         previouslyCreatedCities,
         steps,
         type,
@@ -101,47 +97,5 @@ function createUpdateItineraryReducer(state = { currentStep: 0 }, action) {
     }
 }
 
-function itinerariesListReducer(state = {}, action) {
-    const {
-        count,
-        isLoading,
-        itinerariesList,
-        navigation,
-        total_pages,
-        type,
-        withQuery,
-    } = action;
 
-    switch (type) {
-    case REQUEST_ITINERARIES_LIST:
-        return {
-            ...state,
-            isLoading: true,
-        };
-    case RECEIVE_ITINERARIES_LIST: {
-        return {
-            ...state,
-            isLoading: false,
-            itinerariesList: itinerariesList,
-            count: count,
-            navigation: navigation,
-            total_pages: total_pages,
-            withQuery,
-        };
-    }
-    case ITINERARIES_LIST_FAILURE:
-        return {
-            ...state,
-            error,
-            isLoading: false,
-            withQuery,
-        };
-    default:
-        return state;
-    }
-}
-
-export {
-    createUpdateItineraryReducer,
-    itinerariesListReducer,
-};
+export default itineraryForm;

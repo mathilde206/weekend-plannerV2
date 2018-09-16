@@ -3,12 +3,10 @@ import {
     REMOVE_FROM_CART,
     EMPTY_CART,
     HYDRATE_CART,
-    PAYMENT_SUCCESS,
-    ERROR_PAYMENT,
-    REQUEST_PAYMENT,
 } from '../actions';
 
-function cartReducer(state = {}, action) {
+
+function cart(state = {}, action) {
     const {
         type,
         cart,
@@ -51,36 +49,4 @@ function cartReducer(state = {}, action) {
     }
 }
 
-function paymentReducer(state = {}, action) {
-    const {
-        type,
-        pk,
-        error,
-    } = action;
-
-    switch (type) {
-    case REQUEST_PAYMENT:
-        return {
-            isLoading: true,
-        };
-    case ERROR_PAYMENT:
-        return {
-            ...state,
-            error,
-            isLoading: false,
-        };
-    case PAYMENT_SUCCESS:
-        return {
-            isLoading: false,
-            orderCreated: true,
-            OrderPk: pk,
-        };
-    default:
-        return state;
-    }
-}
-
-export {
-    cartReducer,
-    paymentReducer,
-};
+export default cart;

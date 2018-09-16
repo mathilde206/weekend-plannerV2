@@ -2,7 +2,7 @@ import {
     RECEIVE_USER_LIKES
 } from '../actions';
 
-function userLikesReducer(state = {}, action) {
+function userLikes(state = {}, action) {
     switch (action.type) {
     case RECEIVE_USER_LIKES:
         return {
@@ -14,6 +14,6 @@ function userLikesReducer(state = {}, action) {
     }
 }
 
-export default userLikesReducer;
+export default userLikes;
 
 
