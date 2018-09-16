@@ -19,7 +19,7 @@ import './CheckoutConfirmCart.scss';
 
 const CheckoutConfirmCart = ({
     onStepChange,
-    orders,
+    cart,
     removeFromCart,
     total,
 }) => (
@@ -29,7 +29,7 @@ const CheckoutConfirmCart = ({
         </p>
         <ListGroup>
             {
-                orders.map(({ pk, name, price, type }) => (
+                cart.map(({ pk, name, price, type }) => (
                     <ListGroupItem key={pk}>
                         <Row>
                             <Col xs="2">

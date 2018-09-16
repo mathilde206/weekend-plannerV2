@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import CheckoutConfirmCart from '../CheckoutConfirmCart/CheckoutConfirmCart';
 import UserAddressConf from '../UserAddressConf/UserAddressConf';
 import Payment from '../Payment/Payment';
-import { getCartDetails, getUserBillingInfo, refreshAccessToken, updateBillingInfo } from '../../api';
+import { getUserBillingInfo } from '../../api';
 
 class CheckoutPage extends React.Component {
     state = {
@@ -17,8 +17,6 @@ class CheckoutPage extends React.Component {
         billing_state: '',
         first_name: '',
         last_name: '',
-        orders: [],
-        total: null,
         step: 'confirmCart',
     };
 
@@ -36,9 +34,7 @@ class CheckoutPage extends React.Component {
 
     handleBillingInfoSubmit = () => {
         const {
-            accessToken,
-            isAccessTokenExpired,
-            refreshToken,
+            updateBillingInfo,
             userId,
         } = this.props;
 
@@ -65,41 +61,13 @@ class CheckoutPage extends React.Component {
         formObj.append('first_name', first_name);
         formObj.append('last_name', last_name);
 
-        if (isAccessTokenExpired) {
-            refreshAccessToken(refreshToken)
-                .then(response => {
-                    updateBillingInfo(userId, response.access.token, formObj)
-                        .then(() => {
-                            this.setState({
-                                step: 'payment'
-                            });
-                        });
-                });
-        } else {
-            updateBillingInfo(userId, accessToken, formObj)
-                .then(() => {
-                    this.setState({
-                        step: 'payment'
-                    });
-                });
-        }
-
+        updateBillingInfo(userId, formObj);
     };
 
-    componentWillMount() {
+    componentDidMount() {
         const {
-            cart,
             userId
         } = this.props;
-
-        getCartDetails(cart)
-            .then((response) => {
-                const total = response.map(item => parseInt(item.price)).reduce((a, b) => a + b, 0);
-                this.setState({
-                    orders: response,
-                    total,
-                });
-            });
 
         getUserBillingInfo(userId)
             .then(({
@@ -129,19 +97,16 @@ class CheckoutPage extends React.Component {
         ;
     }
 
-    UNSAFE_componentWillReceiveProps(nextProps) {
-        if (nextProps.cart !== this.props.cart) {
-            getCartDetails(nextProps.cart)
-                .then((response) => {
-                    const total = response.map(item => parseInt(item.price)).reduce((a, b) => a + b, 0);
-                    this.setState({
-                        orders: response,
-                        total,
-                    });
-                }
-                )
-            ;
+    static getDerivedStateFromProps(nextProps, prevState) {
+        const {
+            billingUpdated
+        } = nextProps.userBillingUpdate;
+
+        if (billingUpdated === true) {
+
+            return { step: 'payment' };
         }
+        else return null;
     }
 
     render() {
@@ -155,20 +120,19 @@ class CheckoutPage extends React.Component {
             billing_state,
             first_name,
             last_name,
-            orders,
-            total,
             step,
         } = this.state;
         const {
-            accessToken,
             cart,
-            isAccessTokenExpired,
             removeFromCart,
             emptyCart,
-            refreshToken,
-            userId, url
+            total,
+            userId,
+            url,
+            userBillingUpdate,
+            makePayment,
+            stripe
         } = this.props;
-
 
         switch (step) {
         case 'confirmAddress':
@@ -186,18 +150,14 @@ class CheckoutPage extends React.Component {
                     onStepChange={this.handleStepChange}
                     onSubmit={this.handleBillingInfoSubmit}
                     last_name={last_name}
+                    userBillingUpdate={userBillingUpdate}
                 />
             );
         case 'payment':
             return (
                 <Payment
-                    accessToken={accessToken}
-                    cart={cart}
-                    emptyCart={emptyCart}
-                    isAccessTokenExpired={isAccessTokenExpired}
-                    refreshToken={refreshToken}
                     total={total}
-                    orders={orders}
+                    cart={cart}
                     billing_address_line1={billing_address_line1}
                     billing_address_line2={billing_address_line2}
                     billing_city={billing_city}
@@ -207,7 +167,8 @@ class CheckoutPage extends React.Component {
                     billing_state={billing_state}
                     first_name={first_name}
                     last_name={last_name}
-                    handleStepChange={this.handleStepChange}
+                    makePayment={makePayment}
+                    stripe={stripe}
                 />
             );
         case 'orderFinalized':
@@ -221,7 +182,7 @@ class CheckoutPage extends React.Component {
         default:
             return (
                 <CheckoutConfirmCart
-                    orders={orders}
+                    cart={cart}
                     total={total}
                     removeFromCart={removeFromCart}
                     userId={userId}
