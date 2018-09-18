@@ -1,65 +1,58 @@
-import {
-    getItineraryList,
-    getFilteredItineraryList,
-    getItineraryDetails,
-    getCity,
-    createCity,
-    createItinerary,
-    increaseViewsCounter,
-    addLike,
-    deleteItinerary,
-    updateItinerary,
-} from './itineraryApi';
-
-import {
-    getUsername,
-    getUserProfile,
-    login,
-    logout,
-    register,
-    refreshAccessToken,
-    getUserLikes,
-    updateUserProfile,
-    getUserBillingInfo,
-    updateBillingInfo,
-    getUserOrders,
-} from './userApi';
-
-import {
-    getProductList,
-    getCartDetails,
-    getStripePublishableKey,
-    saveOrder,
-    saveProductItem,
-    getProductDetail,
-} from './checkoutApi';
+import addLike from './addLike';
+import createCity from './createCity';
+import createItinerary from './createItinerary';
+import deleteItinerary from './delete';
+import getCartDetails from './getCartDetails';
+import getCity from './getCity';
+import getOrderDetails from './getOrderDetails';
+import getProductDetail from './getProductDetails';
+import getItineraryDetails from './getItineraryDetails';
+import {getItineraryList, getFilteredItineraryList } from './getItineraryList';
+import getProductList from './getProductList';
+import getStripePublishableKey from './getStripPublishableKey';
+import getUserBillingInfo from './getUserBillingInfo';
+import getUserLikes from './getUsersLikes';
+import getUsername from './getUsername';
+import getUserOrders from './getUserOrders';
+import getUserProfile from './getUserProfile';
+import increaseViewsCounter from './increaseViewCounter';
+import login from './login';
+import logout from './logout';
+import refreshAccessToken from './refreshAccessToken';
+import register from './register';
+import saveOrder from './saveOrder';
+import saveProductItem from './saveProductItem';
+import updateBillingInfo from './updateBillingInfo';
+import updateItinerary from './updateItinerary';
+import updateUserProfile from './updateUserProfile';
 
 export {
-    getItineraryList,
-    getFilteredItineraryList,
-    getItineraryDetails,
-    getCity,
-    getUserProfile,
+    addLike,
     createCity,
     createItinerary,
+    deleteItinerary,
+    getCartDetails,
+    getCity,
+    getFilteredItineraryList,
+    getItineraryDetails,
+    getItineraryList,
+    getOrderDetails,
+    getProductDetail,
+    getProductList,
+    getStripePublishableKey,
+    getUserBillingInfo,
+    getUserLikes,
     getUsername,
+    getUserOrders,
+    getUserProfile,
+    increaseViewsCounter,
     login,
     logout,
-    register,
     refreshAccessToken,
-    increaseViewsCounter,
-    addLike,
-    getUserLikes,
-    updateUserProfile,
-    getProductList,
-    getCartDetails,
-    getUserBillingInfo,
-    updateBillingInfo,
-    getStripePublishableKey,
+    register,
     saveOrder,
     saveProductItem,
-    deleteItinerary,
+    updateBillingInfo,
     updateItinerary,
-    getUserOrders,
-    getProductDetail
+    updateUserProfile,
 };
