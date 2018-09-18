@@ -61,7 +61,7 @@ const LoginForm = ({
     </Jumbotron>);
 
 LoginForm.propTypes = {
-    djangoErrors: PropTypes.object,
+    djangoErrors: PropTypes.string,
     errors: PropTypes.objectOf(PropTypes.string),
     handleChange: PropTypes.func.isRequired,
     handleSubmit: PropTypes.func.isRequired,
@@ -70,7 +70,7 @@ LoginForm.propTypes = {
 };
 
 LoginForm.defaultProps = {
-    djangoErrors: {},
+    djangoErrors: '',
     errors: '',
     fromRegistration: false,
 };

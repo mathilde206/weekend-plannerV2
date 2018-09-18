@@ -13,6 +13,7 @@ import cart from './cart';
 import itineraries from './itineraries';
 import itineraryForm from './itineraryForm';
 import payment from './payment';
+import profileUpdate from './profileUpdate';
 import registration from './registration';
 import user from './user';
 import userLikes from './userLikes';
@@ -26,6 +27,7 @@ const rootReducer = combineReducers({
     itineraries,
     itineraryForm,
     payment,
+    profileUpdate,
     registration,
     router: routerReducer,
     stripe,

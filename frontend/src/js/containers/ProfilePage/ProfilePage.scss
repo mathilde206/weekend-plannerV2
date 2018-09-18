@@ -3,4 +3,34 @@
 .profile-container {
     margin-top: 2em;
     margin-bottom: 2em;
+
+    .profile-nav {
+        padding: 1em 2em;
+        display: flex;
+        justify-content: center;
+        font-family: $font-title;
+        font-size: 1.3em;
+        border-bottom: 1px solid $secondary-light;
+
+        .nav-link-profile {
+            margin: 0 2em;
+
+            a {
+                color: black;
+            }
+
+        }
+
+        .nav-link-active {
+            text-decoration: underline;
+            text-decoration-color: $secondary;
+
+            a {
+                color: $primary;
+                font-weight: $font-bold;
+
+            }
+
+        }
+    }
 }

@@ -69,7 +69,6 @@ function makePayment(formObj, cart) {
         } else {
             saveOrder(access, formObj)
                 .then(({ pk }) => {
-                    console.log(pk)
                     saveOrderItems(cart, pk, access, dispatch);
                 })
                 .catch((error) => {

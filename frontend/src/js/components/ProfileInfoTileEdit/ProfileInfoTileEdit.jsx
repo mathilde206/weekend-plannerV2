@@ -1,5 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import ReactLoading from 'react-loading';
+import { Redirect } from 'react-router-dom';
 
 import {
     Button,
@@ -36,9 +38,30 @@ const ProfileInfoTileEdit = ({
     location,
     onFieldChange,
     onSubmit,
+    profileUpdate,
+    url,
     username,
     website,
 }) => {
+    const {
+        updating,
+        updated,
+    } = profileUpdate;
+
+    if (updating) {
+        return (
+            <div className="container">
+                <ReactLoading type="bubbles" color="#000c4f" />
+            </div>
+        );
+    }
+
+    if (updated) {
+        return (
+            <Redirect to={url} />
+        );
+    }
+
     return (
         <Form className="form-wrapper">
             <FormGroup row>
@@ -122,6 +145,7 @@ ProfileInfoTileEdit.propTypes = {
     location: PropTypes.string,
     onFieldChange: PropTypes.func.isRequired,
     onSubmit: PropTypes.func.isRequired,
+    url: PropTypes.string.isRequired,
     username: PropTypes.string,
     website: PropTypes.string,
 };
@@ -130,6 +154,7 @@ ProfileInfoTileEdit.defaultProps = {
     bio: '',
     birth_date: '',
     location: '',
+    profileUpdate: {},
     username: '',
     website: '',
 };

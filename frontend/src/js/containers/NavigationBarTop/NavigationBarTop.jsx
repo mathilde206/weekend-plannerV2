@@ -79,7 +79,7 @@ class NavigationBarTop extends React.Component {
                                             </DropdownToggle>
                                             <DropdownMenu right>
 
-                                                <Link to={`/${userId}/profile/`}>
+                                                <Link to={`/${userId}/profile`}>
                                                     <DropdownItem>
                                                         <FontAwesomeIcon icon="user" /> Profile
                                                     </DropdownItem>

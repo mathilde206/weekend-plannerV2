@@ -57,6 +57,22 @@ import {
 } from './logout';
 
 import {
+    PAYMENT_SUCCESS,
+    ERROR_PAYMENT,
+    REQUEST_PAYMENT,
+    makePayment,
+} from './payment';
+
+import {
+    UPDATE_PROFILE_REQUEST,
+    UPDATE_PROFILE_SUCCESS,
+    UPDATE_PROFILE_ERROR,
+    RESET_PROFILE_UPDATE,
+    resetProfileUpdate,
+    updateProfile,
+} from './profile';
+
+import {
     REGISTER_SUCCESS,
     REGISTER_FAILURE,
     REGISTER_REQUEST,
@@ -112,13 +128,6 @@ import {
     deleteAction,
 } from './delete';
 
-import {
-    PAYMENT_SUCCESS,
-    ERROR_PAYMENT,
-    REQUEST_PAYMENT,
-    makePayment,
-} from './payment';
-
 export {
     ADD_TO_CART,
     BILLING_UPDATE_SUCCESS,
@@ -162,10 +171,14 @@ export {
     REQUEST_STRIPE_PUB_KEY,
     REQUEST_USER_LIKES,
     RESET_FORM,
+    RESET_PROFILE_UPDATE,
     SUCCESS_STRIPE_PUB_KEY,
     TOKEN_REQUEST,
     TOKEN_RECEIVED,
     TOKEN_FAILURE,
+    UPDATE_PROFILE_REQUEST,
+    UPDATE_PROFILE_SUCCESS,
+    UPDATE_PROFILE_ERROR,
     USER_ORDERS_SUCCESS,
     USER_ORDERS_ERROR,
     USER_ORDERS_REQUEST,
@@ -188,9 +201,11 @@ export {
     refreshAccessAction,
     removeFromCartAction,
     registerAction,
+    resetProfileUpdate,
     resetForm,
     setCityAction,
     successLogin,
     updateItineraryAction,
     updateBillingInfoAction,
+    updateProfile,
 };

@@ -93,12 +93,12 @@ class Login extends React.Component {
 }
 
 Login.propTypes = {
-    djangoErrors: PropTypes.object,
+    djangoErrors: PropTypes.string,
     isLoggingIn: PropTypes.bool,
 };
 
 Login.defaultProps = {
-    djangoErrors: {},
+    djangoErrors: '',
     isLoggingIn: false,
 };
 

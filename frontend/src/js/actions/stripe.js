@@ -46,11 +46,8 @@ function fetchStripePublishableKey() {
                 });
         } else {
             getStripePublishableKey(access)
-                .then(({ access }) => {
-                    getStripePublishableKey(access.token)
-                        .then((key) => {
-                            dispatch(successStripePublishableKey(key));
-                        });
+                .then((key) => {
+                    dispatch(successStripePublishableKey(key));
                 })
                 .catch((error) => {
                     dispatch(errorStripePublishableKey(error));

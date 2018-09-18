@@ -93,7 +93,7 @@ class App extends React.Component {
                             <Route exact path="/orders/" component={Orders} />
                             <PrivateRoute path="/:userId/checkout/" component={CheckoutContainer} />
                             <PrivateRoute path="/create/" component={CreateItinerary} />
-                            <Route exact path="/:userId/profile" component={ProfilePage} />
+                            <Route path="/:userId/profile" component={ProfilePage} />
                             <Route exact path="/explore/:slug" component={ItineraryDetails} />
                             <Route exact path="/:slug" component={ItineraryDetails} />
                             <Route exact path="/:slug/update" component={UpdateItinerary} />
