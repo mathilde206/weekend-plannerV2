@@ -111,11 +111,16 @@ class NavigationBarTop extends React.Component {
 
                                             </DropdownMenu>
                                         </UncontrolledDropdown>
-                                    ) :
-                                    <NavItem>
-                                        <NavLink href="/login/">Login</NavLink>
-                                    </NavItem>
-
+                                    ) : (
+                                        <Fragment>
+                                            <NavItem>
+                                                <NavLink href="/login/">Login</NavLink>
+                                            </NavItem>
+                                            <NavItem>
+                                                <NavLink href="/register/">Register</NavLink>
+                                            </NavItem>
+                                        </Fragment>
+                                    )
                             }
 
                         </Nav>

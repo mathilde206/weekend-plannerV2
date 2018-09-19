@@ -22,7 +22,7 @@ const ItinerariesSearchForm = ({
 }) => {
     return (
         <Form inline className="search-form">
-            <FormGroup className="mb-2 mr-sm-2 mb-sm-0">
+            <FormGroup className="mb-2 mr-sm-2 mb-sm-0 margin-group">
                 <Label
                     className="search-form-label"
                     for="city"
@@ -38,7 +38,7 @@ const ItinerariesSearchForm = ({
                     placeholder="City"
                 />
             </FormGroup>
-            <FormGroup className="mb-2 mr-sm-2 mb-sm-0">
+            <FormGroup className="mb-2 mr-sm-2 mb-sm-0 margin-group">
                 <Label
                     className="search-form-label"
                     for="budget"
@@ -59,7 +59,7 @@ const ItinerariesSearchForm = ({
                     <option>Very_Expensive</option>
                 </Input>
             </FormGroup>
-            <FormGroup className="mb-2 mr-sm-2 mb-sm-0">
+            <FormGroup className="mb-2 mr-sm-2 mb-sm-0 margin-group">
                 <Label
                     className="search-form-label"
                     for="numberOfDays"
@@ -79,8 +79,8 @@ const ItinerariesSearchForm = ({
 3                    <option>3</option>
                 </Input>
             </FormGroup>
-            <Button onClick={onSubmit}>Filter</Button>
-            <Button onClick={onReset}>Reset</Button>
+            <Button className="margin-group" onClick={onSubmit}>Filter</Button>
+            <Button className="margin-group" onClick={onReset}>Reset</Button>
         </Form>
     );
 };

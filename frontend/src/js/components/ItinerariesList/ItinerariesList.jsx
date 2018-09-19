@@ -7,7 +7,6 @@ import {
     Row
 } from 'reactstrap';
 
-import { getItineraryList } from '../../api';
 
 import ItineraryCard from '../ItineraryCard/ItineraryCard';
 import Paginator from '../Paginator/Paginator';
@@ -19,7 +18,6 @@ const ItinerariesList = ({
     onFetchItineraries,
     total_pages,
 }) => {
-
     const handlePageClick = (page) => {
         onFetchItineraries(page);
     };

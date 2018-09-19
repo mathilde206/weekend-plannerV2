@@ -18,7 +18,6 @@ const Paginator = ({
 }) => {
     const numberOfPagesArray = [ ...Array(total_pages).keys() ].map(page => page + 1);
     const currentPage = previous ? previous + 1 : 1;
-
     return (
         <div className="paginator-container">
             <Pagination aria-label="Page navigation example">

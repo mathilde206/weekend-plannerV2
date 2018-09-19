@@ -47,7 +47,7 @@ function fetchFilteredItineraries(page=1, query = '') {
     return function fetchFilteredItinerariesThunk(dispatch) {
         dispatch(requestItinerariesList());
 
-        getFilteredItineraryList(1, query)
+        getFilteredItineraryList(page, query)
             .then((response) => {
                 dispatch(receiveItinerariesList(response, query));
             })
