@@ -18,11 +18,11 @@ library.add(
 import './CheckoutConfirmCart.scss';
 
 const CheckoutConfirmCart = ({
-    cart,
-    removeFromCart,
-    total,
-    url,
-}) => (
+                                 cart,
+                                 removeFromCart,
+                                 total,
+                                 url,
+                             }) => (
     <div className="checkout-confirm-wrapper">
         <p>
             Please confirm your order.

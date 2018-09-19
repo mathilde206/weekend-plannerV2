@@ -56,7 +56,7 @@ function updateProfile(formObj) {
                             dispatch(updateProfileSuccess());
                         })
                         .catch((error) => {
-                            dispatch(updateProfileError(error));
+                            dispatch(updateProfileError(error.message.data));
                         });
                 });
         } else {
@@ -65,7 +65,7 @@ function updateProfile(formObj) {
                     dispatch(updateProfileSuccess());
                 })
                 .catch((error) => {
-                    dispatch(updateProfileError(error));
+                    dispatch(updateProfileError(error.message.data));
                 });
         }
     };

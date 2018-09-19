@@ -5,7 +5,8 @@ function getCity(city) {
         .then(({ data }) => {
             const promisesUrls = data.map(city => axios.get(`/api/cities/${city.pk}`));
             return Promise.all(promisesUrls).then(response => response.map(item => item.data));
-        }).then(response => response);
+        }).then(response => response)
+        .catch(error => error.message.data);
 };
 
 export default getCity;

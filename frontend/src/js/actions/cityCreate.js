@@ -43,7 +43,7 @@ function setCityAction(cityObj) {
                             dispatch(cityCreateSuccess(data));
                         })
                         .catch(error => {
-                            dispatch(cityCreateFailure(error));
+                            dispatch(cityCreateFailure(error.response.data));
                         });
                 });
         } else {
@@ -52,7 +52,7 @@ function setCityAction(cityObj) {
                     dispatch(cityCreateSuccess(data));
                 })
                 .catch(error => {
-                    dispatch(cityCreateFailure(error));
+                    dispatch(cityCreateFailure(error.response.data));
                 });
         }
     };

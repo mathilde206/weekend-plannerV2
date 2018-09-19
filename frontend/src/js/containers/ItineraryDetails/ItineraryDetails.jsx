@@ -2,7 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Redirect from 'react-router-dom';
 import { connect } from 'react-redux';
+import { Alert } from 'reactstrap';
+import ReactLoading from 'react-loading';
 
+import { likeItinerary, fetchUserItineraryLikes } from '../../actions';
 import {
     accessToken,
     isAccessTokenExpired,
@@ -23,7 +26,6 @@ import {
 
 import './ItineraryDetails.scss';
 import { history } from '../../helpers';
-
 
 class ItineraryDetails extends React.Component {
     state = {
@@ -50,12 +52,18 @@ class ItineraryDetails extends React.Component {
         user: {},
         views: 0,
         pk: 0,
+        error: '',
+        deleteError: '',
     };
 
-    componentWillMount() {
+    componentDidMount() {
+        const { dispatch } = this.props;
+
         this.setState({
             isLoading: true,
         });
+
+        dispatch(fetchUserItineraryLikes());
 
         getItineraryDetails(this.props.match.params.slug)
             .then(response => {
@@ -63,18 +71,35 @@ class ItineraryDetails extends React.Component {
                     isLoading: false,
                     ...response
                 });
-            });
+            })
+            .catch(error => this.setState({
+                error: error.message.data,
+            }));
 
         increaseViewsCounter(this.props.match.params.slug);
     }
 
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.userLikes.length !== this.props.userLikes) {
+            getItineraryDetails(this.props.match.params.slug)
+                .then(response => {
+                    this.setState({
+                        isLoading: false,
+                        ...response
+                    });
+                })
+                .catch(error => this.setState({
+                    error: error.message.data,
+                }));
+        }
+    }
+
     handleLike = () => {
-        getItineraryDetails(this.props.match.params.slug)
-            .then(response => {
-                this.setState({
-                    ...response
-                });
-            });
+        const { dispatch, match } = this.props;
+        const { params } = match;
+        const { slug } = params;
+
+        dispatch(likeItinerary(slug));
     };
 
     handleDelete = (event) => {
@@ -94,12 +119,22 @@ class ItineraryDetails extends React.Component {
                     deleteItinerary(slug, response.access.token)
                         .then(() => {
                             history.push('/');
+                        })
+                        .catch(deleteError => {
+                            this.setState({
+                                deleteError
+                            });
                         });
                 });
         } else {
             deleteItinerary(slug, accessToken)
                 .then(() => {
                     history.push('/');
+                })
+                .catch(deleteError => {
+                    this.setState({
+                        deleteError
+                    });
                 });
         }
     };
@@ -128,6 +163,9 @@ class ItineraryDetails extends React.Component {
             day3_lunch,
             day3_afternoon,
             day3_diner,
+            isLoading,
+            error,
+            deleteError,
         } = this.state;
 
         const {
@@ -136,8 +174,33 @@ class ItineraryDetails extends React.Component {
 
         const slug = this.props.match.params.slug;
 
+        if (isLoading) {
+            return (
+                <div className="container">
+                    <ReactLoading type="bubbles" color="#000c4f" />
+                </div>
+            );
+        }
+
         return (
             <div className="details-wrapper">
+                {
+                    error &&
+                    <div className="container">
+                        <Alert color="danger">
+                            We couldn't load the details at this time. Please try again later.
+                        </Alert>
+                    </div>
+                }
+
+                {
+                    deleteError &&
+                    <div className="container">
+                        <Alert color="danger">
+                            This itinerary couldn't be deleted at this time. Please try again later.
+                        </Alert>
+                    </div>
+                }
                 <ItineraryDetailsHeader
                     pk={pk}
                     city={city}
@@ -205,5 +268,3 @@ const mapStateToProps = (state) => {
 };
 
 export default connect(mapStateToProps)(ItineraryDetails);
-
-// TODO: Add comments

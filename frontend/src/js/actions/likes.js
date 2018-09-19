@@ -37,19 +37,20 @@ function requestUserItineraryLikes() {
     };
 }
 
-function fetchUserItineraryLikes(userId) {
+function fetchUserItineraryLikes() {
     return function fetchUserItineraryLikesThunk(dispatch, getState) {
-        const state = getState();
-        console.log(state);
+        const { user } = getState();
+        const { id } = user;
+
         dispatch(requestUserItineraryLikes());
 
-        getUserLikes(userId)
+        getUserLikes(id)
             .then(({ likes }) => dispatch(receiveUserItineraryLikes(likes)))
-            .catch(error => dispatch(errorUserItineraryLikes(error)));
+            .catch(error => dispatch(errorUserItineraryLikes(error.message.data)));
     };
 }
 
-function likeItinerary(slug, likeObj) {
+function likeItinerary(slug) {
     return function likeItineraryThunk(dispatch, getState) {
         const state = getState();
         const refresh = refreshToken(state);
@@ -57,7 +58,7 @@ function likeItinerary(slug, likeObj) {
 
         if (isAccessTokenExpired(state)) {
             refreshAccessToken(refresh)
-                .then((access) => {
+                .then(({ access }) => {
                     addLike(slug, access.token)
                         .then(({ userLikes }) => {
                             dispatch(receiveUserItineraryLikes(userLikes));

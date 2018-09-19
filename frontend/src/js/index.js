@@ -13,7 +13,7 @@ import createHistory from 'history/createBrowserHistory';
 import { createLogger } from 'redux-logger';
 
 import rootReducer from './reducers';
-import { App } from './containers';
+import App from './containers/App/App';
 
 const loggerMiddleware = createLogger();
 const history = createHistory();

@@ -15,6 +15,7 @@ function requestBillingUpdate() {
 function errorBillingUpdate(error) {
     return {
         type: BILLING_UPDATE_ERROR,
+        error,
     };
 }
 
@@ -41,7 +42,7 @@ function updateBillingInfoAction(userId, formObj) {
                             dispatch(successBillingUpdate());
                         })
                         .catch(error => {
-                            dispatch(errorBillingUpdate(error));
+                            dispatch(errorBillingUpdate(error.message.data));
                         });
                 });
         } else {
@@ -50,7 +51,7 @@ function updateBillingInfoAction(userId, formObj) {
                     dispatch(successBillingUpdate());
                 })
                 .catch(error => {
-                    dispatch(errorBillingUpdate(error));
+                    dispatch(errorBillingUpdate(error.message.data));
                 });
         }
     };

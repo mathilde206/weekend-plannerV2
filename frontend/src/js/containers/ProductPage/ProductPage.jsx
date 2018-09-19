@@ -2,7 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { Button, CardColumns } from 'reactstrap';
+import { Alert, Button, CardColumns } from 'reactstrap';
+import ReactLoading from 'react-loading';
 
 import { addToCartAction, removeFromCartAction } from '../../actions';
 import { getProductList } from '../../api';
@@ -21,7 +22,7 @@ class ProductPage extends React.Component {
         isLoading: true,
     };
 
-    componentWillMount() {
+    componentDidMount() {
         getProductList()
             .then((productList) => {
                 const basicProducts = productList.filter(({ type }) => (type !== 'Premium' && type !== 'Deluxe'));
@@ -38,20 +39,24 @@ class ProductPage extends React.Component {
 
     render() {
         const {
-            productList,
             isLoading,
         } = this.state;
 
         const {
             addToCart,
             cart,
+            error,
             isAuthenticated,
             removeFromCart,
             userId,
         } = this.props;
 
         if (isLoading) {
-            return <h1>Loading...</h1>;
+            return (
+                <div className="container">
+                    <ReactLoading type="bubbles" color="#000c4f" />
+                </div>
+            );
         }
 
         return (
@@ -63,6 +68,12 @@ class ProductPage extends React.Component {
                     <div className="product-headline">
                         <span className="disabled-checkout"> You must <Link to="/login">Login</Link> to buy travel packages.</span>
                     </div>
+                }
+                {
+                    error &&
+                    <Alert color="danger">
+                        We couldn't update your cart at this time. Please try again later.
+                    </Alert>
                 }
 
                 {
@@ -148,6 +159,7 @@ const mapStateToProps = (state) => {
 
     return ({
         cart: cart.cart,
+        error: cart.error,
         isAuthenticated: isAuthenticated(state),
         userId: user.id,
     });

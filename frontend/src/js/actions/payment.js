@@ -42,7 +42,7 @@ function saveOrderItems(cart, orderPk, token, dispatch) {
                 }
             })
             .catch((error) => {
-                dispatch(errorPayment(error));
+                dispatch(errorPayment(error.message.data));
             });
     });
 }

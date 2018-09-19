@@ -1,7 +1,8 @@
 import {
     ADD_TO_CART,
-    REMOVE_FROM_CART,
     EMPTY_CART,
+    ERROR_ADD_TO_CART,
+    REMOVE_FROM_CART,
     HYDRATE_CART,
     addToCartAction,
     removeFromCartAction,
@@ -137,6 +138,7 @@ export {
     CITY_CREATE_FAILURE,
     CITY_CREATE_REQUEST,
     EMPTY_CART,
+    ERROR_ADD_TO_CART,
     ERROR_PAYMENT,
     ERROR_STRIPE_PUB_KEY,
     ERROR_USER_LIKES,

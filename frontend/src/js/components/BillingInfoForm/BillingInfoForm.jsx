@@ -128,7 +128,7 @@ class BillingInfoForm extends React.Component {
                 {
                     userBillingUpdate.error &&
                     <Alert color="danger">
-                        There was a problem saving your information. Please verify your information.
+                        There was a problem saving your information. Please try again.
                     </Alert>
                 }
                 <Form>

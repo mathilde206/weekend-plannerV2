@@ -20,10 +20,10 @@ function successProductDetails(product) {
     };
 }
 
-function errorAddToCard(product) {
+function errorAddToCard(error) {
     return {
         type: ERROR_ADD_TO_CART,
-        product,
+        error,
     };
 }
 
@@ -35,7 +35,7 @@ function addToCartAction(productId) {
                 dispatch(successProductDetails(details));
             })
             .catch((error) => {
-                dispatch(errorAddToCard(error));
+                dispatch(errorAddToCard(error.response.data));
             });
     };
 }

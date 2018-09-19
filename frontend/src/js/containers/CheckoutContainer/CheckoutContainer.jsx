@@ -149,10 +149,11 @@ class CheckoutContainer extends React.Component {
                                     billing_state={billing_state}
                                     first_name={first_name}
                                     last_name={last_name}
-                                    stripe={stripe}
                                     cart={cart}
-                                    total={total}
+                                    payment={payment}
                                     makePayment={makePayment}
+                                    stripe={stripe}
+                                    total={total}
                                 />} />
                             <Route
                                 render={() => <CheckoutConfirmCart

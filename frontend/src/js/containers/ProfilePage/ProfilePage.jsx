@@ -146,8 +146,6 @@ class ProfilePage extends React.Component {
             profileUpdate,
         } = this.props;
 
-        console.log(location)
-
         if (isLoading) {
             return (
                 <div className="container">

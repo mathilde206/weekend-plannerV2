@@ -1,10 +1,10 @@
 import {
     ADD_TO_CART,
-    REMOVE_FROM_CART,
+    ERROR_ADD_TO_CART,
     EMPTY_CART,
+    REMOVE_FROM_CART,
     HYDRATE_CART,
 } from '../actions';
-
 
 function cart(state = {}, action) {
     const {
@@ -25,6 +25,11 @@ function cart(state = {}, action) {
             ...state,
             cart: newCartAdd,
             total,
+        };
+    case ERROR_ADD_TO_CART:
+        return {
+            ...state,
+            error,
         };
     case REMOVE_FROM_CART:
         let newCartRemove = currentCart.filter(item => item.pk !== productId);

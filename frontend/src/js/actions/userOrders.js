@@ -42,7 +42,7 @@ function fetchUserOrders() {
                             dispatch(receiveUserOrders(orders));
                         })
                         .catch(error => {
-                            dispatch(errorUserOrders(error));
+                            dispatch(errorUserOrders(error.message.data));
                         });
                 });
         } else {
@@ -51,7 +51,7 @@ function fetchUserOrders() {
                     dispatch(receiveUserOrders(orders));
                 })
                 .catch(error => {
-                    dispatch(errorUserOrders(error));
+                    dispatch(errorUserOrders(error.message.data));
                 });
         }
     };

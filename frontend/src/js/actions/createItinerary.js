@@ -12,6 +12,8 @@ import {
 } from '../reducers';
 
 const INITIALIZE_FORM = 'INITIALIZE_FORM';
+const INITIALIZE_FORM_REQUEST = 'INITIALIZE_FORM_REQUEST';
+const INITIALIZE_FORM_FAILURE = 'INITIALIZE_FORM_FAILURE';
 const FORM_SUBMITTED = 'FORM_SUBMITTED';
 const ITINERARY_CREATED = 'ITINERARY_CREATED';
 const ITINERARY_CREATION_FAILURE = 'ITINERARY_CREATION_FAILURE';
@@ -35,6 +37,13 @@ function getSteps(number_of_days) {
     return [ 1, 2, 3, 4, 5, 6 ];
 }
 
+function requestInitializeForm() {
+    return {
+        type: INITIALIZE_FORM_REQUEST,
+        isLoading: true,
+    };
+}
+
 function initializeAction(city, number_of_days, steps, previouslyCreatedCities) {
     return {
         type: INITIALIZE_FORM,
@@ -44,6 +53,15 @@ function initializeAction(city, number_of_days, steps, previouslyCreatedCities) 
         },
         steps,
         previouslyCreatedCities,
+        isLoading: false,
+    };
+}
+
+function initializeFormFailure(error) {
+    return {
+        type: INITIALIZE_FORM_FAILURE,
+        error,
+        isLoading: false,
     };
 }
 
@@ -51,10 +69,12 @@ function initializeCreateAction(city, number_of_days) {
     const steps = getSteps(number_of_days);
 
     return function initializeCreateAction(dispatch) {
+        dispatch(requestInitializeForm());
         return getCity(city)
             .then(previouslyCreatedCities => {
                 dispatch(initializeAction(city, number_of_days, steps, previouslyCreatedCities));
-            });
+            })
+            .catch((error) => initializeFormFailure(error.response.data));
     };
 }
 
@@ -94,7 +114,7 @@ function createItineraryAction(formObj) {
                             dispatch(itineraryCreatedSuccess(data));
                         })
                         .catch(error => {
-                            dispatch(itineraryCreationFailure(error));
+                            dispatch(itineraryCreationFailure(error.message.error));
                         });
                 });
         } else {
@@ -103,7 +123,7 @@ function createItineraryAction(formObj) {
                     dispatch(itineraryCreatedSuccess(data));
                 })
                 .catch(error => {
-                    dispatch(itineraryCreationFailure(error));
+                    dispatch(itineraryCreationFailure(error.message.data));
                 });
         }
     };
@@ -113,6 +133,8 @@ function createItineraryAction(formObj) {
 export {
     FORM_SUBMITTED,
     INITIALIZE_FORM,
+    INITIALIZE_FORM_REQUEST,
+    INITIALIZE_FORM_FAILURE,
     ITINERARY_CREATED,
     ITINERARY_CREATION_FAILURE,
     RESET_FORM,

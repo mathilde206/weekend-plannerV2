@@ -76,7 +76,11 @@ class App extends React.Component {
         const { isLoading } = this.state;
 
         if (isLoading) {
-            return <ReactLoading type="bubbles" color="#000c4f" />;
+            return (
+                <div className="container">
+                    <ReactLoading type="bubbles" color="#000c4f" />
+                </div>
+            );
         }
 
         return (

@@ -51,7 +51,7 @@ function fetchFilteredItineraries(page=1, query = '') {
             .then((response) => {
                 dispatch(receiveItinerariesList(response, query));
             })
-            .catch(error => dispatch(itinerariesListFailure(error, query)));
+            .catch(error => dispatch(itinerariesListFailure(error.message.data, query)));
     };
 }
 

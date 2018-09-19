@@ -1,4 +1,3 @@
-import CardDisplay from './CardDisplay/CardDisplay';
 import CartActionButton from './CartActionButton/CartActionButton';
 import CityItem from './CityItem/CityItem';
 import CreateUpdateFormStep from './CreateUpdateFormStep/CreateUpdateFormStep';
@@ -25,7 +24,6 @@ import BillingInfoForm from './BillingInfoForm/BillingInfoForm';
 import Payment from './Payment/Payment';
 
 export {
-    CardDisplay,
     CartActionButton,
     CityItem,
     CreateUpdateFormStep,

@@ -37,7 +37,7 @@ function fetchUserData(id) {
                 dispatch(retreiveUserData(user, id));
             })
             .catch((error) => {
-                dispatch(errorUserData(error));
+                dispatch(errorUserData(error.message.data));
             });
     };
 }

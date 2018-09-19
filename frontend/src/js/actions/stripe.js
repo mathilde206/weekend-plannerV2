@@ -42,7 +42,7 @@ function fetchStripePublishableKey() {
                         });
                 })
                 .catch((error) => {
-                    dispatch(errorStripePublishableKey(error));
+                    dispatch(errorStripePublishableKey(error.message.data));
                 });
         } else {
             getStripePublishableKey(access)
@@ -50,7 +50,7 @@ function fetchStripePublishableKey() {
                     dispatch(successStripePublishableKey(key));
                 })
                 .catch((error) => {
-                    dispatch(errorStripePublishableKey(error));
+                    dispatch(errorStripePublishableKey(error.message.data));
                 });
         }
     };

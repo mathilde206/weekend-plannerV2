@@ -15,7 +15,7 @@ const CityItem = ({ country, currency, handleSelectExistingCity, language, name,
                 <br />
                 Language : {language}
             </CardText>
-            <Button onClick={(event) => handleSelectExistingCity(event, pk)}>Select as City</Button>
+            <Button onClick={(event) => handleSelectExistingCity(event, pk)}>Select</Button>
         </Card>
     </Col>
 );
