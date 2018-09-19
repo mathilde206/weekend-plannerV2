@@ -2,6 +2,7 @@ import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import ReactLoading from 'react-loading';
+import { Alert } from 'reactstrap';
 import { fetchUserOrders } from '../../actions';
 import OrderCard from '../OrderCard/OrderCard';
 
@@ -12,6 +13,7 @@ class Orders extends React.Component {
         const {
             orders,
             isFetching,
+            fromOrder,
         } = this.props;
 
         if (isFetching) {
@@ -25,6 +27,12 @@ class Orders extends React.Component {
         return (
             <Fragment>
                 <h4 className="order-title">Your Orders</h4>
+                {
+                    fromOrder &&
+                    <Alert color="success">
+                        Your order was successfully created. Thank you for your trust!
+                    </Alert>
+                }
                 {orders.map(({
                     pk,
                     creation_date,

@@ -84,7 +84,7 @@ const ItineraryDetailsHeader = ({
                     </Row>
                     <hr className="my-2" />
                     <p className="text-muted">
-                        Created by <Link to={`/${user.pk}/profile/`}>{user.username}</Link> on {created_date}
+                        Created by <Link to={`/${user.pk}/profile`}>{user.username}</Link> on {created_date}
                         - <FontAwesomeIcon icon="star" /> {likes} likes
                         - <FontAwesomeIcon icon="eye" /> {views} views
                     </p>

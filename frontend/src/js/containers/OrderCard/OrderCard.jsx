@@ -23,7 +23,6 @@ class OrderCard extends React.Component {
         const { pk } = this.props;
         getOrderDetails(pk)
             .then(({ order_items }) => {
-                console.log(order_items)
                 this.setState({
                     isLoading: false,
                     orderItems: order_items,
@@ -58,7 +57,7 @@ class OrderCard extends React.Component {
             );
         } else if (orderItems.length) {
             content = orderItems.map(({ name, type, price }) => (
-                <div className="order-item-wrapper">
+                <div key={`${name}-${type}`} className="order-item-wrapper">
                     <span>{name} - {type}</span>
                     <span>{price} EUR</span>
                 </div>

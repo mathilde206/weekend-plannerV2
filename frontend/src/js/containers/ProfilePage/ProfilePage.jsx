@@ -15,7 +15,7 @@ import './ProfilePage.scss';
 
 const NavProfile = ({ children, to, exact }) => {
     return (
-        <Route path={to} exact={exact} children={({ match }) => (console.log(match) ||
+        <Route path={to} exact={exact} children={({ match }) => (
             <div className={match ? 'nav-link-profile nav-link-active' : 'nav-link-profile'}>
                 <Link to={to}>
                     {children}
@@ -33,8 +33,9 @@ class ProfilePage extends React.Component {
         birth_date: '',
         isLoading: true,
         isEditing: false,
-        location: '',
+        userLocation: '',
         website: '',
+        userId: null,
     };
 
     handleClick = (event) => {
@@ -49,7 +50,7 @@ class ProfilePage extends React.Component {
         const {
             bio,
             birth_date,
-            location,
+            userLocation,
             website,
         } = this.state;
 
@@ -68,7 +69,7 @@ class ProfilePage extends React.Component {
         formObj.append('user', params.userId);
         formObj.append('bio', bio);
         formObj.append('birth_date', birth_date);
-        formObj.append('location', location);
+        formObj.append('location', userLocation);
         formObj.append('website', website);
 
         dispatch(updateProfile(formObj));
@@ -92,7 +93,24 @@ class ProfilePage extends React.Component {
             params
         } = match;
 
-        getUserProfile(params.userId)
+        this.getData(params.userId);
+    }
+
+    componentWillReceiveProps(nextProps) {
+        const { match } = nextProps;
+        const { params } = match;
+        const { userId } = params;
+        if (userId !== this.state.userId) {
+            this.getData(userId);
+        }
+    }
+
+    getData(userId) {
+        this.setState({
+            isLoading: true,
+        });
+
+        getUserProfile(userId)
             .then(({ user, bio, birth_date, location, website }) => {
                 const {
                     username,
@@ -103,8 +121,9 @@ class ProfilePage extends React.Component {
                     bio,
                     birth_date,
                     isLoading: false,
-                    location,
+                    userLocation: location,
                     website,
+                    userId,
                 });
             });
     }
@@ -114,7 +133,7 @@ class ProfilePage extends React.Component {
             birth_date,
             bio,
             isLoading,
-            location,
+            userLocation,
             username,
             website,
         } = this.state;
@@ -122,9 +141,12 @@ class ProfilePage extends React.Component {
         const {
             dispatch,
             loggedInUser,
+            location,
             match,
             profileUpdate,
         } = this.props;
+
+        console.log(location)
 
         if (isLoading) {
             return (
@@ -135,6 +157,7 @@ class ProfilePage extends React.Component {
         }
 
         const isOwner = loggedInUser === username;
+
         return (
             <div className="container profile-container">
                 <h1 className="display-3 text-capitalize">{username}'s Profile</h1>
@@ -167,7 +190,7 @@ class ProfilePage extends React.Component {
                             <ProfileInfoTileEdit
                                 bio={bio}
                                 birth_date={birth_date}
-                                location={location}
+                                userLocation={userLocation}
                                 onSubmit={this.handleSubmit}
                                 onFieldChange={this.handleFieldchange}
                                 profileUpdate={profileUpdate}
@@ -177,14 +200,17 @@ class ProfilePage extends React.Component {
                             />)
                         }
                     />
-                    <Route path={`${match.path}/orders`} component={Orders} />
+                    <Route path={`${match.path}/orders`}
+                        render={() => <Orders
+                            fromOrder={location.search === '?orderCreated'}
+                        />} />
                     <Route
                         render={() => (
                             <ProfileInfoTile
                                 bio={bio}
                                 birth_date={birth_date}
                                 dispatch={dispatch}
-                                location={location}
+                                userLocation={userLocation}
                                 username={username}
                                 website={website}
                             />

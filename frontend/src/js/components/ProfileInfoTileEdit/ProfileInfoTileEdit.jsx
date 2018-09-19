@@ -35,7 +35,7 @@ library.add(
 const ProfileInfoTileEdit = ({
     bio,
     birth_date,
-    location,
+    userLocation,
     onFieldChange,
     onSubmit,
     profileUpdate,
@@ -79,15 +79,15 @@ const ProfileInfoTileEdit = ({
                 </Col>
             </FormGroup>
             <FormGroup row>
-                <Label for="location" sm={2}>
+                <Label for="userLocation" sm={2}>
                     <FontAwesomeIcon icon="map-marker-alt" /> Location
                 </Label>
                 <Col sm={10}>
                     <Input
                         type="text"
-                        name="location"
-                        id="location"
-                        onChange={(event) => onFieldChange('location', event)}
+                        name="userLocation"
+                        id="userLocation"
+                        onChange={(event) => onFieldChange('userLocation', event)}
                         placeholder={location}
                     />
                 </Col>
@@ -142,7 +142,7 @@ const ProfileInfoTileEdit = ({
 ProfileInfoTileEdit.propTypes = {
     bio: PropTypes.string,
     birth_date: PropTypes.string,
-    location: PropTypes.string,
+    userLocation: PropTypes.string,
     onFieldChange: PropTypes.func.isRequired,
     onSubmit: PropTypes.func.isRequired,
     url: PropTypes.string.isRequired,
@@ -153,7 +153,7 @@ ProfileInfoTileEdit.propTypes = {
 ProfileInfoTileEdit.defaultProps = {
     bio: '',
     birth_date: '',
-    location: '',
+    userLocation: '',
     profileUpdate: {},
     username: '',
     website: '',

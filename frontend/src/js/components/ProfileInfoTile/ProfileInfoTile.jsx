@@ -38,7 +38,7 @@ class ProfileInfoTile extends React.Component {
         const {
             bio,
             birth_date,
-            location,
+            userLocation,
             username,
             website,
         } = this.props;
@@ -69,7 +69,7 @@ class ProfileInfoTile extends React.Component {
                     </Col>
                     <Col xs="6" md="8">
                         <span className="profile-info">
-                            {location || noDataPlaceholder}
+                            {userLocation || noDataPlaceholder}
                         </span>
                     </Col>
                 </Row>
@@ -121,7 +121,7 @@ ProfileInfoTile.propTypes = {
     bio: PropTypes.string,
     birth_date: PropTypes.string,
     dispatch: PropTypes.func.isRequired,
-    location: PropTypes.string,
+    userLocation: PropTypes.string,
     username: PropTypes.string,
     website: PropTypes.string,
 };
@@ -129,7 +129,7 @@ ProfileInfoTile.propTypes = {
 ProfileInfoTile.defaultProps = {
     bio: '',
     birth_date: '',
-    location: '',
+    userLocation: '',
     username: '',
     website: '',
 };
