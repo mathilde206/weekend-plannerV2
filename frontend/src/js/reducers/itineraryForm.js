@@ -4,6 +4,8 @@ import {
     CITY_CREATE_REQUEST,
     FORM_SUBMITTED,
     INITIALIZE_FORM,
+    INITIALIZE_FORM_REQUEST,
+    INITIALIZE_FORM_FAILURE,
     ITINERARY_CREATED,
     ITINERARY_CREATION_FAILURE,
     ITINERARY_UPDATED,
@@ -19,6 +21,7 @@ function itineraryForm(state = { currentStep: 0 }, action) {
         data,
         error,
         formData,
+        isLoading,
         previouslyCreatedCities,
         steps,
         type,
@@ -26,6 +29,15 @@ function itineraryForm(state = { currentStep: 0 }, action) {
     } = action;
 
     switch (type) {
+    case INITIALIZE_FORM_REQUEST:
+        return {
+            isLoading,
+        };
+    case INITIALIZE_FORM_FAILURE:
+        return {
+            isLoading,
+            error,
+        };
     case INITIALIZE_FORM:
         return {
             ...state,
@@ -96,6 +108,5 @@ function itineraryForm(state = { currentStep: 0 }, action) {
         return state;
     }
 }
-
 
 export default itineraryForm;

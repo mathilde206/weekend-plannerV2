@@ -60,7 +60,7 @@ function initializeAction(city, number_of_days, steps, previouslyCreatedCities) 
 function initializeFormFailure(error) {
     return {
         type: INITIALIZE_FORM_FAILURE,
-        error,
+        djangoError: error,
         isLoading: false,
     };
 }
@@ -94,7 +94,7 @@ function itineraryCreatedSuccess(data) {
 function itineraryCreationFailure(error) {
     return {
         type: ITINERARY_CREATION_FAILURE,
-        error,
+        djangoError:error,
     };
 }
 

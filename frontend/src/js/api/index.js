@@ -7,7 +7,7 @@ import getCity from './getCity';
 import getOrderDetails from './getOrderDetails';
 import getProductDetail from './getProductDetails';
 import getItineraryDetails from './getItineraryDetails';
-import {getItineraryList, getFilteredItineraryList } from './getItineraryList';
+import { getItineraryList, getFilteredItineraryList } from './getItineraryList';
 import getProductList from './getProductList';
 import getStripePublishableKey from './getStripPublishableKey';
 import getUserBillingInfo from './getUserBillingInfo';
@@ -23,6 +23,7 @@ import register from './register';
 import saveOrder from './saveOrder';
 import saveProductItem from './saveProductItem';
 import updateBillingInfo from './updateBillingInfo';
+import updateCity from './updateCity';
 import updateItinerary from './updateItinerary';
 import updateUserProfile from './updateUserProfile';
 
@@ -53,6 +54,7 @@ export {
     saveOrder,
     saveProductItem,
     updateBillingInfo,
+    updateCity,
     updateItinerary,
     updateUserProfile,
 };

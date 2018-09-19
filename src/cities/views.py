@@ -6,6 +6,7 @@ from rest_framework.generics import (
     CreateAPIView,
     ListAPIView,
     RetrieveAPIView,
+    UpdateAPIView,
 )
 
 from rest_framework.permissions import (
@@ -40,6 +41,13 @@ class CityListView(ListAPIView):
 
 
 class CityCreateView(CreateAPIView):
+    queryset = City.objects.all()
+    serializer_class = CitySerializer
+    permission_classes = [IsAuthenticated]
+
+
+class CityUpdateView(UpdateAPIView):
+    lookup_field = 'pk'
     queryset = City.objects.all()
     serializer_class = CitySerializer
     permission_classes = [IsAuthenticated]

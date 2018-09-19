@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
+import ReactLoading from 'react-loading';
 
 import {
     initializeCreateAction,
@@ -54,6 +55,8 @@ class CreateItinerary extends React.Component {
         image: '',
         errors: {},
         slug: '',
+        isLoading: true,
+        submitted: false,
     };
 
     handleInputChange = (event) => {
@@ -156,6 +159,7 @@ class CreateItinerary extends React.Component {
             day3_diner,
             image,
             errors,
+
         } = this.state;
 
         const {
@@ -250,6 +254,9 @@ class CreateItinerary extends React.Component {
         case 6:
             let formObj = createFormObj(this.state);
             dispatch(createItineraryAction(formObj));
+            this.setState({
+                submitted: true,
+            });
             break;
         case 0:
         default:
@@ -281,16 +288,29 @@ class CreateItinerary extends React.Component {
 
     render() {
         const {
+            djangoErrors,
+            cityError,
             itinerarySlug,
+            isInitializing,
         } = this.props;
 
         if (itinerarySlug) {
             return (<Redirect to={`/${itinerarySlug}`} />);
         }
 
+        if (isInitializing) {
+            return (
+                <div className="container">
+                    <ReactLoading type="bubbles" color="#000c4f" />
+                </div>
+            );
+        }
+
         return (
             <div className="container-wrapper">
                 <CreateUpdateItineraryForm
+                    djangoErrors={this.props.djangoErrors}
+                    cityError={cityError}
                     errors={this.state.errors}
                     handleClickBack={this.handleClickBack}
                     handleInputChange={this.handleInputChange}
@@ -301,6 +321,7 @@ class CreateItinerary extends React.Component {
                     step={this.state.step}
                     type="create"
                     values={this.state}
+                    submitted={this.state.submitted}
                 />
             </div>);
     }

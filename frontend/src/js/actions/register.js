@@ -41,7 +41,6 @@ function registerAction(user) {
                 history.push('/login?registration');
             })
             .catch((error) => {
-                console.log(error.response.data);
                 dispatch(registerFailure(error.response.data));
             });
     };

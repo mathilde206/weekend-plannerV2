@@ -109,6 +109,15 @@ import {
 } from './updateBillingInfo';
 
 import {
+    UPDATE_CITY_REQUEST,
+    UPDATE_CITY_SUCCESS,
+    UPDATE_CITY_ERROR,
+    UPDATE_CITY_RESET,
+    cityUpdateReset,
+    updateCityAction,
+} from './updateCity';
+
+import {
     GET_USER_SUCCESS,
     GET_USER_REQUEST,
     GET_USER_FAILURE,
@@ -178,6 +187,10 @@ export {
     TOKEN_REQUEST,
     TOKEN_RECEIVED,
     TOKEN_FAILURE,
+    UPDATE_CITY_REQUEST,
+    UPDATE_CITY_SUCCESS,
+    UPDATE_CITY_ERROR,
+    UPDATE_CITY_RESET,
     UPDATE_PROFILE_REQUEST,
     UPDATE_PROFILE_SUCCESS,
     UPDATE_PROFILE_ERROR,
@@ -207,7 +220,8 @@ export {
     resetForm,
     setCityAction,
     successLogin,
-    updateItineraryAction,
     updateBillingInfoAction,
+    updateCityAction,
+    updateItineraryAction,
     updateProfile,
 };

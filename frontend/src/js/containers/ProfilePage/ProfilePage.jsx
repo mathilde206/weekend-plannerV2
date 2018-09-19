@@ -65,7 +65,7 @@ class ProfilePage extends React.Component {
 
         event.preventDefault();
 
-        let formObj = new FormData;
+        let formObj = new FormData();
         formObj.append('user', params.userId);
         formObj.append('bio', bio);
         formObj.append('birth_date', birth_date);

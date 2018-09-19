@@ -10,6 +10,8 @@ import { getFieldsforStep, getDescriptionforSteps } from './config';
 import './CreateUpdateItineraryForm.scss';
 
 const CreateUpdateItineraryForm = ({
+    djangoErrors,
+    cityError,
     errors,
     handleClickBack,
     handleInputChange,
@@ -56,6 +58,7 @@ const CreateUpdateItineraryForm = ({
                 handleInputChange={handleInputChange}
                 values={values}
                 errors={errors}
+                cityError={cityError}
             />
             {
                 values.city &&
@@ -69,9 +72,13 @@ const CreateUpdateItineraryForm = ({
 CreateUpdateItineraryForm.defaultProps = {
     previouslyCreatedCities: [],
     errors: {},
+    djangoErrors: {},
+    cityError: {},
 };
 
 CreateUpdateItineraryForm.propTypes = {
+    djangoErrors: PropTypes.objectOf(PropTypes.string),
+    cityError: PropTypes.objectOf(PropTypes.array),
     errors: PropTypes.objectOf(PropTypes.string),
     handleClickBack: PropTypes.func.isRequired,
     handleInputChange: PropTypes.func.isRequired,

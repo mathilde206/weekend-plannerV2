@@ -6,13 +6,20 @@ import InputField from '../InputField/InputField';
 
 import './CreateUpdateFormStep.scss';
 
-const CreateUpdateFormStep = ({ errors, handleInputChange, handleSubmit, stepFields, values }) => (
+const CreateUpdateFormStep = ({ djangoErrors, cityError, errors, handleInputChange, handleSubmit, stepFields, values }) => (
     <Form>
         {
-            errors.non_field_errors ?
-                <Alert color="danger">
-                    {errors.non_field_errors}
-                </Alert> : ''
+            Object.keys(djangoErrors).length > 0 &&
+            <Alert color="danger">
+                There was an error, please try again later.
+            </Alert>
+        }
+        {
+            Object.keys(cityError).length>0 &&
+            <Alert color="danger">
+                {Object.keys(cityError).map(key => <li key={key}>{cityError[ key ]}</li>)}
+            </Alert>
+
         }
         {
             stepFields.map(item =>
@@ -34,11 +41,14 @@ const CreateUpdateFormStep = ({ errors, handleInputChange, handleSubmit, stepFie
 
 CreateUpdateFormStep.defaultProps = {
     errors: {},
+    djangoErrors: {},
+    cityError: {}
 };
 
 CreateUpdateFormStep.propTypes = {
-    errors: PropTypes.objectOf(PropTypes.string)
+    errors: PropTypes.objectOf(PropTypes.string),
+    djangoErrors: PropTypes.objectOf(PropTypes.string),
+    cityError: PropTypes.objectOf(PropTypes.array),
 };
-
 
 export default CreateUpdateFormStep;

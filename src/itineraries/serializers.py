@@ -47,7 +47,6 @@ class ItineraryDetailSerializer(ModelSerializer):
         """
         If an image was uploaded, we add its url
         """
-        # TODO: the media upload doesn't work !!!!
         try:
             image = obj.image.url
         except:
@@ -65,7 +64,6 @@ class ItineraryDetailSerializer(ModelSerializer):
 
     def get_likes(self, obj):
         return obj.likes.count()
-
 
     class Meta:
         model = Itinerary

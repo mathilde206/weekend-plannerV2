@@ -23,7 +23,7 @@ function itineraryUpdated(data) {
 function itineraryUpdateFailure(error) {
     return {
         type: ITINERARY_UPDATED_FAILURE,
-        error,
+        djangoError: error,
     };
 }
 
@@ -43,7 +43,7 @@ function updateItineraryAction(formObj, slug) {
                             dispatch(itineraryUpdated(data));
                         })
                         .catch(error => {
-                            dispatch(itineraryUpdateFailure(error));
+                            dispatch(itineraryUpdateFailure(error.message.data));
                         });
                 });
         } else {
