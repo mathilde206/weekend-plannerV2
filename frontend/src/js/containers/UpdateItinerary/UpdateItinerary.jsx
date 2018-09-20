@@ -121,9 +121,14 @@ class UpdateItinerary extends React.Component {
         const {
             steps
         } = this.props;
+        const {
+            step
+        } = this.state;
+
+        const currentIndex = steps.indexOf(step);
 
         this.setState({
-            step: steps[ step - 1 ],
+            step: steps[ currentIndex - 1 ],
         });
     };
 

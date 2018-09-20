@@ -7,3 +7,19 @@
 .reset-button {
     color: $primary-light;
 }
+
+.back-icon-container{
+    width: 100%;
+    margin: 1em;
+
+    button {
+        background-color: transparent;
+        border: none;
+        font-size: 2em;
+        cursor: pointer;
+
+        &:hover{
+            color: $primary-light;
+        }
+    }
+}

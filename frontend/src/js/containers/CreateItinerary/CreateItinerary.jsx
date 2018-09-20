@@ -128,9 +128,14 @@ class CreateItinerary extends React.Component {
         const {
             steps
         } = this.props;
+        const {
+            step
+        } = this.state;
+
+        const currentIndex = steps.indexOf(step);
 
         this.setState({
-            step: steps[ step - 1 ],
+            step: steps[ currentIndex - 1 ],
         });
     };
 
@@ -172,109 +177,109 @@ class CreateItinerary extends React.Component {
         event.preventDefault();
 
         switch (this.state.step) {
-        case 1:
-            let errorsStep1 = validateStep1Input(city, country, language, currency);
+            case 1:
+                let errorsStep1 = validateStep1Input(city, country, language, currency);
 
-            if (errorsStep1.city || errorsStep1.country || errorsStep1.language || errorsStep1.currency) {
-                this.setState({
-                    errors: errorsStep1,
-                });
-            } else {
-                let cityObj = {
-                    name: city,
-                    country,
-                    language,
-                    currency,
-                };
+                if (errorsStep1.city || errorsStep1.country || errorsStep1.language || errorsStep1.currency) {
+                    this.setState({
+                        errors: errorsStep1,
+                    });
+                } else {
+                    let cityObj = {
+                        name: city,
+                        country,
+                        language,
+                        currency,
+                    };
 
-                if (!cityPk) {
-                    dispatch(setCityAction(cityObj));
+                    if (!cityPk) {
+                        dispatch(setCityAction(cityObj));
+                    }
+
+                    this.setState({
+                        errors: {},
+                        step: steps[ step ],
+                    });
+                }
+                break;
+            case 2:
+                let errorsStep2 = validateStep2Input(title);
+                if (errorsStep2.title) {
+                    this.setState({
+                        errors: errorsStep2
+                    });
+                } else {
+                    this.setState({
+                        errors: {},
+                        step: steps[ step ],
+                        cityPk: cityPk || formData.pk,
+                    });
                 }
 
+                break;
+            case 3:
+                let errorsDay1 = validateDayInput(day1_morning, day1_lunch, day1_afternoon, day1_diner, 'day1');
+                if (errorsDay1.day1_morning || errorsDay1.day1_lunch || errorsDay1.day1_afternoon || errorsDay1.day1_diner) {
+                    this.setState({
+                        errors: errorsDay1
+                    });
+                } else {
+                    this.setState({
+                        errors: {},
+                        step: steps[ step ],
+                    });
+                }
+                break;
+            case 4:
+                let errorsDay2 = validateDayInput(day2_morning, day2_lunch, day2_afternoon, day2_diner, 'day2');
+                if (errorsDay2.day2_morning || errorsDay2.day2_lunch || errorsDay2.day2_afternoon || errorsDay2.day2_diner) {
+                    this.setState({
+                        errors: errorsDay2
+                    });
+                } else {
+                    this.setState({
+                        errors: {},
+                        step: steps[ step ],
+                    });
+                }
+                break;
+            case 5:
+                let errorsDay3 = validateDayInput(day3_morning, day3_lunch, day3_afternoon, day3_diner, 'day3');
+                if (errorsDay3.day3_morning || errorsDay3.day3_lunch || errorsDay3.day3_afternoon || errorsDay3.day3_diner) {
+                    this.setState({
+                        errors: errorsDay3
+                    });
+                } else {
+                    this.setState({
+                        errors: {},
+                        step: steps[ step ],
+                    });
+                }
+                break;
+            case 6:
+                let formObj = createFormObj(this.state);
+                dispatch(createItineraryAction(formObj));
                 this.setState({
-                    errors: {},
-                    step: steps[ step ],
+                    submitted: true,
                 });
-            }
-            break;
-        case 2:
-            let errorsStep2 = validateStep2Input(title);
-            if (errorsStep2.title) {
-                this.setState({
-                    errors: errorsStep2
-                });
-            } else {
-                this.setState({
-                    errors: {},
-                    step: steps[ step ],
-                    cityPk: cityPk || formData.pk,
-                });
-            }
+                break;
+            case 0:
+            default:
+                let errorsStep0 = validateStep0Input(city);
 
-            break;
-        case 3:
-            let errorsDay1 = validateDayInput(day1_morning, day1_lunch, day1_afternoon, day1_diner, 'day1');
-            if (errorsDay1.day1_morning || errorsDay1.day1_lunch || errorsDay1.day1_afternoon || errorsDay1.day1_diner) {
-                this.setState({
-                    errors: errorsDay1
-                });
-            } else {
-                this.setState({
-                    errors: {},
-                    step: steps[ step ],
-                });
-            }
-            break;
-        case 4:
-            let errorsDay2 = validateDayInput(day2_morning, day2_lunch, day2_afternoon, day2_diner, 'day2');
-            if (errorsDay2.day2_morning || errorsDay2.day2_lunch || errorsDay2.day2_afternoon || errorsDay2.day2_diner) {
-                this.setState({
-                    errors: errorsDay2
-                });
-            } else {
-                this.setState({
-                    errors: {},
-                    step: steps[ step ],
-                });
-            }
-            break;
-        case 5:
-            let errorsDay3 = validateDayInput(day3_morning, day3_lunch, day3_afternoon, day3_diner, 'day3');
-            if (errorsDay3.day3_morning || errorsDay3.day3_lunch || errorsDay3.day3_afternoon || errorsDay3.day3_diner) {
-                this.setState({
-                    errors: errorsDay3
-                });
-            } else {
-                this.setState({
-                    errors: {},
-                    step: steps[ step ],
-                });
-            }
-            break;
-        case 6:
-            let formObj = createFormObj(this.state);
-            dispatch(createItineraryAction(formObj));
-            this.setState({
-                submitted: true,
-            });
-            break;
-        case 0:
-        default:
-            let errorsStep0 = validateStep0Input(city);
+                if (errorsStep0.city) {
+                    this.setState({
+                        errors: errorsStep0,
+                    });
+                } else {
+                    dispatch(initializeCreateAction(city, number_of_days));
+                    this.setState({
+                        errors: {},
+                        step: 1,
+                    });
 
-            if (errorsStep0.city) {
-                this.setState({
-                    errors: errorsStep0,
-                });
-            } else {
-                dispatch(initializeCreateAction(city, number_of_days));
-                this.setState({
-                    errors: {},
-                    step: 1,
-                });
-
-            }
-            break;
+                }
+                break;
         }
     };
 

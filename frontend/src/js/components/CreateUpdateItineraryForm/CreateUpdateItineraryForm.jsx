@@ -2,6 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { Jumbotron, Row, Col } from 'reactstrap';
+import { library } from '@fortawesome/fontawesome-svg-core/index';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faAngleLeft, } from '@fortawesome/free-solid-svg-icons';
+
+library.add(faAngleLeft,);
 
 import CreateUpdateFormStep from '../CreateUpdateFormStep/CreateUpdateFormStep';
 import CityItem from '../CityItem/CityItem';
@@ -32,11 +37,19 @@ const CreateUpdateItineraryForm = ({
                     ? <h1>Create a New Itinerary</h1>
                     : <h1>Update an Itinerary</h1>
             }
-
             {
                 stepDescription.map(line => <p className="lead" key={line}>{line}</p>)
             }
             <hr className="my-2" />
+            {
+                step > 0 &&
+                <div className="back-icon-container">
+                    <button onClick={handleClickBack}>
+                        <FontAwesomeIcon icon="angle-left" />
+                    </button>
+                </div>
+            }
+
             {
                 step === 1 && previouslyCreatedCities.length > 0 &&
                 <Row>
@@ -54,6 +67,7 @@ const CreateUpdateItineraryForm = ({
 
             <CreateUpdateFormStep
                 stepFields={stepFields}
+                handleClickBack={handleClickBack}
                 handleSubmit={handleSubmit}
                 handleInputChange={handleInputChange}
                 values={values}

@@ -6,7 +6,15 @@ import InputField from '../InputField/InputField';
 
 import './CreateUpdateFormStep.scss';
 
-const CreateUpdateFormStep = ({ djangoErrors, cityError, errors, handleInputChange, handleSubmit, stepFields, values }) => (
+const CreateUpdateFormStep = ({
+    djangoErrors,
+    cityError,
+    errors,
+    handleInputChange,
+    handleSubmit,
+    stepFields,
+    values
+}) => (
     <Form>
         {
             Object.keys(djangoErrors).length > 0 &&
@@ -15,7 +23,7 @@ const CreateUpdateFormStep = ({ djangoErrors, cityError, errors, handleInputChan
             </Alert>
         }
         {
-            Object.keys(cityError).length>0 &&
+            Object.keys(cityError).length > 0 &&
             <Alert color="danger">
                 {Object.keys(cityError).map(key => <li key={key}>{cityError[ key ]}</li>)}
             </Alert>
