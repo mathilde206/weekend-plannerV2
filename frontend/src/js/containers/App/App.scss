@@ -65,4 +65,14 @@ body, html {
         list-style-type: circle;
         margin: 1em;
     }
+
+    .reset-password-form-item{
+        margin: 1em;
+    }
+
+    .error-password-reset {
+        font-size: 0.8em;
+        color: red;
+    }
 }
+

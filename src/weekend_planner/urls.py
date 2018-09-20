@@ -11,6 +11,7 @@ from rest_framework_simplejwt.views import (
 )
 
 from accounts import urls as users_urls
+from accounts import url_reset
 from itineraries import urls as itineraries_urls
 from cities import urls as cities_urls
 from products import urls as products_urls
@@ -25,14 +26,15 @@ urlpatterns = [
                   path('api/auth/token/refresh/', TokenRefreshView.as_view()),
                   path('api/users/', include((users_urls, 'users'), namespace='users-api')),
                   path('api/itineraries/',
-                        include((itineraries_urls, 'itineraries'), namespace='itineraries-api')),
+                      include((itineraries_urls, 'itineraries'), namespace='itineraries-api')),
                   path('api/cities/',
-                        include((cities_urls, 'cities'), namespace='cities-api')),
+                      include((cities_urls, 'cities'), namespace='cities-api')),
                   path('api/products/',
-                        include((products_urls, 'products'), namespace='products-api')),
+                      include((products_urls, 'products'), namespace='products-api')),
                   path('api/checkout/',
                       include((checkout_urls, 'checkout'), namespace='checkout-api')),
                   path('admin/', admin.site.urls),
+                  path('password-reset/', include(url_reset))
               ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 urlpatterns.append(url(r'', TemplateView.as_view(template_name='react.html')))

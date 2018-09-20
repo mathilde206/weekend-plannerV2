@@ -27,7 +27,7 @@ const LoginForm = ({
                 djangoErrors &&
                 <Alert color="danger">
                     We couldn't log you in. Are you sure you are a registered user ?
-                    <Link to="/resetPassword" className="btn btn-link">Password Forgotten</Link>
+                    <a href="/password-reset/" className="btn btn-link">Password Forgotten</a>
                 </Alert>
             }
 
@@ -57,7 +57,7 @@ const LoginForm = ({
             }
         </Form>
         <Link to="/register" className="btn btn-link">Register</Link>
-        <Link to="/resetPassword" className="btn btn-link">Password Forgotten</Link>
+        <a href="/password-reset/" className="btn btn-link">Password Forgotten</a>
     </Jumbotron>);
 
 LoginForm.propTypes = {
