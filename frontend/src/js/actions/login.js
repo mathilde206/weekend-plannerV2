@@ -41,7 +41,7 @@ function loginAction(username, password) {
                 dispatch(successLogin(auth));
                 dispatch(fetchUserData(user_id));
             })
-            .catch(errors => dispatch(failureLogin(errors.message.data)));
+            .catch(error => dispatch(failureLogin(error)));
     };
 }
 

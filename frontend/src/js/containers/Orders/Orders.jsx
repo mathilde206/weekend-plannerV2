@@ -2,7 +2,9 @@ import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import ReactLoading from 'react-loading';
+import { Link } from 'react-router-dom';
 import { Alert } from 'reactstrap';
+
 import { fetchUserOrders } from '../../actions';
 import OrderCard from '../OrderCard/OrderCard';
 
@@ -21,6 +23,15 @@ class Orders extends React.Component {
                 <div className="container">
                     <ReactLoading type="bubbles" color="#000c4f" />
                 </div>
+            );
+        }
+
+        if (!orders.length) {
+            return (
+                <Fragment>
+                    <h4 className="order-title">You don't have any orders yet</h4>
+                    <p>Visit our <Link to="/products/">Product Page</Link></p>
+                </Fragment>
             );
         }
 

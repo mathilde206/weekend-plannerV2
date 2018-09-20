@@ -1,6 +1,7 @@
 from django.contrib.auth import get_user_model
 from django.http import JsonResponse
 from django.conf import settings
+from rest_framework.permissions import AllowAny
 import stripe
 
 from rest_framework.response import Response
@@ -10,7 +11,7 @@ User = get_user_model()
 
 from rest_framework.generics import (
     CreateAPIView,
-    RetrieveUpdateAPIView,
+    RetrieveAPIView,
     ListAPIView,
 )
 from rest_framework.permissions import IsAuthenticated
@@ -88,10 +89,11 @@ class UserOrderView(ListAPIView):
     serializer_class = OrderSerializer
 
 
-class OrderDetailView(RetrieveUpdateAPIView):
+class OrderDetailView(RetrieveAPIView):
     """
     This view returns the order items for one order
     """
     queryset = Order.objects.all()
     lookup_field = 'pk'
     serializer_class = OrderDetailSerializer
+    permission_classes = [AllowAny]

@@ -9,7 +9,7 @@ function getItineraryList(pageNumber='1', query='') {
 
 
 function getFilteredItineraryList(pageNumber='1', query='') {
-    const queryUrl = `?page=${pageNumber}&query=${query}`;
+    const queryUrl = `?page=${pageNumber}&${query}`;
 
     return axios.get(`/api/itineraries/list/${queryUrl}`)
         .then((response) => (response.data));

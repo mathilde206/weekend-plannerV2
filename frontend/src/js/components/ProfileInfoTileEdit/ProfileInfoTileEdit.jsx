@@ -88,7 +88,7 @@ const ProfileInfoTileEdit = ({
                         name="userLocation"
                         id="userLocation"
                         onChange={(event) => onFieldChange('userLocation', event)}
-                        placeholder={location}
+                        placeholder={userLocation}
                     />
                 </Col>
             </FormGroup>
