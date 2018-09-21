@@ -62,6 +62,7 @@ function getCart(cart) {
 
 export {
     ADD_TO_CART,
+    ERROR_ADD_TO_CART,
     REMOVE_FROM_CART,
     EMPTY_CART,
     HYDRATE_CART,

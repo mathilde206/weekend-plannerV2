@@ -60,7 +60,7 @@ function updateProfile(formObj) {
                         });
                 });
         } else {
-            updateUserProfile(id, access.token, formObj)
+            updateUserProfile(id, access, formObj)
                 .then(() => {
                     dispatch(updateProfileSuccess());
                 })

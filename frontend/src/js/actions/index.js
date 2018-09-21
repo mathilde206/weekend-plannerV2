@@ -20,6 +20,8 @@ import {
 import {
     FORM_SUBMITTED,
     INITIALIZE_FORM,
+    INITIALIZE_FORM_REQUEST,
+    INITIALIZE_FORM_FAILURE,
     ITINERARY_CREATED,
     ITINERARY_CREATION_FAILURE,
     RESET_FORM,
@@ -131,13 +133,6 @@ import {
     fetchUserOrders,
 } from './userOrders';
 
-import {
-    DELETE_REQUEST,
-    DELETE_SUCCESS,
-    DELETE_FAILURE,
-    deleteAction,
-} from './delete';
-
 export {
     ADD_TO_CART,
     BILLING_UPDATE_SUCCESS,
@@ -153,14 +148,13 @@ export {
     ERROR_USER_LIKES,
     FORM_SUBMITTED,
     INITIALIZE_FORM,
+    INITIALIZE_FORM_REQUEST,
+    INITIALIZE_FORM_FAILURE,
     ITINERARY_CREATED,
     ITINERARY_CREATION_FAILURE,
     ITINERARIES_LIST_FAILURE,
     ITINERARY_UPDATED,
     ITINERARY_UPDATED_FAILURE,
-    DELETE_REQUEST,
-    DELETE_SUCCESS,
-    DELETE_FAILURE,
     GET_USER_REQUEST,
     GET_USER_SUCCESS,
     GET_USER_FAILURE,
@@ -199,7 +193,6 @@ export {
     USER_ORDERS_REQUEST,
     addToCartAction,
     createItineraryAction,
-    deleteAction,
     emptyCartAction,
     fetchFilteredItineraries,
     fetchItineraries,

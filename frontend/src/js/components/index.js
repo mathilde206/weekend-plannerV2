@@ -31,6 +31,7 @@ export {
     DayDetails,
     DayTabs,
     Footer,
+    Four0FourPage,
     HomeJumbotron,
     InputField,
     ItineraryCard,
