@@ -1,0 +1,23 @@
+{
+  "displayName": "frontend tests",
+  "verbose": true,
+  "moduleDirectories": [
+    "node_modules"
+  ],
+  "testMatch": [
+    "<rootDir>/frontend/src/**/*.test.js?(x)"
+  ],
+  "moduleFileExtensions": [
+    "js",
+    "json",
+    "jsx",
+    "node"
+  ],
+  "transform": {
+    "^.+\\.js$": "<rootDir>/frontend/preprocess.js"
+  },
+  "rootDir": "../",
+  "setupFiles": [
+    "<rootDir>/node_modules/regenerator-runtime/runtime.js"
+  ]
+}
