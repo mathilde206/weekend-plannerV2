@@ -30,9 +30,6 @@ class Itinerary(models.Model):
         upload_to=upload_location,
         blank=True,
         null=True)
-    # TODO: Figure out how this works (and if I need it)
-    # height_field = models.IntegerField(default=0, editable=False)
-    # width_field = models.IntegerField(default=0, editable=False)
 
     budget = models.CharField(
         max_length=15,
@@ -66,9 +63,9 @@ class Itinerary(models.Model):
 def create_slug(instance, new_slug=None):
     """
     This recursive function will ensure that we create a unique slug (in case several
-    recommendations have the same title)
+    itinerary have the same title)
     by adding the id of the last one created to this instance (which unfortunately doesn't have
-    an idea to append yet).
+    an id to append yet).
     """
     slug = slugify(instance.title)
     if new_slug is not None:

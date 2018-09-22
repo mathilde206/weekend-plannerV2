@@ -21,6 +21,9 @@ class CitySerializer(ModelSerializer):
         ]
 
     def validate_name(self, value):
+        """
+        This function makes sure we can only create one city with the same name
+        """
         qs = City.objects.filter(name__iexact=value)
         if self.instance:
             qs = qs.exclude(pk=self.instance.pk)

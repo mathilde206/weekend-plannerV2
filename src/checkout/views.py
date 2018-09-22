@@ -25,6 +25,10 @@ from checkout.serializers import (
 
 
 def stripe_token_view(request):
+    """
+    This view returns the stripe publishable token in order to make the payment with the checkout
+    app
+    """
     if request.method == 'GET':
         if request.user:
             response = {
@@ -49,7 +53,7 @@ class OrderCreateView(CreateAPIView):
 
         try:
             charge = stripe.Charge.create(
-                amount=int(request.data["total"])*100,
+                amount=int(request.data["total"]) * 100,
                 currency="eur",
                 source=request.data['charge_id'],
                 description='userID'
