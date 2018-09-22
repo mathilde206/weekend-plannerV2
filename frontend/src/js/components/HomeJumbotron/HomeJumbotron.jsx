@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link, Redirect } from 'react-router-dom';
-import { Jumbotron, Button, Form, FormGroup, Input } from 'reactstrap';
+import { Jumbotron, Button, Col, Input, Row } from 'reactstrap';
 
 import './HomeJumbotron.scss';
 
@@ -50,29 +50,31 @@ class HomeJumbotron extends React.Component {
                 <h2 className="capitalize">Welcome {user ? user : ''}</h2>
                 <p className="lead">Start planning your next weekend in Europe with 1-3 days trips recommendations. You can also join the community and propose your own itineraries. </p>
                 <hr className="my-2" />
-                <div className="buttons-inline">
+                <Row>
+                    <Col xs="5" md="3" className="home-actions">
+                        <Input
+                            onChange={this.handleSearchChange}
+                            type="text"
+                            name="search"
+                            id="search"
+                            placeholder="Start Exploring"
+                            className=""
+                        />
+                    </Col>
+                    <Col xs="5" md="3" className="home-actions">
+                        <Button onClick={this.handleSubmit}>Go!</Button>
+                    </Col>
                     {
                         isAuthenticated &&
-                            <Link to="/create/">
-                                <Button color="primary" className="btn-mg-right">
-                                    Create an Itinerary
-                                </Button>
-                            </Link>
+                            <Col xs="12" md={{ size: 3, offset: 3 }} className="home-actions">
+                                <Link to="/create/">
+                                    <Button color="primary" className="btn-mg-right">
+                                        Create an Itinerary
+                                    </Button>
+                                </Link>
+                            </Col>
                     }
-
-                    <Form inline>
-                        <FormGroup className="mb-2 mr-sm-2 mb-sm-0">
-                            <Input
-                                onChange={this.handleSearchChange}
-                                type="text"
-                                name="search"
-                                id="search"
-                                placeholder="Start Exploring"
-                            />
-                        </FormGroup>
-                        <Button onClick={this.handleSubmit}>Go!</Button>
-                    </Form>
-                </div>
+                </Row>
             </Jumbotron>
         </div>
         );

@@ -48,65 +48,65 @@ class ProfileInfoTile extends React.Component {
         return (
             <div className="details-container">
                 <Row className="details-row">
-                    <Col xs="4" md="2">
+                    <Col xs="12" md="4">
                         <span className="details-label">
                             <FontAwesomeIcon icon="user" />
                         &nbsp;Name
                         </span>
                     </Col>
-                    <Col xs="6" md="8">
+                    <Col xs="12" md="8">
                         <span className="details-info">
                             {username || noDataPlaceholder}
                         </span>
                     </Col>
                 </Row>
                 <Row className="details-row">
-                    <Col xs="4" md="2">
+                    <Col xs="12" md="4">
                         <span className="details-label">
                             <FontAwesomeIcon icon="map-marker-alt" />
                         &nbsp;Location
                         </span>
                     </Col>
-                    <Col xs="6" md="8">
+                    <Col xs="12" md="8">
                         <span className="profile-info">
                             {userLocation || noDataPlaceholder}
                         </span>
                     </Col>
                 </Row>
                 <Row className="details-row">
-                    <Col xs="4" md="2">
+                    <Col xs="12" md="4">
                         <span className="details-label">
                             <FontAwesomeIcon icon="birthday-cake" />
                         &nbsp;Birth Date
                         </span>
                     </Col>
-                    <Col xs="6" md="8">
+                    <Col xs="12" md="8">
                         <span className="profile-info">
                             {birth_date || noDataPlaceholder}
                         </span>
                     </Col>
                 </Row>
                 <Row className="details-row">
-                    <Col xs="4" md="2">
+                    <Col xs="12" md="4">
                         <span className="details-label">
                             <FontAwesomeIcon icon="globe" />
                         &nbsp;Website
                         </span>
                     </Col>
-                    <Col xs="6" md="8">
+                    <Col xs="12" md="8">
                         <span className="profile-info">
                             {website || noDataPlaceholder}
                         </span>
                     </Col>
                 </Row>
                 <Row className="details-row">
-                    <Col xs="4" md="2">
+                    <Col xs="12" md="4">
                         <span className="details-label">
                             <FontAwesomeIcon icon="book" />
                         &nbsp;Bio
                         </span>
                     </Col>
-                    <Col xs="6" md="8">
+                    <Col xs="12" md="8">
                         <span className="details-label">
                             {bio || noDataPlaceholder}
                         </span>

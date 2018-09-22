@@ -1,11 +1,8 @@
 .product-page-wrapper {
-    min-height: 100vh;
-    display: flex;
     align-content: center;
-    flex-wrap: wrap;
 
     h1 {
-        flex-basis: 100%;
+        width: 100%;
     }
 
     .disabled-checkout {

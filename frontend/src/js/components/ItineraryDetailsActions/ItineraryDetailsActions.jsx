@@ -27,7 +27,6 @@ library.add(
 class ItineraryDetailsActions extends React.Component {
     handleLikeClick = (event) => {
         const {
-            onLike,
             slug,
             dispatch,
         } = this.props;

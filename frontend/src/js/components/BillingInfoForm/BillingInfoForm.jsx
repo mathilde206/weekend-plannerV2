@@ -221,7 +221,7 @@ class BillingInfoForm extends React.Component {
                         value={billing_phone_number}
                         error={errors.billing_phone_number}
                     />
-                    <Button className="main-button" onClick={this.handleSubmit}>Submit</Button>
+                    <Button className="btn btn-default main-button" onClick={this.handleSubmit}>Submit</Button>
                 </Form>
             </div>
         );

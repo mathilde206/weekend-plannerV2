@@ -18,11 +18,11 @@ library.add(
 import './CheckoutConfirmCart.scss';
 
 const CheckoutConfirmCart = ({
-                                 cart,
-                                 removeFromCart,
-                                 total,
-                                 url,
-                             }) => (
+    cart,
+    removeFromCart,
+    total,
+    url,
+}) => (
     <div className="checkout-confirm-wrapper">
         <p>
             Please confirm your order.
@@ -32,7 +32,7 @@ const CheckoutConfirmCart = ({
                 cart.map(({ pk, name, price, type }) => (
                     <ListGroupItem key={pk}>
                         <Row>
-                            <Col xs="2">
+                            <Col xs="4" md="2">
                                 <Button
                                     outline
                                     color="danger"
@@ -41,10 +41,10 @@ const CheckoutConfirmCart = ({
                                     <FontAwesomeIcon icon="ban" />
                                 </Button>
                             </Col>
-                            <Col xs="6">
+                            <Col xs="8" md="6">
                                 {name} - {type}
                             </Col>
-                            <Col xs="4" className="price-col">
+                            <Col xs="12" md="4" className="price-col">
                                 <FontAwesomeIcon icon="euro-sign" /> {price}
                             </Col>
                         </Row>

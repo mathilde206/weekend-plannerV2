@@ -50,7 +50,7 @@ class NavigationBarTop extends React.Component {
 
         return (
             <div className="container-fluid">
-                <Navbar color="light" light expand="md">
+                <Navbar color="dark" dark expand="md">
                     <NavbarBrand href="/">Weekend Planner</NavbarBrand>
                     <NavbarToggler onClick={this.toggle} />
                     <Collapse isOpen={this.state.isOpen} navbar>

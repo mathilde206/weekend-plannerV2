@@ -1,6 +1,6 @@
 @import '../../../scss/variables';
 
-nav.navbar.navbar-expand-md.navbar-light {
+nav.navbar.navbar-expand-md.navbar-dark{
     background: $primary; /* fallback for old browsers */
     background: -webkit-linear-gradient(to right, $primary, $primary-dark); /* Chrome 10-25, Safari 5.1-6 */
     background: linear-gradient(to right, $primary, $primary-dark); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
@@ -13,7 +13,7 @@ nav.navbar.navbar-expand-md.navbar-light {
         a {
             color: $font-color-dark;
 
-            &:hover, &:active{
+            &:hover, &:active, &:focus{
                 color: $primary;
             }
         }

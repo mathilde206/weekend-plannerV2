@@ -2,7 +2,7 @@
 @import '../../../scss/reset';
 
 body, html {
-    min-width: 100vw;
+    width: 100%;
     min-height: 100vh;
     font-family: $font-text;
 
@@ -55,6 +55,7 @@ body, html {
     .border-title {
         padding: 0.6em 2em;
         margin-bottom: 1em;
+        margin-top:1em;
         background-color: $background-white;
         border-bottom: $heavy-border;
         border-top: $heavy-border;

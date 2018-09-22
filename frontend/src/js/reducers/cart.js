@@ -44,8 +44,7 @@ function cart(state = {}, action) {
             cart: []
         };
     case HYDRATE_CART:
-        console.log(cart)
-        total = cart ? cart.map(item => parseInt(item.price)).reduce((a, b) => a + b, 0) : 0;
+        total = cart.length ? cart.map(item => parseInt(item.price)).reduce((a, b) => a + b, 0) : 0;
         return {
             cart,
             total,

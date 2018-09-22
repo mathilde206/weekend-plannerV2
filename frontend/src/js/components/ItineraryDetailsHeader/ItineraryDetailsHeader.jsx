@@ -31,22 +31,22 @@ library.add(
 );
 
 const ItineraryDetailsHeader = ({
-    city,
-    created_date,
-    budget,
-    isAuthenticated,
-    isOwner,
-    image,
-    likes,
-    number_of_days,
-    onLike,
-    pk,
-    slug,
-    title,
-    user,
-    views,
-    onDelete,
-}) => (
+                                    city,
+                                    created_date,
+                                    budget,
+                                    isAuthenticated,
+                                    isOwner,
+                                    image,
+                                    likes,
+                                    number_of_days,
+                                    onLike,
+                                    pk,
+                                    slug,
+                                    title,
+                                    user,
+                                    views,
+                                    onDelete,
+                                }) => (
     <Fragment>
         {
             image &&
@@ -61,7 +61,7 @@ const ItineraryDetailsHeader = ({
         <Row>
             <Col xs="12" md={{ size: 10, offset: 1 }}>
                 <Jumbotron>
-                    <h1 className="display-3">{title}</h1>
+                    <h2>{title}</h2>
                     <Row>
                         <Col sm="12" md="3">
                             <p className="lead">
@@ -75,7 +75,7 @@ const ItineraryDetailsHeader = ({
                                 &nbsp;{number_of_days} days
                             </p>
                         </Col>
-                        <Col sm="12" md="3nom">
+                        <Col sm="12" md="3">
                             <p className="lead">
                                 <FontAwesomeIcon icon="dollar-sign" />
                                 &nbsp;{budget}
@@ -84,9 +84,15 @@ const ItineraryDetailsHeader = ({
                     </Row>
                     <hr className="my-2" />
                     <p className="text-muted">
-                        Created by <Link to={`/${user.pk}/profile`}>{user.username}</Link> on {created_date}
-                        - <FontAwesomeIcon icon="star" /> {likes} likes
-                        - <FontAwesomeIcon icon="eye" /> {views} views
+                        <Col sm="12" className="margin-bottom">
+                            Created by <Link to={`/${user.pk}/profile`}>{user.username}</Link> on {created_date}
+                        </Col>
+                        <Col sm="12" md="6" className="margin-bottom">
+                            <FontAwesomeIcon icon="star" /> {likes} likes
+                        </Col>
+                        <Col sm="12" md="6" className="margin-bottom">
+                            <FontAwesomeIcon icon="eye" /> {views} views
+                        </Col>
                     </p>
                     <ItineraryDetailsActions
                         onLike={onLike}

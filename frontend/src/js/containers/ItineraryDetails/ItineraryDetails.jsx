@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Redirect from 'react-router-dom';
 import { connect } from 'react-redux';
 import { Alert } from 'reactstrap';
 import ReactLoading from 'react-loading';
@@ -183,23 +182,20 @@ class ItineraryDetails extends React.Component {
         }
 
         return (
-            <div className="details-wrapper">
+            <div className="details-wrapper container">
                 {
                     error &&
-                    <div className="container">
-                        <Alert color="danger">
-                            We couldn't load the details at this time. Please try again later.
-                        </Alert>
-                    </div>
+                    <Alert color="danger">
+                        We couldn't load the details at this time. Please try again later.
+                    </Alert>
                 }
 
                 {
                     deleteError &&
-                    <div className="container">
-                        <Alert color="danger">
-                            This itinerary couldn't be deleted at this time. Please try again later.
-                        </Alert>
-                    </div>
+
+                    <Alert color="danger">
+                        This itinerary couldn't be deleted at this time. Please try again later.
+                    </Alert>
                 }
                 <ItineraryDetailsHeader
                     pk={pk}
