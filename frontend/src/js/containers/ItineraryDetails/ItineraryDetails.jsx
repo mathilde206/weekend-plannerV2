@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { Alert } from 'reactstrap';
 import ReactLoading from 'react-loading';
 
-import { likeItinerary, fetchUserItineraryLikes } from '../../actions';
+import { likeItinerary, fetchUserItineraryLikes, fetchItineraries } from '../../actions';
 import {
     accessToken,
     isAccessTokenExpired,

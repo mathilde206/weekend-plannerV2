@@ -32,7 +32,7 @@ import {
 class CreateItinerary extends React.Component {
     state = {
         step: 0,
-        number_of_days: 1,
+        number_of_days: '1',
         city: '',
         cityPk: null,
         country: '',
@@ -99,7 +99,7 @@ class CreateItinerary extends React.Component {
         dispatch(resetForm());
         this.setState({
             step: 0,
-            number_of_days: 1,
+            number_of_days: '1',
             city: '',
             cityPk: null,
             country: '',
@@ -273,7 +273,7 @@ class CreateItinerary extends React.Component {
             if (errorsStep0.city) {
                 this.setState({
                     errors: errorsStep0,
-                });get;
+                });
             } else {
                 dispatch(initializeCreateAction(city, number_of_days));
                 this.setState({

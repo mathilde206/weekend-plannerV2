@@ -29,7 +29,7 @@ import {
 class UpdateItinerary extends React.Component {
     state = {
         step: 0,
-        number_of_days: 1,
+        number_of_days: '1',
         city: '',
         cityPk: null,
         country: '',
@@ -176,130 +176,130 @@ class UpdateItinerary extends React.Component {
         event.preventDefault();
 
         switch (this.state.step) {
-            case 1:
-                let errorsStep1 = validateStep1Input(city, country, language, currency);
+        case 1:
+            let errorsStep1 = validateStep1Input(city, country, language, currency);
 
-                if (errorsStep1.city || errorsStep1.country || errorsStep1.language || errorsStep1.currency) {
-                    this.setState({
-                        errors: errorsStep1,
-                    });
-                } else {
-                    let cityObj = new FormData();
-                    cityObj.append('name', city);
-                    cityObj.append('country', country);
-                    cityObj.append('language', language);
-                    cityObj.append('currency', currency);
-
-                    dispatch(updateCityAction(cityObj, cityPk));
-
-                    this.setState({
-                        errors: {},
-                        step: steps[ step ],
-                    });
-                }
-                break;
-            case 2:
-                let errorsStep2 = validateStep2Input(title);
-                if (errorsStep2.title) {
-                    this.setState({
-                        errors: errorsStep2
-                    });
-                } else {
-                    this.setState({
-                        errors: {},
-                        step: steps[ step ],
-                        cityPk: cityPk || formData.pk,
-                    });
-                }
-
-                break;
-            case 3:
-                let errorsDay1 = validateDayInput(day1_morning, day1_lunch, day1_afternoon, day1_diner, 'day1');
-                if (errorsDay1.day1_morning || errorsDay1.day1_lunch || errorsDay1.day1_afternoon || errorsDay1.day1_diner) {
-                    this.setState({
-                        errors: errorsDay1
-                    });
-                } else {
-                    this.setState({
-                        errors: {},
-                        step: steps[ step ],
-                    });
-                }
-                break;
-            case 4:
-                let errorsDay2 = validateDayInput(day2_morning, day2_lunch, day2_afternoon, day2_diner, 'day2');
-                if (errorsDay2.day2_morning || errorsDay2.day2_lunch || errorsDay2.day2_afternoon || errorsDay2.day2_diner) {
-                    this.setState({
-                        errors: errorsDay2
-                    });
-                } else {
-                    this.setState({
-                        errors: {},
-                        step: steps[ step ],
-                    });
-                }
-                break;
-            case 5:
-                let errorsDay3 = validateDayInput(day3_morning, day3_lunch, day3_afternoon, day3_diner, 'day3');
-                if (errorsDay3.day3_morning || errorsDay3.day3_lunch || errorsDay3.day3_afternoon || errorsDay3.day3_diner) {
-                    this.setState({
-                        errors: errorsDay3
-                    });
-                } else {
-                    this.setState({
-                        errors: {},
-                        step: steps[ step ],
-                    });
-                }
-                break;
-            case 6:
-                let formObj = new FormData();
-                formObj.append('city', cityPk);
-                formObj.append('number_of_days', String(number_of_days));
-                formObj.append('title', title);
-                formObj.append('budget', budget);
-                formObj.append('day1_morning', day1_morning);
-                formObj.append('day1_lunch', day1_lunch);
-                formObj.append('day1_afternoon', day1_afternoon);
-                formObj.append('day1_diner', day1_diner);
-                if (image) {
-                    formObj.append('image', image);
-                }
-                if (number_of_days > 1) {
-                    formObj.append('day2_morning', day2_morning);
-                    formObj.append('day2_lunch', day2_lunch);
-                    formObj.append('day2_afternoon', day2_afternoon);
-                    formObj.append('day2_diner', day2_diner);
-                }
-
-                if (number_of_days > 2) {
-                    formObj.append('day3_morning', day3_morning);
-                    formObj.append('day3_lunch', day3_lunch);
-                    formObj.append('day3_afternoon', day3_afternoon);
-                    formObj.append('day3_diner', day3_diner);
-                }
-
-                dispatch(updateItineraryAction(formObj, slug));
+            if (errorsStep1.city || errorsStep1.country || errorsStep1.language || errorsStep1.currency) {
                 this.setState({
-                    submitted: true,
+                    errors: errorsStep1,
                 });
-                break;
-            case 0:
-            default:
-                let errorsStep0 = validateStep0Input(city);
+            } else {
+                let cityObj = new FormData();
+                cityObj.append('name', city);
+                cityObj.append('country', country);
+                cityObj.append('language', language);
+                cityObj.append('currency', currency);
 
-                if (errorsStep0.city) {
-                    this.setState({
-                        errors: errorsStep0,
-                    });
-                } else {
-                    dispatch(initializeCreateAction(city, number_of_days));
-                    this.setState({
-                        errors: {},
-                        step: 1,
-                    });
-                }
-                break;
+                dispatch(updateCityAction(cityObj, cityPk));
+
+                this.setState({
+                    errors: {},
+                    step: steps[ step ],
+                });
+            }
+            break;
+        case 2:
+            let errorsStep2 = validateStep2Input(title);
+            if (errorsStep2.title) {
+                this.setState({
+                    errors: errorsStep2
+                });
+            } else {
+                this.setState({
+                    errors: {},
+                    step: steps[ step ],
+                    cityPk: cityPk || formData.pk,
+                });
+            }
+
+            break;
+        case 3:
+            let errorsDay1 = validateDayInput(day1_morning, day1_lunch, day1_afternoon, day1_diner, 'day1');
+            if (errorsDay1.day1_morning || errorsDay1.day1_lunch || errorsDay1.day1_afternoon || errorsDay1.day1_diner) {
+                this.setState({
+                    errors: errorsDay1
+                });
+            } else {
+                this.setState({
+                    errors: {},
+                    step: steps[ step ],
+                });
+            }
+            break;
+        case 4:
+            let errorsDay2 = validateDayInput(day2_morning, day2_lunch, day2_afternoon, day2_diner, 'day2');
+            if (errorsDay2.day2_morning || errorsDay2.day2_lunch || errorsDay2.day2_afternoon || errorsDay2.day2_diner) {
+                this.setState({
+                    errors: errorsDay2
+                });
+            } else {
+                this.setState({
+                    errors: {},
+                    step: steps[ step ],
+                });
+            }
+            break;
+        case 5:
+            let errorsDay3 = validateDayInput(day3_morning, day3_lunch, day3_afternoon, day3_diner, 'day3');
+            if (errorsDay3.day3_morning || errorsDay3.day3_lunch || errorsDay3.day3_afternoon || errorsDay3.day3_diner) {
+                this.setState({
+                    errors: errorsDay3
+                });
+            } else {
+                this.setState({
+                    errors: {},
+                    step: steps[ step ],
+                });
+            }
+            break;
+        case 6:
+            let formObj = new FormData();
+            formObj.append('city', cityPk);
+            formObj.append('number_of_days', String(number_of_days));
+            formObj.append('title', title);
+            formObj.append('budget', budget);
+            formObj.append('day1_morning', day1_morning);
+            formObj.append('day1_lunch', day1_lunch);
+            formObj.append('day1_afternoon', day1_afternoon);
+            formObj.append('day1_diner', day1_diner);
+            if (image) {
+                formObj.append('image', image);
+            }
+            if (parseInt(number_of_days) > 1) {
+                formObj.append('day2_morning', day2_morning);
+                formObj.append('day2_lunch', day2_lunch);
+                formObj.append('day2_afternoon', day2_afternoon);
+                formObj.append('day2_diner', day2_diner);
+            }
+
+            if (parseInt(number_of_days) > 2) {
+                formObj.append('day3_morning', day3_morning);
+                formObj.append('day3_lunch', day3_lunch);
+                formObj.append('day3_afternoon', day3_afternoon);
+                formObj.append('day3_diner', day3_diner);
+            }
+
+            dispatch(updateItineraryAction(formObj, slug));
+            this.setState({
+                submitted: true,
+            });
+            break;
+        case 0:
+        default:
+            let errorsStep0 = validateStep0Input(city);
+
+            if (errorsStep0.city) {
+                this.setState({
+                    errors: errorsStep0,
+                });
+            } else {
+                dispatch(initializeCreateAction(city, number_of_days));
+                this.setState({
+                    errors: {},
+                    step: 1,
+                });
+            }
+            break;
         }
         ;
     };

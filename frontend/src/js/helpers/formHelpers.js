@@ -52,14 +52,14 @@ const createFormObj = (state) => {
     formObj.append('day1_diner', state.day1_diner);
     formObj.append('image', state.image);
 
-    if (state.number_of_days > 1) {
+    if (parseInt(state.number_of_days) > 1) {
         formObj.append('day2_morning', state.day2_morning);
         formObj.append('day2_lunch', state.day2_lunch);
         formObj.append('day2_afternoon', state.day2_afternoon);
         formObj.append('day2_diner', state.day2_diner);
     }
 
-    if (state.number_of_days > 2) {
+    if (parseInt(state.number_of_days) > 2) {
         formObj.append('day3_morning', state.day3_morning);
         formObj.append('day3_lunch', state.day3_lunch);
         formObj.append('day3_afternoon', state.day3_afternoon);
