@@ -127,7 +127,7 @@ export function getFieldsforStep(step) {
                 name: 'number_of_days',
                 label: 'Number of Days *',
                 type: 'select',
-                options: [ 1, 2, 3 ]
+                options: [ '1', '2', '3' ]
             },
         ]);
     }

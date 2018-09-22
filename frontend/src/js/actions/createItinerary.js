@@ -30,10 +30,10 @@ function getSteps(number_of_days) {
     //Step 3 is day 1 input,
     // Step 4 is day 2 input
     // Step 5 is day 3 input
-    if (number_of_days === 1) {
+    if (number_of_days === '1') {
         return [ 1, 2, 3, 6 ];
     }
-    if (number_of_days === 2) {
+    if (number_of_days === '2') {
         return [ 1, 2, 3, 4, 6 ];
     }
     return [ 1, 2, 3, 4, 5, 6 ];
