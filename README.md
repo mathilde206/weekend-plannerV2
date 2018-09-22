@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/mathilde206/weekend-planner-django-only.svg?branch=master)](https://travis-ci.org/mathilde206/weekend-planner-django-only)
+
 # The weekend planner
 
 When you live in Europe, you have the chance to be a few hours away to many great cities and places, making it possible and easy to frequently travel on the weekends. 
