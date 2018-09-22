@@ -23,7 +23,7 @@ function stripe(state = {}, action) {
         };
     case SUCCESS_STRIPE_PUB_KEY:
         return {
-            isLoading: true,
+            isLoading: false,
             key,
         };
     default:

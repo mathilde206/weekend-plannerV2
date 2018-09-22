@@ -61,7 +61,7 @@ In this section, you should mention all of the languages, frameworks, libraries,
 
 ## Testing
 - I included unit tests in my django apps for custom functions.
-- I included JS unit tests for non-react and non-asyncronous functions
+- I included JS unit tests for non-react and non-asyncronous functions. To test: in the frontend directory, ```npm test```
 - The detailed UI/UX tests are to be found [here](https://github.com/mathilde206/weekend-plannerV2/blob/master/User%20Testing%20-%20Weekend%20Planner.pdf)
 - I am using Travis for continuous integration. 
 

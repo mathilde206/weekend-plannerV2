@@ -15,26 +15,28 @@ function cityUpdate(state={}, action) {
     } = action;
 
     switch (type){
-        case UPDATE_CITY_REQUEST:
-            return {
-                isLoading,
-            }
-        case UPDATE_CITY_ERROR:
-            return {
-                updated,
-                isLoading,
-                error,
-            };
-        case UPDATE_CITY_SUCCESS:
-            return {
-                city,
-                updated,
-                isLoading
-            };
-        case UPDATE_CITY_RESET:{
-            return {}
-        }
-        default:
-            return state;
+    case UPDATE_CITY_REQUEST:
+        return {
+            isLoading,
+        };
+    case UPDATE_CITY_ERROR:
+        return {
+            updated,
+            isLoading,
+            error,
+        };
+    case UPDATE_CITY_SUCCESS:
+        return {
+            city,
+            updated,
+            isLoading
+        };
+    case UPDATE_CITY_RESET:{
+        return {};
+    }
+    default:
+        return state;
     }
 }
+
+export default cityUpdate;

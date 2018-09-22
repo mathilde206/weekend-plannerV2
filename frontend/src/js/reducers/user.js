@@ -11,6 +11,7 @@ function user(state = {}, action) {
         isFetching,
         type,
         user,
+        error,
     } = action;
 
     switch (type) {

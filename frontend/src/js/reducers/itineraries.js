@@ -12,6 +12,7 @@ function itineraries(state = {}, action) {
         total_pages,
         type,
         withQuery,
+        error,
     } = action;
 
     switch (type) {

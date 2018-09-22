@@ -12,6 +12,7 @@ function cart(state = {}, action) {
         cart,
         product,
         productId,
+        error,
     } = action;
 
     let currentCart = state.cart || [];
@@ -41,7 +42,8 @@ function cart(state = {}, action) {
         };
     case EMPTY_CART:
         return {
-            cart: []
+            cart: [],
+            total: 0,
         };
     case HYDRATE_CART:
         total = cart.length ? cart.map(item => parseInt(item.price)).reduce((a, b) => a + b, 0) : 0;

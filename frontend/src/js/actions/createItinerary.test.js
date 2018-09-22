@@ -11,9 +11,9 @@ import {
 
 describe('Validate itinerary creation actions', () => {
     it('should return the correct list of steps depending on the number of days ', () => {
-        expect(getSteps(1)).toEqual([ 1, 2, 3, 6 ]);
-        expect(getSteps(2)).toEqual([ 1, 2, 3, 4, 6 ]);
-        expect(getSteps(3)).toEqual([ 1, 2, 3, 4, 5, 6 ]);
+        expect(getSteps('1')).toEqual([ 1, 2, 3, 6 ]);
+        expect(getSteps('2')).toEqual([ 1, 2, 3, 4, 6 ]);
+        expect(getSteps('3')).toEqual([ 1, 2, 3, 4, 5, 6 ]);
     });
     it('it should return the right actions', () => {
         expect(resetForm()).toEqual({
@@ -23,11 +23,11 @@ describe('Validate itinerary creation actions', () => {
             type: 'INITIALIZE_FORM_REQUEST',
             isLoading: true,
         });
-        expect(initializeAction('Paris', 2, getSteps(2), 1)).toEqual({
+        expect(initializeAction('Paris', '2', getSteps('2'), 1)).toEqual({
             type: 'INITIALIZE_FORM',
             formData: {
                 city: 'Paris',
-                number_of_days: 2,
+                number_of_days: '2',
             },
             steps: [ 1, 2, 3, 4, 6 ],
             previouslyCreatedCities: 1,
