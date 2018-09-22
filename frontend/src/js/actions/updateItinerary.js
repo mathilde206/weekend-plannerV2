@@ -62,5 +62,8 @@ export {
     ITINERARY_UPDATED_FAILURE,
     ITINERARY_UPDATED,
     REQUEST_ITINERARY_UPDATE,
-    updateItineraryAction
+    updateItineraryAction,
+    requestItineraryUpdate,
+    itineraryUpdated,
+    itineraryUpdateFailure,
 };

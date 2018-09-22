@@ -19,7 +19,6 @@ const ITINERARY_CREATED = 'ITINERARY_CREATED';
 const ITINERARY_CREATION_FAILURE = 'ITINERARY_CREATION_FAILURE';
 const RESET_FORM = 'RESET_FORM';
 
-
 function resetForm() {
     return {
         type: RESET_FORM,
@@ -28,6 +27,9 @@ function resetForm() {
 
 function getSteps(number_of_days) {
     // Helper function to get the number of steps when the form is initialized.
+    //Step 3 is day 1 input,
+    // Step 4 is day 2 input
+    // Step 5 is day 3 input
     if (number_of_days === 1) {
         return [ 1, 2, 3, 6 ];
     }
@@ -94,7 +96,7 @@ function itineraryCreatedSuccess(data) {
 function itineraryCreationFailure(error) {
     return {
         type: ITINERARY_CREATION_FAILURE,
-        djangoError:error,
+        djangoError: error,
     };
 }
 
@@ -129,7 +131,6 @@ function createItineraryAction(formObj) {
     };
 }
 
-
 export {
     FORM_SUBMITTED,
     INITIALIZE_FORM,
@@ -141,4 +142,11 @@ export {
     createItineraryAction,
     initializeCreateAction,
     resetForm,
+    getSteps,
+    requestInitializeForm,
+    initializeAction,
+    initializeFormFailure,
+    submitItinerary,
+    itineraryCreatedSuccess,
+    itineraryCreationFailure,
 };

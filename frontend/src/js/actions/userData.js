@@ -22,7 +22,7 @@ function retreiveUserData(user, id) {
 
 function errorUserData(error) {
     return {
-        type: GET_USER_SUCCESS,
+        type: GET_USER_FAILURE,
         isFetching: false,
         error: error,
     };
@@ -47,4 +47,7 @@ export {
     GET_USER_REQUEST,
     GET_USER_FAILURE,
     fetchUserData,
+    requestUserData,
+    retreiveUserData,
+    errorUserData,
 };

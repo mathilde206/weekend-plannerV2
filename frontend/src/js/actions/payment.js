@@ -83,4 +83,7 @@ export {
     ERROR_PAYMENT,
     REQUEST_PAYMENT,
     makePayment,
+    requestPayment,
+    errorPayment,
+    successPayment,
 };

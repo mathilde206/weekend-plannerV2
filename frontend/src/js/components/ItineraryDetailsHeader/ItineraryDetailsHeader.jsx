@@ -63,19 +63,19 @@ const ItineraryDetailsHeader = ({
                 <Jumbotron>
                     <h1 className="display-3">{title}</h1>
                     <Row>
-                        <Col sm="12" md="2">
+                        <Col sm="12" md="3">
                             <p className="lead">
                                 <FontAwesomeIcon icon="map-marker-alt" />
                                 &nbsp;{city.name}
                             </p>
                         </Col>
-                        <Col sm="12" md="2">
+                        <Col sm="12" md="3">
                             <p className="lead">
                                 <FontAwesomeIcon icon="calendar-alt" />
                                 &nbsp;{number_of_days} days
                             </p>
                         </Col>
-                        <Col sm="12" md="2">
+                        <Col sm="12" md="3nom">
                             <p className="lead">
                                 <FontAwesomeIcon icon="dollar-sign" />
                                 &nbsp;{budget}

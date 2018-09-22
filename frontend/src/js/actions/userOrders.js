@@ -62,4 +62,7 @@ export {
     USER_ORDERS_ERROR,
     USER_ORDERS_REQUEST,
     fetchUserOrders,
+    requestUserOrders,
+    errorUserOrders,
+    receiveUserOrders,
 };

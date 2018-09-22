@@ -75,4 +75,5 @@ export {
     validateStep1Input,
     validateStep2Input,
     validateDayInput,
+    validateValue,
 };

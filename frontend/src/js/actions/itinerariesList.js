@@ -60,5 +60,8 @@ export {
     REQUEST_ITINERARIES_LIST,
     RECEIVE_ITINERARIES_LIST,
     fetchItineraries,
-    fetchFilteredItineraries
+    fetchFilteredItineraries,
+    requestItinerariesList,
+    itinerariesListFailure,
+    receiveItinerariesList,
 };

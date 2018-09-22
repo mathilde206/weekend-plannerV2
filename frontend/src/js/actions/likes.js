@@ -79,5 +79,8 @@ export {
     REQUEST_USER_LIKES,
     fetchUserItineraryLikes,
     likeItinerary,
+    errorUserItineraryLikes,
+    receiveUserItineraryLikes,
+    requestUserItineraryLikes,
 };
 

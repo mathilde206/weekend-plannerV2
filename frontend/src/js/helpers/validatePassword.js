@@ -1,5 +1,5 @@
 const validatePassword = (password) => {
-    return password.length > 8;
+    return password.length > 7;
 };
 
 export default validatePassword;

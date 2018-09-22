@@ -50,5 +50,7 @@ export {
     LOGIN_FAILURE,
     LOGIN_SUCCESS,
     loginAction,
-    successLogin
+    successLogin,
+    requestLogin,
+    failureLogin,
 };

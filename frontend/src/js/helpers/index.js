@@ -1,5 +1,4 @@
 import getAuthToken from './authHeader';
-import getBudgetChoices from './getBudgetChoices';
 import validateEmail from './validateEmail';
 import validateEmailsMatch from './validateEmailsMatch';
 import validatePassword from './validatePassword';
@@ -17,7 +16,6 @@ import {
 export {
     createFormObj,
     getAuthToken,
-    getBudgetChoices,
     history,
     validateEmail,
     validateEmailsMatch,

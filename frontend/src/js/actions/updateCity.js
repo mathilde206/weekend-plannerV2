@@ -13,7 +13,7 @@ function requestCityUpdate() {
     };
 }
 
-function errorCityUpdate() {
+function errorCityUpdate(error) {
     return {
         type: UPDATE_CITY_ERROR,
         updated: false,
@@ -76,5 +76,8 @@ export {
     UPDATE_CITY_RESET,
     updateCityAction,
     cityUpdateReset,
+    requestCityUpdate,
+    errorCityUpdate,
+    successCityUpdate,
 };
 

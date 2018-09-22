@@ -70,4 +70,7 @@ export {
     removeFromCartAction,
     emptyCartAction,
     getCart,
+    successProductDetails,
+    errorAddToCard,
+    requestProductInfo,
 };

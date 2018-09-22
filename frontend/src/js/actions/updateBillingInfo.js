@@ -63,4 +63,7 @@ export {
     BILLING_UPDATE_ERROR,
     BILLING_UPDATE_REQUEST,
     updateBillingInfoAction,
+    requestBillingUpdate,
+    errorBillingUpdate,
+    successBillingUpdate,
 };

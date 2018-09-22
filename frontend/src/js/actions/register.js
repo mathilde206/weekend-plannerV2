@@ -51,4 +51,7 @@ export {
     REGISTER_FAILURE,
     REGISTER_REQUEST,
     registerAction,
+    registerRequest,
+    registerFailure,
+    registerSuccess,
 };

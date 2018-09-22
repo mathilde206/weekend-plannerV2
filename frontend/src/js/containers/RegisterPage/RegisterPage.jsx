@@ -60,7 +60,7 @@ class Register extends React.Component {
         }
 
         if (!isPasswordValid) {
-            errors.password = 'You password must be at least 9 characters long.';
+            errors.password = 'You password must be at least 8 characters long.';
         }
 
         if (!arePasswordsMatching) {

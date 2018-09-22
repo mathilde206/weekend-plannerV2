@@ -78,4 +78,7 @@ export {
     RESET_PROFILE_UPDATE,
     resetProfileUpdate,
     updateProfile,
+    updateProfileRequest,
+    updateProfileError,
+    updateProfileSuccess,
 };
