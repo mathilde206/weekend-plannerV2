@@ -31,7 +31,6 @@ const store = createStore(
     reducer,
     applyMiddleware(
         thunk,
-        loggerMiddleware,
         routerMiddleware(history)
     )
 );
