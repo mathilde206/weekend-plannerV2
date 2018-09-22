@@ -8,7 +8,7 @@ from django.contrib.auth.models import User
 class TestAccountSerializer(TestCase):
     def setUp(self):
         self.user = User.objects.create_user(username='testuser', password='12345')
-        self.order = Order.objects.create(buyer=self.user, stripe_token='1234')
+        self.order = Order.objects.create(buyer=self.user, charge_id='1234', total='200')
         self.product = Product.objects.create(name='Product1', type='Basic', price='2')
         self.item = OrderItem.objects.create(product=self.product, order=self.order)
 
